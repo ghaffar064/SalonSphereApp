@@ -1,223 +1,119 @@
 import navigationStrings from '../constants/imagePath';
 import imagePath from '../constants/imagePath';
 export const hairsalon =[
-    {
-      name: "The big tease salon",
-      reviews:{
-
-
-      },
-      description: "this is salon 1",
-      image: imagePath.salonpic,
-      address:'expo center',
-      location:{
-        latitude:'31.469356431274537',
-        longitude:'74.25655607498646'
-      },
-     
-
-      fillheart: false,
-      about:
-      'this is the big salon here we offer different services including hair cut, hair styling and hair treatments',
-      services: [
-        {
-          type: "Hair Cut",
-          options: [
-            {
-              name: "Long Hair Cut",
-              price: "Rs. 1000000",
-              stylists:[
-                  
-                  {
-                    name:"Shahbaz Munir",
-                    experirence:"5 years",
-                    expertise: "Hair cut specialist",
-                    about: "He has experience of 5+ years of hair cutting",
-                    id:1
-                  },
-                  {
-                    name:"Abdul Ghaffar khan",
-                    experirence:"2 years",
-                    expertise: "Hair cut specialist",
-                    about: "He has experience of 5+ years of hair cutting"
-                    ,id:2
-                  },
-                  {
-                    name:"Shahbaz Munir",
-                    experirence:"5 years",
-                    expertise: "Hair cut specialist",
-                    about: "He has experience of 5+ years of hair cutting"
-                    ,id:3
-                  },
-                  {
-                    name:"Shahbaz Munir",
-                    experirence:"5 years",
-                    expertise: "Hair cut specialist",
-                    about: "He has experience of 5+ years of hair cutting"
-                    ,id:4
-                  }
-
-              ]
-            },
-            {
-              name: "Short Hair Cut",
-              price: "Rs. 800",
-              stylists:[
-                  
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:5
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:6
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:7
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:8
-                }
-
-            ]
-            },
-            {
-              name: "Medium Hair Cut",
-              price: "Rs. 200",
-              stylists:[
-                  
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:9
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:10
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:11
-                },
-                
-            ]
-            },
-            
-          ]
-        },
-        {
-          type: "Hair Styling",
-          options: [
-            {
-              name: "Blow Dry",
-              price: "Rs. 800",
-              stylists:[
-                  
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:12
-                },
-                {
-                  name:"Ghaffar",
-                  experirence:"2 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:13
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:14
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:15
-                }
-
-            ]
-
-            },
-           
-          ]
-        },
-        {
-          type: "Treatment",
-          options: [
-            {
-              name: "Keratin",
-              price: "Rs. 800",
-              stylists:[
-                  
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:16
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:17
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:18
-                },
-                {
-                  name:"Shahbaz Munir",
-                  experirence:"5 years",
-                  expertise: "Hair cut specialist",
-                  about: "He has experience of 5+ years of hair cutting"
-                  ,id:19
-                }
-
-            ]
-            },
-           
-          ]
-        },
-       
-      ]
-              
-     
-    
+  {
+    name: "The big tease salon",
+    reviews: {},
+    description: "this is salon 1",
+    image: imagePath.salonpic,
+    address: 'expo center',
+    location: {
+      latitude: '31.469356431274537',
+      longitude: '74.25655607498646',
     },
+    fillheart: false,
+    about: 'this is the big salon here we offer different services including hair cut, hair styling and hair treatments',
+    stylists: [
+      {
+        name: "Shahbaz Munir",
+        experience: "5 years",
+        expertise: "Hair cut specialist",
+        about: "He has experience of 5+ years of hair cutting",
+        id: 1,
+        dateTimeSlots: [
+          {
+            date: "2024-10-02",
+            times: ["09:00 AM", "10:00 AM", "11:00 AM"],
+          },
+          {
+            date: "2024-10-03",
+            times: ["01:00 PM", "02:00 PM", "03:00 PM"],
+          },
+        ],
+      },
+      {
+        name: "Abdul Ghaffar ",
+        experience: "2 years",
+        expertise: "Hair cut specialist",
+        about: "He has experience of 5+ years of hair cutting",
+        id: 2,
+        dateTimeSlots: [
+          {
+            date: "2024-10-02",
+            times: ["10:00 AM", "11:00 AM", "12:00 PM"],
+          },
+          {
+            date: "2024-10-04",
+            times: ["02:00 PM", "03:00 PM", "04:00 PM"],
+          },
+          {
+            date: "2024-10-06",
+            times: ["02:00 PM", "04:00 PM", "06:00 PM"],
+          },
+          
+        ],
+      },
+      {
+        name: "Shayan",
+        experience: "2 years",
+        expertise: "Hair cut specialist",
+        about: "He has experience of 5+ years of hair cutting",
+        id: 3,
+        dateTimeSlots: [
+          {
+            date: "2024-10-02",
+            times: ["10:00 AM", "11:00 AM", "12:00 PM"],
+          },
+          {
+            date: "2024-10-04",
+            times: ["02:00 PM", "03:00 PM", "04:00 PM"],
+          },
+          {
+            date: "2024-10-06",
+            times: ["02:00 PM", "04:00 PM", "06:00 PM"],
+          },
+          
+        ],
+      },
+    ],
+    services: [
+      {
+        type: "Hair Cut",
+        options: [
+          {
+            name: "Long Hair Cut",
+            price: "Rs. 1000000",
+          
+          },
+          {
+            name: "Short Hair Cut",
+            price: "Rs. 800",
+          
+          },
+        ],
+      },
+      {
+        type: "Hair Styling",
+        options: [
+          {
+            name: "Blow Dry",
+            price: "Rs. 800",
+           
+          },
+        ],
+      },
+      {
+        type: "Treatment",
+        options: [
+          {
+            name: "Keratin",
+            price: "Rs. 800",
+           
+          },
+        ],
+      },
+    ],
+  },
     {
       name: "The salon master",
       description: "this is salon 1",

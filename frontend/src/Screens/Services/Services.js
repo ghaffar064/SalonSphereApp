@@ -10,7 +10,7 @@ import {
 export default function Services({ services, selected, onSelect }) {
 
   
-console.log(selected)
+
 
   
 const toggleOption = (serviceType, optionName, optionPrice,optionStylist) => {

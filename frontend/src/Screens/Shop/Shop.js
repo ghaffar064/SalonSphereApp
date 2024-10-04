@@ -12,6 +12,10 @@ export default function Shop() {
   const navigation = useNavigation();
   const { params: { item } } = useRoute();
  
+ 
+
+  
+
 
   // Moved selected services to Shop component
   const [selected, setSelected] = useState({});
@@ -117,7 +121,9 @@ export default function Shop() {
           {hasSelectedService && (
             <View style={{ marginVertical: moderateVerticalScale(20), alignItems: "center" }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate(navigationStrings.STEPPERFORMSCREEN, { selectedServices: selected })}
+                onPress={() => 
+                  navigation.navigate(navigationStrings.STEPPERFORMSCREEN,
+                     { selectedServices: selected,stylists:item.stylists,salonName:item.name })}
                 style={{
                   backgroundColor: color.background,
                   paddingVertical: moderateVerticalScale(10),

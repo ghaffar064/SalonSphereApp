@@ -96,7 +96,7 @@ export default function MainStack({hairsalon,nailsalon,permissionStatus,setPermi
           headerTintColor: color.foreground,
         }}
       />
-       <Stack.Screen name={navigationStrings.STEPPERFORMSCREEN} component={StepperFormScreen} />
+       <Stack.Screen name={navigationStrings.STEPPERFORMSCREEN} component={StepperFormScreen}  options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

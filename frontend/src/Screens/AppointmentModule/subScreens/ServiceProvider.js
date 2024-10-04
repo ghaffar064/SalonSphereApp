@@ -2,116 +2,60 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ScrollView, Image, Dimensions, TouchableOpacity, Button, Alert } from 'react-native';
 import imagePath from '../../../constants/imagePath';
 import { moderateScale, moderateVerticalScale } from 'react-native-size-matters';
+import color from '../../../constants/color';
 
 const { width } = Dimensions.get('window');
 
-export default function ServiceProvider({ selectedServices, onNextStep }) {
-  const [selectedStylists, setSelectedStylists] = useState({}); // State to store selected stylists
-  const [activeServices, setActiveServices] = useState(Object.keys(selectedServices)); // State to track active services
+export default function ServiceProvider({ stylists, onNextStep, setSelectedStylist, selectedStylist }) {
 
-  // Filter out services with null values
-  const filteredServices = Object.fromEntries(
-    Object.entries(selectedServices).filter(([, value]) => value !== null)
-  );
-
-  const selectedServiceEntries = Object.entries(filteredServices);
-
-  const handleStylistSelect = (serviceType, stylist) => {
-    setSelectedStylists((prev) => ({
-      ...prev,
-      [serviceType]: stylist, // Store selected stylist for the service type
-    }));
-  };
-
-  const handleServiceToggle = (serviceType) => {
-    if (activeServices.includes(serviceType)) {
-      // If the service is already active, remove it
-      setActiveServices((prev) => prev.filter((service) => service !== serviceType));
-      // Also remove the stylist selection for this service
-      setSelectedStylists((prev) => {
-        const { [serviceType]: _, ...rest } = prev; // Remove stylist for the service
-        return rest; // Return the rest of the stylists
-      });
-    } else {
-      // Add the service back
-      setActiveServices((prev) => [...prev, serviceType]);
-    }
+  const handleStylistSelect = (stylist) => {
+    setSelectedStylist(stylist);
   };
 
   const handleNextStep = () => {
-    const unselectedServices = selectedServiceEntries.filter(
-      ([serviceType]) => !selectedStylists[serviceType]
-    );
-
-    if (unselectedServices.length > 0) {
-      const serviceNames = unselectedServices.map(([serviceType]) => serviceType).join(', ');
+    if (!selectedStylist) {
       Alert.alert(
-        'Select Stylists',
-        `Please select a stylist for: ${serviceNames}`,
+        'Select Stylist',
+        'Please select a stylist to proceed.',
         [{ text: 'OK' }]
       );
     } else {
-      onNextStep(selectedStylists); // Pass the selected stylists to the next step
+      onNextStep(selectedStylist);
     }
   };
 
   return (
-    <ScrollView 
-      contentContainerStyle={styles.container} 
-      showsVerticalScrollIndicator={false} 
-    >
+    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <Text style={styles.heading}>Select a Service Provider</Text>
 
-      {selectedServiceEntries.length > 0 ? (
-        selectedServiceEntries.map(([serviceType, serviceDetails], index) => {
-          // Ensure serviceDetails is valid before rendering
-          if (!serviceDetails || !serviceDetails.optionStylist) {
-            return null; // Skip rendering if serviceDetails is null or empty
-          }
-
-          return (
-            <View key={index} style={styles.serviceContainer}>
-              <TouchableOpacity onPress={() => handleServiceToggle(serviceType)}>
-                <Text style={[styles.subheading, { textDecorationLine: activeServices.includes(serviceType) ? 'none' : 'line-through' }]}>
-                  {serviceType}
-                </Text>
-              </TouchableOpacity>
-
-              {activeServices.includes(serviceType) && (
-                <FlatList
-                  data={serviceDetails.optionStylist}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity 
-                      style={[styles.card, selectedStylists[serviceType]?.id === item.id ? styles.selectedCard : null]} 
-                      onPress={() => handleStylistSelect(serviceType, item)} 
-                    >
-                      <Image
-                        style={styles.image}
-                        source={imagePath.hairsalon}
-                      />
-                      <Text style={styles.stylistName}>{item.name}</Text>
-                      <Text style={styles.stylistDetail}>ID: {item.id}</Text>
-                      <Text style={styles.stylistDetail}>Expertise: {item.expertise}</Text>
-                    </TouchableOpacity>
-                  )}
-                  keyExtractor={(item) => item.id.toString()}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.flatListContent} 
-                />
-              )}
-            </View>
-          );
-        })
+      {stylists.length > 0 ? (
+        <FlatList
+          data={stylists}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={[styles.card, selectedStylist?.id === item.id ? styles.selectedCard : null]}
+              onPress={() => handleStylistSelect(item)}
+            >
+              <Image style={styles.image} source={imagePath.hairsalon} />
+              <Text style={styles.stylistName}>{item.name}</Text>
+              <Text style={styles.stylistDetail}>Experience: {item.experience}</Text>
+              <Text style={styles.stylistDetail}>Expertise: {item.expertise}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.flatListContent}
+        />
       ) : (
-        <Text style={styles.noServiceText}>No service selected</Text>
+        <Text style={styles.noServiceText}>No stylists available</Text>
       )}
 
       <View style={styles.buttonContainer}>
-        <Button title="Next" onPress={handleNextStep} color="#2a9d8f" /> 
+        <Button title="Next" onPress={handleNextStep} color={color.background} />
       </View>
 
-      <View style={styles.bottomSpace} /> 
+      <View style={styles.bottomSpace} />
     </ScrollView>
   );
 }
@@ -129,15 +73,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333',
   },
-  subheading: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginVertical: 10,
-    color: '#666',
-  },
-  serviceContainer: {
-    marginBottom: 0,
-  },
   card: {
     borderWidth: 1,
     borderColor: '#dedede',
@@ -150,8 +85,8 @@ const styles = StyleSheet.create({
     width: (width / 2) - 20,
   },
   selectedCard: {
-    borderColor: '#2a9d8f', // Change border color when selected
-    borderWidth: 2, // Make border thicker when selected
+    borderColor: color.background, // Updated to use color.background
+    borderWidth: 2,
   },
   image: {
     height: moderateVerticalScale(100),
@@ -161,7 +96,7 @@ const styles = StyleSheet.create({
   stylistName: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2a9d8f',
+    color: color.background, // Updated to use color.background
     marginBottom: 8,
   },
   stylistDetail: {
@@ -177,11 +112,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   flatListContent: {
-    paddingBottom: 20, 
+    paddingBottom: 20,
   },
   buttonContainer: {
-    marginTop: 20, // Add some space above the button
-    zIndex: 1, // Ensure the button is above other elements
+    marginTop: 20,
+    zIndex: 1,
   },
   bottomSpace: {
     height: 220,
