@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import ServiceProvider from './subScreens/ServiceProvider';
 import DateAndTime from './subScreens/DateAndTime';
+import Cart from './subScreens/Cart';
 import color from '../../constants/color';
+import { ArrowLeftIcon } from 'react-native-heroicons/outline';
+import { scale, verticalScale, moderateScale, moderateVerticalScale } from "react-native-size-matters";
+import navigationStrings from '../../constants/navigationStrings';
+import PaymentMethod from './subScreens/PaymentMethod';
 
 const StepperFormScreen = ({ route, navigation }) => {
   const [currentPosition, setCurrentPosition] = useState(1);
-  const { selectedServices, stylists, salonName } = route.params;
+  const { selectedServices, stylists, salonName,salonId } = route.params;
   const [selectedStylist, setSelectedStylist] = useState({});
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedAgent, setSelectedAgent] = useState(null);
@@ -15,14 +20,30 @@ const StepperFormScreen = ({ route, navigation }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [incompleteMsg, setIncompleteMsg] = useState(false);
 
-  const steps = [
-    'Service',
-    'Service Provider',
-    'Date & Time',
-    'Cart',
-    'Payment',
-    
-  ];
+  console.log(salonId)
+  
+
+  const steps = ['Service', 'Service Provider', 'Date & Time', 'Cart', 'Payment'];
+
+
+  // Handle back button press
+  const handleBackPress = () => {
+    if (currentPosition > 1) {
+      setCurrentPosition((prevPosition) => prevPosition - 1); // Move to the previous step
+    } else {
+      navigation.navigate(navigationStrings.SERVICES); // Navigate back to the Service component
+    }
+  };
+
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerLeft: () => (
+  //       <TouchableOpacity onPress={handleBackPress}>
+  //         <ArrowLeftIcon fill={'black'} size={84} color="white" />
+  //       </TouchableOpacity>
+  //     ),
+  //   });
+  // }, [navigation, currentPosition]);
 
   const nextStep = () => {
     if (currentPosition < steps.length - 1) {
@@ -55,49 +76,31 @@ const StepperFormScreen = ({ route, navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       {/* Header with salon name */}
       <View style={styles.header}>
+      <TouchableOpacity
+             onPress={handleBackPress}
+              style={{
+                position: "absolute",
+                left: moderateScale(18),
+                top: moderateVerticalScale(35),
+                backgroundColor: "white",
+                borderRadius: 100,
+                
+              }}
+            >
+              <ArrowLeftIcon size={30} color={color.background} />
+            </TouchableOpacity>
         <Text style={styles.headerText}>{salonName}</Text>
       </View>
 
       {/* Step Indicator */}
-     <View style={{margin:5}}>
-     <StepIndicator
-  currentPosition={currentPosition}
-  labels={steps}
-  stepCount={steps.length}
-  customStyles={{
-    stepIndicatorSize: 30,
-    currentStepIndicatorSize: 40, // Slightly larger size for the current step
-    separatorStrokeWidth: 3,
-    currentStepIndicatorStyle: {
-      backgroundColor: color.background, // Ensures the current step is colored
-      borderColor: color.background, // Border color for the current step
-      borderWidth: 2, // Border thickness
-    },
-    stepIndicatorFinishedColor: color.background, // Color for the finished steps
-    stepIndicatorUnFinishedColor: '#E0E0E0', // Unfinished steps remain grey
-    separatorFinishedColor: color.background, // Finished separator lines color
-    separatorUnFinishedColor: '#E0E0E0', // Unfinished separator color
-
-    labelColor: '#757575', // Text label color for unfinished steps
-    finishedLabelColor: 'black', // Label color for finished steps (try this instead of `finishedStepLabelColor`)
-    currentStepLabelColor: color.background, // Label color for the current step
-
-    labelFontSize: 16, // Increase font size for step labels (try different values here)
-    currentStepIndicatorLabelFontSize: 16, // Larger font size for the current step
-    stepIndicatorLabelFontSize: 14, // Base font size for step indicator labels
-
-    stepStrokeWidth: 0, // Removes any inner stroke from steps
-    currentStepStrokeWidth: 2, // Adds stroke width around the current step
-    currentStepStrokeColor: '#E0E0E0', // Stroke color for the current step
-
-    stepStrokeFinishedColor: color.background, // Border for completed steps
-    stepStrokeUnFinishedColor: '#E0E0E0', // Border for unfinished steps
-    stepStrokeCurrentColor: color.background, // Border for the current step
-  }}
-/>
-
-     </View>
-
+      <View style={{ margin: 5 }}>
+        <StepIndicator
+          currentPosition={currentPosition}
+          labels={steps}
+          stepCount={steps.length}
+          customStyles={stepIndicatorStyles}
+        />
+      </View>
 
       {/* Render different content based on the current step */}
       <View style={styles.contentContainer}>
@@ -123,7 +126,6 @@ const StepperFormScreen = ({ route, navigation }) => {
 
         {currentPosition === 2 && (
           <View>
-          
             <DateAndTime
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
@@ -133,38 +135,27 @@ const StepperFormScreen = ({ route, navigation }) => {
               setIncompleteMsg={setIncompleteMsg}
               selectedServices={selectedServices}
               selectedStylist={selectedStylist}
+              selectedTime={selectedTime}
+              nextStep = {nextStep}
             />
-           
           </View>
         )}
 
         {currentPosition === 3 && (
           <View>
             <Text style={styles.stepText}>Cart Summary</Text>
-            {/* Add Cart Summary UI */}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={nextStep}>
-                <Text style={styles.buttonText}>NEXT</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.backButton} onPress={prevStep}>
-                <Text style={styles.buttonText}>BACK</Text>
-              </TouchableOpacity>
-            </View>
+              <Cart selectedServices = {selectedServices} selectedStylist = {selectedStylist} 
+              selectedDate = {selectedDate} selectedTime = {selectedTime} nextStep={nextStep}/>
+           
           </View>
         )}
 
         {currentPosition === 4 && (
           <View>
             <Text style={styles.stepText}>Payment Method</Text>
-            {/* Add Payment Method Selection */}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleConfirmation}>
-                <Text style={styles.buttonText}>CONFIRM BOOKING</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.backButton} onPress={prevStep}>
-                <Text style={styles.buttonText}>BACK</Text>
-              </TouchableOpacity>
-            </View>
+           <PaymentMethod  selectedServices = {selectedServices} selectedStylist = {selectedStylist} 
+              selectedDate = {selectedDate} selectedTime = {selectedTime} salonId={salonId} salonName={salonName}/>
+           
           </View>
         )}
 
@@ -184,14 +175,41 @@ const StepperFormScreen = ({ route, navigation }) => {
   );
 };
 
-// Styles
+// Styles for step indicator and buttons
+const stepIndicatorStyles = {
+  stepIndicatorSize: 30,
+  currentStepIndicatorSize: 40,
+  separatorStrokeWidth: 3,
+  currentStepIndicatorStyle: {
+    backgroundColor: color.background,
+    borderColor: color.background,
+    borderWidth: 2,
+  },
+  stepIndicatorFinishedColor: color.background,
+  stepIndicatorUnFinishedColor: '#E0E0E0',
+  separatorFinishedColor: color.background,
+  separatorUnFinishedColor: '#E0E0E0',
+  labelColor: '#757575',
+  finishedLabelColor: 'black',
+  currentStepLabelColor: color.background,
+  labelFontSize: 16,
+  currentStepIndicatorLabelFontSize: 16,
+  stepIndicatorLabelFontSize: 14,
+  stepStrokeWidth: 0,
+  currentStepStrokeWidth: 2,
+  currentStepStrokeColor: '#E0E0E0',
+  stepStrokeFinishedColor: color.background,
+  stepStrokeUnFinishedColor: '#E0E0E0',
+  stepStrokeCurrentColor: color.background,
+};
+
 const styles = StyleSheet.create({
   header: {
     backgroundColor: color.background,
     padding: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom:10
+    marginBottom: 10,
   },
   headerText: {
     color: 'white',

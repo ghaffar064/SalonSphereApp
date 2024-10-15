@@ -98,7 +98,7 @@ export default function Map({ nailsalon, hairsalon, permissionStatus, setPermiss
     if (location) {
       const nearbySalons = formattedData.filter(item => {
         const distance = haversineDistance(location.coords, { latitude: item.latitude, longitude: item.longitude });
-        return distance <= 2; // Distance within 5 km
+        return distance <= 15; // Distance within 5 km
       });
       setData(nearbySalons);
       console.log("Nearby Salons:", nearbySalons);

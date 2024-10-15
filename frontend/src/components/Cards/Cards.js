@@ -26,7 +26,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function Cards({data}) {
   const navigation = useNavigation();
   const [data1, setData1] = useState([])
-
+    console.log(data1)
  
 
   const toggleHeart = (index) => {

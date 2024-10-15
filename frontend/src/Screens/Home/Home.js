@@ -14,18 +14,43 @@ import styles from './styles';
 
 import color from '../../constants/color';
 import {BellIcon} from "react-native-heroicons/outline";
-
-export default function Home({navigation,nailsalon,hairsalon,permissionStatus,setPermissionStatus,
+import axios from 'axios'
+export default function Home({navigation,permissionStatus,setPermissionStatus,
 location,setLocation,address,setAddress
 
 }) {
   
- 
-  const [hairSalonData, setHairSalonData] = useState();
-  const [nailSalonData, setNailSalonData] = useState();
+  const [hairSalonData, setHairSalonData] = useState([]);
+  const [nailSalonData, setNailSalonData] = useState([]);
+  const [homeServiceData, setHomeServiceData] = useState([]);
+  const [makeUpData, setMakeUpData] = useState([]);
+  const [spaData, setSpaData] = useState([]);
+
+  
   useEffect(() => {
-    setHairSalonData(hairsalon); 
-    setNailSalonData(nailsalon)
+    const fetchSalons = async () => {
+      try {
+        // Fetch hair salons
+        const hairResponse = await axios.get('http://192.168.100.11:3500/api/salon/getSalons?salonType=hair');
+        setHairSalonData(hairResponse.data);
+        
+        // Fetch nail salons
+        const nailResponse = await axios.get('http://192.168.100.11:3500/api/salon/getSalons?salonType=nail');
+        setNailSalonData(nailResponse.data);
+        const homeResponse = await axios.get('http://192.168.100.11:3500/api/salon/getSalons?salonType=Home Service');
+        setHomeServiceData(homeResponse.data);
+
+        const makeUpResponse = await axios.get('http://192.168.100.11:3500/api/salon/getSalons?salonType=Make Up');
+        setMakeUpData(makeUpResponse.data);
+
+        const spaResponse = await axios.get('http://192.168.100.11/api/salon/getSalons?salonType=Spa');
+        setSpaData(spaResponse.data);
+      } catch (error) {
+        console.error('Error fetching salons:', error);
+      }
+    };
+
+    fetchSalons();
   }, []);
       const categories= [
         
@@ -50,7 +75,7 @@ location,setLocation,address,setAddress
           imagePath:imagePath.makeup,
           navigate:navigationStrings.MAKEUP,
           placeholder:"Search your makeup artist",
-          data :nailSalonData
+          data :makeUpData
         },
           {name:'Skin Care',
           imagePath:imagePath.skincare,
@@ -62,13 +87,13 @@ location,setLocation,address,setAddress
           imagePath:imagePath.spa,
           navigate:navigationStrings.SPA,
           placeholder:"Search your spa",
-          data :nailSalonData
+          data :spaData
         },
           {name:'Home Service',
           imagePath:imagePath.homeservice,
           navigate:navigationStrings.HOMESERVICE,
           placeholder:"Search home service",
-          data :nailSalonData
+          data :homeServiceData
         },
                          
                         

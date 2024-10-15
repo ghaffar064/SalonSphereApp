@@ -2,6 +2,7 @@ import navigationStrings from '../constants/imagePath';
 import imagePath from '../constants/imagePath';
 export const hairsalon =[
   {
+    salonId:"1010110",
     name: "The big tease salon",
     reviews: {},
     description: "this is salon 1",
@@ -50,6 +51,10 @@ export const hairsalon =[
             date: "2024-10-06",
             times: ["02:00 PM", "04:00 PM", "06:00 PM"],
           },
+          {
+            date: "2024-10-10",
+            times: ["02:00 PM", "04:00 PM", "06:00 PM"],
+          },
           
         ],
       },
@@ -82,12 +87,12 @@ export const hairsalon =[
         options: [
           {
             name: "Long Hair Cut",
-            price: "Rs. 1000000",
+            price: "1000000",
           
           },
           {
             name: "Short Hair Cut",
-            price: "Rs. 800",
+            price: "800",
           
           },
         ],
@@ -97,7 +102,7 @@ export const hairsalon =[
         options: [
           {
             name: "Blow Dry",
-            price: "Rs. 800",
+            price: "800",
            
           },
         ],
@@ -107,7 +112,7 @@ export const hairsalon =[
         options: [
           {
             name: "Keratin",
-            price: "Rs. 800",
+            price: "800",
            
           },
         ],
@@ -132,7 +137,7 @@ export const hairsalon =[
           options: [
             {
               name: "Long Hair Cut",
-              price: "Rs. 1000000",
+              price: "1000000",
               stylists:[
                   
                 {
@@ -168,7 +173,7 @@ export const hairsalon =[
             },
             {
               name: "Short Hair Cut",
-              price: "Rs. 800",
+              price: "800",
               stylists:[
                   
                 {

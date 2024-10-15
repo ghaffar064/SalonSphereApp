@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity,Button,Alert } from 'react-native';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { Calendar } from 'react-native-calendars'; // Import the Calendar component
+import color from '../../../constants/color';
+
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -15,9 +17,30 @@ export default function DateAndTime({
   setSelectedTime,
   setIncompleteMsg,
   selectedStylist,
+  nextStep,
+  selectedTime
 }) {
   const [availableDates, setAvailableDates] = useState([]);
   const [availableTimes, setAvailableTimes] = useState([]);
+  console.log(selectedDate)
+  const handleNextStep = () => {
+    if (!selectedDate) {
+      Alert.alert(
+        'Select Date',
+        
+      );
+    }
+    if (!selectedTime) {
+      Alert.alert(
+        'Select Time',
+        
+      );
+    }
+    else {
+     nextStep()
+    }
+  };
+  
 
   // Auto-select today's date when the component mounts
   useEffect(() => {
@@ -73,6 +96,7 @@ export default function DateAndTime({
     setSelectedTime(timeslot);
     setIncompleteMsg(false);
     setActiveStep(3);
+    nextStep()
   };
 
   // Create marked dates
@@ -134,6 +158,9 @@ export default function DateAndTime({
           )}
         </>
       )}
+        {/* <View style={styles.buttonContainer}>
+        <Button title="Next" onPress={handleNextStep} color={color.background} />
+      </View> */}
     </ScrollView>
   );
 }
@@ -167,7 +194,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   timeSlotButton: {
-    backgroundColor: '#6200ea',
+    backgroundColor: color.background,
     padding: 10,
     borderRadius: 5,
     margin: 5,
@@ -183,5 +210,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'red',
     marginTop: 20,
+  },
+  buttonContainer: {
+    marginTop: 20,
+    zIndex: 1,
   },
 });

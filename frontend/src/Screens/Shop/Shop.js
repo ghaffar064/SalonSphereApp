@@ -123,7 +123,7 @@ export default function Shop() {
               <TouchableOpacity
                 onPress={() => 
                   navigation.navigate(navigationStrings.STEPPERFORMSCREEN,
-                     { selectedServices: selected,stylists:item.stylists,salonName:item.name })}
+                     { selectedServices: selected,stylists:item.stylists,salonName:item.name,salonId:item.salonId })}
                 style={{
                   backgroundColor: color.background,
                   paddingVertical: moderateVerticalScale(10),
