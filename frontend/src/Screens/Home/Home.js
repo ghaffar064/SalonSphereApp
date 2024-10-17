@@ -43,7 +43,7 @@ location,setLocation,address,setAddress
         const makeUpResponse = await axios.get('http://192.168.100.11:3500/api/salon/getSalons?salonType=Make Up');
         setMakeUpData(makeUpResponse.data);
 
-        const spaResponse = await axios.get('http://192.168.100.11/api/salon/getSalons?salonType=Spa');
+        const spaResponse = await axios.get('http://192.168.100.11:3500/api/salon/getSalons?salonType=Spa');
         setSpaData(spaResponse.data);
       } catch (error) {
         console.error('Error fetching salons:', error);

@@ -38,7 +38,7 @@ export default function GetLocation({permissionStatus,setPermissionStatus,locati
   }
 
   return (
-    <View style={{ flexDirection: 'row', padding: moderateScale(10) }}>
+    <View style={{ flexDirection: 'row', padding: moderateScale(10),width:'100%' }}>
       <MapPinIcon size={20} color="white" />
       <Text style={styles.paragraph}>{text}</Text>
     </View>
@@ -49,8 +49,9 @@ const styles = StyleSheet.create({
   paragraph: {
    
     textAlign: 'center',
-    color:'white'
+    color:'white',
     
+     
     
     
   },

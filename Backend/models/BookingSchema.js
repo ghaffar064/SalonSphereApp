@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const BookingSchema = new mongoose.Schema({
   salonId: {
     type: String, // Change ObjectId to String
-    required: true,
+   
   },
   selectedServices: [
     {
@@ -53,11 +53,7 @@ const BookingSchema = new mongoose.Schema({
     type: String,
     
   },
-  status: {
-    type: String,
-    enum: ['pending', 'confirmed', 'canceled'],
-    default: 'pending',
-  },
+ 
 }, { timestamps: true });
 
 export const Booking = mongoose.model('Booking', BookingSchema);

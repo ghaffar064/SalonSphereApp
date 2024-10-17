@@ -35,9 +35,9 @@ const SalonSchema = new mongoose.Schema({
     latitude: String,
     longitude: String,
   },
-  salonType: { // New field added here
-    type: String,
-    enum: ['hair', 'nail','Home Service','Make Up', 'Skin Care','Spa','Home Service'], // Limit values to 'hair' or 'nail'
+  salonType: { // Updated field to support an array of types
+    type: [String], // Now an array of strings
+    enum: ['hair', 'nail', 'Home Service', 'Make Up', 'Skin Care', 'Spa'], // Allowed values
     required: true,
   },
   about: String,

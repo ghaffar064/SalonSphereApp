@@ -49,8 +49,8 @@ export const getSalonsByType = async (req, res) => {
   try {
     const { salonType } = req.query; // Get the salon type from the query parameters
 
-    // Fetch all salon documents matching the specified type from the database
-    const salons = await Salon.find({ salonType });
+    // Fetch salons matching at least one of the types specified in the array
+    const salons = await Salon.find({ salonType: { $in: [salonType] } });
 
     // Return a success response with the list of salons
     res.status(200).json(salons);

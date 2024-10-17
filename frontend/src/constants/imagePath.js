@@ -17,5 +17,6 @@ export default {
   skincare:require('../assets/images/skincare.png'),
   spa:require('../assets/images/spa.jpg'),
   homeservice:require('../assets/images/homeservice.png'),
+  promo:require('../assets/images/Promo.png')
 
 };

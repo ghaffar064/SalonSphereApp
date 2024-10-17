@@ -11,6 +11,7 @@ import navigationStrings from "../../constants/navigationStrings";
 export default function Shop() {
   const navigation = useNavigation();
   const { params: { item } } = useRoute();
+  console.log(item)
  
  
 

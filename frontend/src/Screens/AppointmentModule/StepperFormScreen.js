@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Alert } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import ServiceProvider from './subScreens/ServiceProvider';
 import DateAndTime from './subScreens/DateAndTime';
@@ -48,6 +48,10 @@ const StepperFormScreen = ({ route, navigation }) => {
   const nextStep = () => {
     if (currentPosition < steps.length - 1) {
       setCurrentPosition(currentPosition + 1);
+    }
+    else if(currentPosition==4){
+      navigation.navigate(navigationStrings.TABROUTES)
+
     }
   };
 
@@ -154,7 +158,7 @@ const StepperFormScreen = ({ route, navigation }) => {
           <View>
             <Text style={styles.stepText}>Payment Method</Text>
            <PaymentMethod  selectedServices = {selectedServices} selectedStylist = {selectedStylist} 
-              selectedDate = {selectedDate} selectedTime = {selectedTime} salonId={salonId} salonName={salonName}/>
+              selectedDate = {selectedDate} selectedTime = {selectedTime} salonId={salonId} salonName={salonName} nextStep={nextStep}/>
            
           </View>
         )}

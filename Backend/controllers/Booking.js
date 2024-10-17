@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import { Booking } from "../models/BookingSchema.js";
+import mongoose from "mongoose";
 
 const stripe = new Stripe("sk_test_51PIFiAFdq3SMwAKa5PSG4mWWwsyVJap6XCXFhv6ofUwAjZWXUPn6IS5uKPtmgrndnDNKSCGJvov1mEZtaOk6GPdh00dnsTmIuQ");
 
@@ -11,168 +12,91 @@ const calculateTotalPrice = (selectedServices) => {
   }, 0) * 100; // Convert to cents
 };
 
+// Function to create a new booking
+const createBooking = async (bookingData) => {
+  const booking = new Booking(bookingData);
+  await booking.save();
+  return booking;
+};
+
 // Checkout endpoint
-export const Checkout = async (req, res) => {
+export const createPaymentIntent = async (req, res) => {
   try {
-    const {
-      salonId,
+    const { amount, salonName, selectedStylist, selectedDate, selectedTime, customerEmail, customerFirstName, customerLastName, customerPhoneNumber, selectedServices } = req.body;
+
+    // Log the incoming data for debugging
+    console.log("Received data:", {
+      amount,
       salonName,
-      selectedServices,
       selectedStylist,
       selectedDate,
       selectedTime,
+      customerEmail,
       customerFirstName,
       customerLastName,
       customerPhoneNumber,
-      customerEmail,
-    } = req.body;
-
-    console.log("Received salonName:", salonName);
-
-    // Normalize selectedServices to always be an array of objects with price
-    const servicesArray = Object.keys(selectedServices).map(serviceType => {
-      const serviceDetail = selectedServices[serviceType];
-      return {
-        name: serviceDetail.name,
-        price: serviceDetail.price,
-      };
+      selectedServices,
     });
 
-    // Check if a similar booking already exists
-    const existingBooking = await Booking.findOne({
-      salonId,
+    // Create the payment intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: 'usd',
+      payment_method_types: ['card'],
+    });
+
+    const clientSecret = paymentIntent.client_secret;
+     
+    // Respond with the client secret
+    res.json({ clientSecret });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: error.message });
+  }
+};
+
+export const confirmPaymentAndCreateBooking = async (req, res) => {
+  try {
+    const {
+      paymentIntentId,
+      salonName,
       selectedStylist,
       selectedDate,
       selectedTime,
       customerEmail,
-    });
+      selectedServices
+    } = req.body;
 
-    if (existingBooking) {
-      return res.status(200).json({
-        success: false,
-        msg: "Booking already exists",
-        bookingId: existingBooking._id,
-      });
+    if (!selectedStylist.stylistName || !selectedServices || selectedServices.length === 0) {
+      return res.status(400).json({ error: "Required booking data is missing" });
     }
 
-    // Calculate total price
-    const totalPriceInCents = calculateTotalPrice(servicesArray);
+    // Confirm the payment intent
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
-    // Create Stripe checkout session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      success_url: "http://localhost:3000/appointment?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:3000/checkout-cancel",
-      line_items: servicesArray.map((service) => ({
-        price_data: {
-          currency: "usd",
-          unit_amount: totalPriceInCents,
-          product_data: {
-            name: service.name,
-          },
-        },
-        quantity: 1,
-      })),
-      metadata: {
-        salonId,
+    // Check if the payment was successful
+    if (paymentIntent.status === 'succeeded') {
+      // Prepare booking data
+      const bookingData = {
         salonName,
-        selectedStylist,
-        selectedDate,
-        selectedTime,
-        customerFirstName,
-        customerLastName,
-        customerPhoneNumber,
-        customerEmail,
-      },
-      payment_intent_data: {
-        description: `Service Booking at ${salonName || "Default Salon Name"}`,
-        metadata: {
-          merchantDisplayName: salonName || "Default Salon Name", // Ensure it never is empty
-        },
-      },
-    });
-    console.log("Session created:", session);
-
-
-    // Respond with session ID
-    res.status(200).json({
-      success: true,
-      clientSecret: session.id,
-      customerId: session.customer,
-      ephemeralKey: session.ephemeralKey,
-    });
-  } catch (error) {
-    console.error("Error creating checkout session:", error.message, error.stack);
-    res.status(500).json({
-      success: false,
-      msg: "Error creating checkout session",
-      error: error.message,
-    });
-  }
-};
-
-// Confirm booking after successful payment
-export const confirmBooking = async (req, res) => {
-  try {
-    const { sessionId } = req.body;
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
-
-    if (session.payment_status === "paid") {
-      const {
-        salonId,
-        selectedStylist,
-        selectedDate,
-        selectedTime,
-        customerFirstName,
-        customerLastName,
-        customerPhoneNumber,
-        customerEmail,
-      } = session.metadata;
-
-      // Check for existing booking
-      const existingBooking = await Booking.findOne({
-        salonId,
+        selectedServices,
         selectedStylist,
         selectedDate,
         selectedTime,
         customerEmail,
-      });
+      };
 
-      if (existingBooking) {
-        return res.status(200).json({
-          success: true,
-          msg: "Booking already exists",
-          bookingId: existingBooking._id,
-        });
-      }
+      // Create the booking
+      const newBooking = await createBooking(bookingData);
+      console.log("Booking created:", newBooking);
 
-      // Create a new booking
-      const newBooking = await Booking.create({
-        salonId,
-        selectedStylist,
-        selectedDate,
-        selectedTime,
-        customerFirstName,
-        customerLastName,
-        customerPhoneNumber,
-        customerEmail,
-      });
-
-      res.status(200).json({
-        success: true,
-        msg: "Booking created successfully",
-        bookingId: newBooking._id,
-      });
+      // Respond with success
+      res.json({ success: true, booking: newBooking });
     } else {
-      res.status(400).json({ success: false, msg: "Payment not completed" });
+      res.status(400).json({ error: 'Payment not successful' });
     }
   } catch (error) {
-    console.error("Error confirming booking:", error.message, error.stack);
-    res.status(500).json({
-      success: false,
-      msg: "Error confirming booking",
-      error: error.message,
-    });
+    console.log(error);
+    res.json({ error: error.message });
   }
 };

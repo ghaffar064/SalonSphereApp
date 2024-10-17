@@ -23,11 +23,11 @@ export const hairsalon =[
         id: 1,
         dateTimeSlots: [
           {
-            date: "2024-10-02",
+            date: "2024-10-16",
             times: ["09:00 AM", "10:00 AM", "11:00 AM"],
           },
           {
-            date: "2024-10-03",
+            date: "2024-10-17",
             times: ["01:00 PM", "02:00 PM", "03:00 PM"],
           },
         ],

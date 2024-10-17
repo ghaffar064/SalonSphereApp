@@ -5,6 +5,7 @@ import connectDB from "./Configration/db.js";
 import cors from "cors";
 import path from "path";
 import salonRouter from './routes/SalonRoute.js'
+import bookingRouter from './routes/Booking.js'
 //config
 dotenv.config();
 connectDB();
@@ -32,6 +33,7 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
 app.use('/api/salon/',salonRouter)
+app.use('/api/booking',bookingRouter)
 //port
 const PORT = 3500 || 3600;
 app.listen(PORT, () => {
