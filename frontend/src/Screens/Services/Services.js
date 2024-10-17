@@ -69,7 +69,7 @@ const toggleOption = (serviceType, optionName, optionPrice,optionStylist) => {
                   <Text>{option.name}</Text>
                 </View>
                 <View style={{ width: "40%" }}>
-                  <Text>{option.price}</Text>
+                  <Text> Rs. {option.price}</Text>
                 </View>
                 <View style={{ width: "10%" }}>
                   <TouchableOpacity

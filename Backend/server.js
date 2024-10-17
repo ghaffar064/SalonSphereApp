@@ -20,7 +20,7 @@ const corsConfig = {
 //simple api
 app.get("/", (req, resp) => {
   resp.send({
-    message: "Welcome to the Real Migration And Education 2",
+    message: "Welcome to Salon Sphere",
   });
 });
 

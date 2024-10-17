@@ -3,6 +3,7 @@ import React from 'react';
 import color from '../../../constants/color';
 
 export default function Cart({ selectedServices, selectedStylist, selectedDate, selectedTime, nextStep }) {
+    
   
   // Render service details
   const renderServices = () => {
@@ -10,7 +11,7 @@ export default function Cart({ selectedServices, selectedStylist, selectedDate, 
       <View key={index} style={styles.serviceContainer}>
         <Text style={styles.serviceTitle}>{serviceType}</Text>
         <Text style={styles.serviceText}>Service Name: {serviceDetails.name}</Text>
-        <Text style={styles.servicePrice}>Price: {serviceDetails.price}</Text>
+        <Text style={styles.servicePrice}>Price: Rs. {serviceDetails.price}</Text>
       </View>
     ));
   };
