@@ -1,36 +1,25 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "frontend": "npm start --prefix ./frontend",
-    "dev": "concurrently \"npm run server\" \"npm run frontend\""
+    "start": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "SalonSphere",
+  "license": "MIT",
+  "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.2",
+    "color": "^4.2.3",
     "colors": "^1.4.0",
-    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
-    "csvtojson": "^2.0.10",
     "dotenv": "^16.4.5",
-    "ejs": "^3.1.6",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.3.3",
-    "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.14",
-    "nodemon": "^3.1.0",
-    "slugify": "^1.6.6",
-    "stripe": "^15.7.0",
-    "uuid": "^9.0.1"
+    "mongoose": "^8.6.3",
+    "nodemon": "^3.1.7",
+    "stripe": "^17.2.0"
   }
 }

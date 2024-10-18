@@ -15,55 +15,73 @@ import {
 
 export default function CustomizedTextInput({
   label,
+  value,
   placeholder,
   onChangeText = () => {},
   inputStyle = {},
+  containerStyle = {},
+  labelStyle = {},
+  textInputStyle = {},
   rightIcon,
   leftIcon,
   onPressRight,
+  onPressLeft,
   ...props
 }) {
   return (
-    <View style={{ ...styles.inputStyle, ...inputStyle }}>
-      <Text style={styles.labelStyle}>{label}</Text>
-      <View style={styles.view1}>
+    <View style={[styles.container, containerStyle]}>
+      {label && <Text style={[styles.labelStyle, labelStyle]}>{label}</Text>}
+      <View style={[styles.inputWrapper, inputStyle]}>
+        {leftIcon && (
+          <TouchableOpacity onPress={onPressLeft} style={styles.iconContainer}>
+            <Image source={leftIcon} style={styles.iconStyle} />
+          </TouchableOpacity>
+        )}
         <TextInput
           placeholder={placeholder}
-          onChange={onChangeText}
-          style={styles.inlineStyle}
+          onChangeText={onChangeText}
+          style={[styles.textInputStyle, textInputStyle]}
+          value={value}
           {...props}
         />
-        {rightIcon ? (
-          <TouchableOpacity onPress={onPressRight}>
-            <Image source={rightIcon} />
+        {rightIcon && (
+          <TouchableOpacity onPress={onPressRight} style={styles.iconContainer}>
+            <Image source={rightIcon} style={styles.iconStyle} />
           </TouchableOpacity>
-        ) : null}
+        )}
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  inputStyle: {
+  container: {
+    marginBottom: moderateVerticalScale(20),
+  },
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "grey",
     borderRadius: moderateScale(5),
-   
-    
   },
-  inlineStyle: {
+  textInputStyle: {
+    flex: 1,
     paddingVertical: moderateVerticalScale(8),
     fontSize: scale(16),
-    width:'90%'
-   
-    
+    color: "black",
   },
   labelStyle: {
     fontSize: scale(14),
+    marginBottom: moderateVerticalScale(4),
+    color: "grey",
   },
-  view1: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+  iconContainer: {
+    padding: moderateScale(5),
+  },
+  iconStyle: {
+    width: moderateScale(20),
+    height: moderateScale(20),
+    resizeMode: "contain",
   },
 });

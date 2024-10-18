@@ -12,7 +12,7 @@ export default {
   PROFILE: "Profile",
   NOTIFICATION: "Notification",
   SHOP: "Shop",
-  CATEGORIES: "Categories",
+    CATEGORIES: "Categories",
   SERVICES: "Services",
   INFORMATION: "Information",
   REVIEWS: "Reviews",
