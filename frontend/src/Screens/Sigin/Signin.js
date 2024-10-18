@@ -7,7 +7,7 @@ import { moderateVerticalScale } from "react-native-size-matters";
 import CustomizedButton from "../../components/CustomizedButton";
 import navigationStrings from "../../constants/navigationStrings";
 import axios from "axios";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export function Signin({ navigation, onSignIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,29 +16,29 @@ export function Signin({ navigation, onSignIn }) {
   const [notvisible, setNotVisible] = useState(true);
 
 
-  const API_URL = "http://192.168.100.11:3500/api/auth/login";
+  const API_URL = "http://192.168.100.70:3500/api/auth/login";
 
   const handleSignin = async () => {
     setLoading(true);
     setError(null);
-
+  
     try {
       // Make a POST request to authenticate the user
       const response = await axios.post(API_URL, {
         email,
         password,
       });
-
+  
       // Handle successful login
       if (response.status === 200) {
         console.log("Login successful:", response.data);
-        
-        // Save user data to local storage or a secure store
-        localStorage.setItem("auth", JSON.stringify(response.data));
-
+  
+        // Save user data to AsyncStorage
+        await AsyncStorage.setItem("auth", JSON.stringify(response.data));
+  
         // Call the onSignIn function passed as a prop
         onSignIn();
-
+  
         // Determine the navigation route based on user role
         const userRole = response.data.user.role;
         if (userRole === 1) {
@@ -56,11 +56,11 @@ export function Signin({ navigation, onSignIn }) {
         }
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       // Handle error during login
       const errorMessage = err.response?.data?.message || "Login failed";
       setError(errorMessage);
-      
+  
       Alert.alert("Login Failed", errorMessage);
     } finally {
       setLoading(false);
