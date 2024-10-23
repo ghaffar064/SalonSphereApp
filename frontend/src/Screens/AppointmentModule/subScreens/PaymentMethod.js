@@ -6,7 +6,7 @@ export default function PaymentMethod({ selectedServices, selectedStylist, selec
   const [email, setEmail] = useState('');
   const [cardDetails, setCardDetails] = useState();
   const { confirmPayment, loading } = useConfirmPayment();
-  const API_URL = "http://192.168.100.11:3500/api";
+ 
   const [isProcessing, setIsProcessing] = useState(false); // New state for loading indicator
   
   // Calculate total price based on selected services
@@ -20,7 +20,7 @@ export default function PaymentMethod({ selectedServices, selectedStylist, selec
   const fetchPaymentIntentClientSecret = async () => {
     const amount = calculateTotalPrice(selectedServices); // Calculate total price
 
-    const response = await fetch(`${API_URL}/booking/create-payment-intent`, {
+    const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/booking/create-payment-intent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

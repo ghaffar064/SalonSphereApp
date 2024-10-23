@@ -8,6 +8,7 @@ import CustomizedButton from "../../components/CustomizedButton";
 import navigationStrings from "../../constants/navigationStrings";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export function Signin({ navigation, onSignIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,30 +17,28 @@ export function Signin({ navigation, onSignIn }) {
   const [notvisible, setNotVisible] = useState(true);
 
 
-  const API_URL = "http://192.168.100.70:3500/api/auth/login";
+
 
   const handleSignin = async () => {
     setLoading(true);
     setError(null);
-  
+    
     try {
-      // Make a POST request to authenticate the user
-      const response = await axios.post(API_URL, {
+      const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/auth/login`, {
         email,
         password,
       });
   
-      // Handle successful login
       if (response.status === 200) {
         console.log("Login successful:", response.data);
   
-        // Save user data to AsyncStorage
+        // Store user data (name, token, etc.) in AsyncStorage
         await AsyncStorage.setItem("auth", JSON.stringify(response.data));
   
-        // Call the onSignIn function passed as a prop
+        // Call the onSignIn function if needed
         onSignIn();
   
-        // Determine the navigation route based on user role
+        // Navigate based on user role
         const userRole = response.data.user.role;
         if (userRole === 1) {
           setTimeout(() => {
@@ -51,22 +50,20 @@ export function Signin({ navigation, onSignIn }) {
           }, 2000);
         } else {
           setTimeout(() => {
-            navigation.navigate(navigationStrings.HOME);
+            navigation.navigate(navigationStrings.TABROUTES);
           }, 2000);
         }
       }
     } catch (err) {
       console.log(err);
-      // Handle error during login
       const errorMessage = err.response?.data?.message || "Login failed";
       setError(errorMessage);
-  
       Alert.alert("Login Failed", errorMessage);
     } finally {
       setLoading(false);
     }
   };
-
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.view1}>
