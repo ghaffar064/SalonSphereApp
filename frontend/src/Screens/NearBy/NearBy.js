@@ -12,7 +12,7 @@ import * as Location from 'expo-location';
 import MapView, { Marker,Callout } from 'react-native-maps';
 import Map from '../../components/Map';
 
-export default function NearBy({nailsalon,hairsalon,permissionStatus,setPermissionStatus,location
+export default function NearBy({allSalons,permissionStatus,setPermissionStatus,location
 
   ,setLocation,address,setAddress
 }) {
@@ -36,7 +36,7 @@ export default function NearBy({nailsalon,hairsalon,permissionStatus,setPermissi
    
    </View>
       
-   <Map nailsalon = {nailsalon} hairsalon = {hairsalon} permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}
+   <Map allSalons={allSalons} permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}
       location={location} setLocation = {setLocation} address ={address} setAddress={setAddress}
    />
 

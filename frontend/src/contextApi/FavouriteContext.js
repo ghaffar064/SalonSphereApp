@@ -1,6 +1,6 @@
-// context/FavoritesContext.js
-import React, { createContext, useContext, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// FavoritesContext.js
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FavoritesContext = createContext();
 
@@ -12,12 +12,12 @@ export const FavoritesProvider = ({ children }) => {
   useEffect(() => {
     const loadFavorites = async () => {
       try {
-        const storedFavorites = await AsyncStorage.getItem("favorites");
+        const storedFavorites = await AsyncStorage.getItem('favorites');
         if (storedFavorites) {
           setFavorites(JSON.parse(storedFavorites));
         }
       } catch (error) {
-        console.error("Failed to load favorites", error);
+        console.error('Failed to load favorites:', error);
       }
     };
     loadFavorites();
@@ -25,10 +25,10 @@ export const FavoritesProvider = ({ children }) => {
 
   const updateFavorites = async (newFavorites) => {
     try {
-      await AsyncStorage.setItem("favorites", JSON.stringify(newFavorites));
+      await AsyncStorage.setItem('favorites', JSON.stringify(newFavorites));
       setFavorites(newFavorites);
     } catch (error) {
-      console.error("Failed to update favorites", error);
+      console.error('Failed to update favorites:', error);
     }
   };
 

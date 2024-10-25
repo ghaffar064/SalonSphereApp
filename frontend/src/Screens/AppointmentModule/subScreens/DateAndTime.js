@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity,Button,Alert } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import { Calendar } from 'react-native-calendars'; // Import the Calendar component
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'; // Import plugin
+import customParseFormat from 'dayjs/plugin/customParseFormat'; // Handle custom formats
+import { Calendar } from 'react-native-calendars'; 
 import color from '../../../constants/color';
 
-
+// Register plugins
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(isSameOrAfter);
+dayjs.extend(customParseFormat); // Enable custom date/time format parsing
 
 export default function DateAndTime({
   selectedDate,
@@ -18,67 +29,71 @@ export default function DateAndTime({
   setIncompleteMsg,
   selectedStylist,
   nextStep,
-  selectedTime
+  selectedTime,
 }) {
   const [availableDates, setAvailableDates] = useState([]);
   const [availableTimes, setAvailableTimes] = useState([]);
-  console.log(selectedDate)
+
   const handleNextStep = () => {
     if (!selectedDate) {
-      Alert.alert(
-        'Select Date',
-        
-      );
+      Alert.alert('Select Date');
+      return;
     }
     if (!selectedTime) {
-      Alert.alert(
-        'Select Time',
-        
-      );
+      Alert.alert('Select Time');
+      return;
     }
-    else {
-     nextStep()
-    }
+    nextStep();
   };
-  
 
   // Auto-select today's date when the component mounts
   useEffect(() => {
     const today = dayjs().format('YYYY-MM-DD');
-    setSelectedDate(today); // Auto-select today's date
+    setSelectedDate(today);
   }, []);
 
-  // Fetch available dates from the selected stylist
+  // Populate available dates from the stylist’s slots
   useEffect(() => {
     if (selectedStylist && Array.isArray(selectedStylist.dateTimeSlots)) {
       const dates = [];
-      selectedStylist.dateTimeSlots.forEach((slot) => {
-        const formattedDate = dayjs(slot.date).format('YYYY-MM-DD');
-        const today = dayjs().startOf('day');
+      const today = dayjs().startOf('day');
 
-        // Check if slot date is today or in the future
-        if (dayjs(formattedDate).isAfter(today) || dayjs(formattedDate).isSame(today)) {
+      selectedStylist.dateTimeSlots.forEach((slot) => {
+        const formattedDate = dayjs(slot.date, 'YYYY-MM-DD').format('YYYY-MM-DD'); // Use specific format
+        console.log(`Checking date: ${formattedDate}`);
+
+        if (dayjs(formattedDate).isSameOrAfter(today)) {
           if (!dates.includes(formattedDate)) {
             dates.push(formattedDate);
           }
         }
       });
-      setAvailableDates(dates); // Update available dates
+
+      setAvailableDates(dates);
     }
   }, [selectedStylist]);
 
-  // Fetch available times for the selected date (including today's date on first render)
+  // Populate available times for the selected date
   useEffect(() => {
     if (selectedDate && selectedStylist && Array.isArray(selectedStylist.dateTimeSlots)) {
       const times = [];
+      const now = dayjs(); // Current time
+
       selectedStylist.dateTimeSlots.forEach((slot) => {
-        if (dayjs(slot.date).isSame(dayjs(selectedDate), 'day')) {
+        if (dayjs(slot.date, 'YYYY-MM-DD').isSame(dayjs(selectedDate), 'day')) {
           slot.times.forEach((time) => {
-            times.push(time);
+            const timeInDayjs = dayjs(`${selectedDate} ${time}`, 'YYYY-MM-DD hh:mm A'); // Use custom parsing
+            console.log(`Comparing: ${timeInDayjs.format()} with now: ${now.format()}`);
+
+            if (timeInDayjs.isAfter(now)) {
+              times.push(time);
+            }
           });
         }
       });
-      setAvailableTimes(times); // Update available times
+
+      console.log('Available Times:', times);
+      setAvailableTimes(times);
     }
   }, [selectedDate, selectedStylist]);
 
@@ -86,8 +101,7 @@ export default function DateAndTime({
     const selectedDay = dayjs(day.dateString);
     const today = dayjs().startOf('day');
 
-    // Allow selecting only today or future dates
-    if (selectedDay.isAfter(today) || selectedDay.isSame(today)) {
+    if (selectedDay.isSameOrAfter(today)) {
       setSelectedDate(day.dateString);
     }
   };
@@ -96,27 +110,23 @@ export default function DateAndTime({
     setSelectedTime(timeslot);
     setIncompleteMsg(false);
     setActiveStep(3);
-    nextStep()
+    nextStep();
   };
 
-  // Create marked dates
   const markedDates = {};
 
-  // Mark available dates with light blue
   availableDates.forEach((date) => {
-    markedDates[date] = { selected: true, selectedColor: 'lightblue' }; // Set available dates to light blue
+    markedDates[date] = { selected: true, selectedColor: 'lightblue' };
   });
 
-  // Mark the selected date differently with purple
   if (selectedDate) {
-    markedDates[selectedDate] = { selected: true, selectedColor: 'purple' }; // Set selected date to purple
+    markedDates[selectedDate] = { selected: true, selectedColor: 'purple' };
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}  showsVerticalScrollIndicator={false}>
+    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <Text style={styles.heading}>Select Date And Time</Text>
 
-      {/* Calendar integration */}
       {selectedStylist && (
         <>
           <Calendar
@@ -127,14 +137,13 @@ export default function DateAndTime({
             theme={{
               todayTextColor: 'blue',
               dayTextColor: 'black',
-              selectedDayBackgroundColor: 'lightblue', // Set default selected background color
+              selectedDayBackgroundColor: 'lightblue',
               selectedDayTextColor: 'black',
               arrowColor: 'blue',
               disabledDayTextColor: 'grey',
             }}
           />
 
-          {/* Available Times Display */}
           {availableTimes.length > 0 && (
             <View style={styles.timeSlotsContainer}>
               <Text style={styles.timeSlotsLabel}>Available Time Slots:</Text>
@@ -152,15 +161,11 @@ export default function DateAndTime({
             </View>
           )}
 
-          {/* Show a message if no available times */}
           {availableTimes.length === 0 && selectedDate && (
             <Text style={styles.noTimeMessage}>No available times for this date.</Text>
           )}
         </>
       )}
-        {/* <View style={styles.buttonContainer}>
-        <Button title="Next" onPress={handleNextStep} color={color.background} />
-      </View> */}
     </ScrollView>
   );
 }
@@ -210,9 +215,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'red',
     marginTop: 20,
-  },
-  buttonContainer: {
-    marginTop: 20,
-    zIndex: 1,
   },
 });

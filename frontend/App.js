@@ -7,8 +7,48 @@ import { nailsalon,hairsalon } from "./src/components/Dummydata";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { StripeProvider } from '@stripe/stripe-react-native';
+import { FavoritesProvider } from "./src/contextApi/FavouriteContext";
+import { BookingProvider } from "./src/contextApi/BookingContext";
+import axios from "axios";
+import imagePath from "./src/constants/imagePath";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function App() {
+
+// useEffect(() => {
+//   AsyncStorage.clear();
+// }, []);
+
+  const [allSalons, setAllSalons] = useState([]);
+  const categories = [
+    { name: 'Hair Salon', imagePath: imagePath.hairsalon },
+    { name: 'Nail Salon', imagePath: imagePath.nailsalon },
+    { name: 'Home Service', imagePath: imagePath.homeservice },
+    { name: 'Make Up', imagePath: imagePath.makeup },
+    { name: 'Spa', imagePath: imagePath.spa },
+  ];
+
+  const selectedType = 'yourSelectedType';
+  useEffect(() => {
+    const fetchSalons = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.EXPO_PUBLIC_API_URL}/salon/getSalons`,
+          {
+            params: {
+              salonType: categories.map((category) => category.name),
+              selectedType: selectedType,
+            },
+          }
+        );
+        setAllSalons(response.data);
+      } catch (error) {
+        console.error('Error fetching salons:', error);
+      }
+    };
+    fetchSalons();
+  }, [selectedType]);
 
   const [login, setLogin] = useState(false)
   const handleSignIn = () => {
@@ -17,25 +57,31 @@ export default function App() {
   const [permissionStatus, setPermissionStatus] = useState(null);
   const [location, setLocation] = useState(null);
     
+
   const [address, setAddress] = useState(null);
   console.log(address,"from app.js")
   
 
  
   return (
+    <FavoritesProvider>
+    <BookingProvider>
    
-    <StripeProvider publishableKey="pk_test_51PIFiAFdq3SMwAKaqLqamiYft5sraI8d13P9vy0x3mMC2NS1qPdI9Ygm7v8QceNqIgfunx6BwACCIKYQtSwbz7Jm00Cx9Ovein">
+     <StripeProvider publishableKey="pk_test_51PIFiAFdq3SMwAKaqLqamiYft5sraI8d13P9vy0x3mMC2NS1qPdI9Ygm7v8QceNqIgfunx6BwACCIKYQtSwbz7Jm00Cx9Ovein">
    
    
-    <NavigationContainer>
-      <Routes login={login}  onSignIn={handleSignIn} nailsalon = {nailsalon}
-       hairsalon = {hairsalon} 
-       location={location} setLocation = {setLocation} address ={address} setAddress={setAddress}
-       permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}/>
+   <NavigationContainer>
+     <Routes login={login}  onSignIn={handleSignIn}  allSalons ={allSalons} categories={categories}
+      location={location} setLocation = {setLocation} address ={address} setAddress={setAddress}
+      permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}/>
 
-    </NavigationContainer>
-    
-    </StripeProvider>
+   </NavigationContainer>
+  
+   </StripeProvider>
+   
+   </BookingProvider>
+   </FavoritesProvider>
+   
    
   );
 }

@@ -14,9 +14,9 @@ import StepperFormScreen from "../Screens/AppointmentModule/StepperFormScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function MainStack({hairsalon,nailsalon,permissionStatus,setPermissionStatus,
+export default function MainStack({allSalons,permissionStatus,setPermissionStatus,
 
-  location,setLocation,address,setAddress
+  location,setLocation,address,setAddress,categories
 }) {
  
   return (
@@ -26,18 +26,11 @@ export default function MainStack({hairsalon,nailsalon,permissionStatus,setPermi
         component={Home}
         options={{ headerShown: false }}
       />
-       {/* <Stack.Screen
-        name={navigationStrings.TABROUTES}
-        component={TabRoutes}
-        options={{ headerShown: false }}
-<<<<<<< HEAD
-      /> */}
+       
       <Stack.Screen  name={navigationStrings.TABROUTES} options={{ headerShown: false }}>
 
-          {(props) => <TabRoutes {...props}  nailsalon = {nailsalon} 
-          
-          hairsalon = {hairsalon} permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}
-          location={location} setLocation = {setLocation} address ={address} setAddress={setAddress}
+      {(props) => <TabRoutes {...props} allSalons={allSalons}  permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}
+          location={location} setLocation = {setLocation} address ={address} setAddress={setAddress} categories={categories}
           
           />}
         </Stack.Screen>

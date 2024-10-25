@@ -1,13 +1,23 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
-import CustomizedTextInput from "../../components/CustomizedTextInput";
-import imagePath from "../../constants/imagePath";
-import styles from "./styles";
-import { moderateVerticalScale } from "react-native-size-matters";
-import CustomizedButton from "../../components/CustomizedButton";
-import navigationStrings from "../../constants/navigationStrings";
+import React, { useState, useContext } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BookingContext } from "../../contextApi/BookingContext"; // Import BookingContext
+import { useFavorites } from "../../contextApi/FavouriteContext"; // Import FavoritesContext
+import CustomizedTextInput from "../../components/CustomizedTextInput";
+import CustomizedButton from "../../components/CustomizedButton";
+import imagePath from "../../constants/imagePath";
+import navigationStrings from "../../constants/navigationStrings";
+import styles from "./styles";
+import { moderateVerticalScale } from "react-native-size-matters";
 
 export function Signin({ navigation, onSignIn }) {
   const [email, setEmail] = useState("");
@@ -16,28 +26,32 @@ export function Signin({ navigation, onSignIn }) {
   const [error, setError] = useState(null);
   const [notvisible, setNotVisible] = useState(true);
 
-
-
+  const { updateFavorites } = useFavorites(); // Access Favorites context
 
   const handleSignin = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
-      const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/auth/login`, {
-        email,
-        password,
-      });
-  
+      const response = await axios.post(
+        `${process.env.EXPO_PUBLIC_API_URL}/auth/login`,
+        { email, password }
+      );
+
       if (response.status === 200) {
         console.log("Login successful:", response.data);
-  
-        // Store user data (name, token, etc.) in AsyncStorage
+
+        // Store user data in AsyncStorage
         await AsyncStorage.setItem("auth", JSON.stringify(response.data));
-  
-        // Call the onSignIn function if needed
-        onSignIn();
-  
+
+        // Retrieve and update favorites from AsyncStorage
+        const storedFavorites = await AsyncStorage.getItem("favorites");
+        if (storedFavorites) {
+          updateFavorites(JSON.parse(storedFavorites));
+        }
+
+        onSignIn(); // Notify the app that the user has signed in
+
         // Navigate based on user role
         const userRole = response.data.user.role;
         if (userRole === 1) {
@@ -46,7 +60,9 @@ export function Signin({ navigation, onSignIn }) {
           }, 2000);
         } else if (userRole === 2) {
           setTimeout(() => {
-            Alert.alert("Please sign in with web as you have registered as Salon");
+            Alert.alert(
+              "Please sign in with web as you have registered as a Salon"
+            );
           }, 2000);
         } else {
           setTimeout(() => {
@@ -55,7 +71,7 @@ export function Signin({ navigation, onSignIn }) {
         }
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       const errorMessage = err.response?.data?.message || "Login failed";
       setError(errorMessage);
       Alert.alert("Login Failed", errorMessage);
@@ -63,16 +79,17 @@ export function Signin({ navigation, onSignIn }) {
       setLoading(false);
     }
   };
-  
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.view1}>
         <Image source={imagePath.logo} style={styles.imgStyle} />
         <Text style={styles.loginTextStyle}>Login</Text>
       </View>
+
       <View style={styles.view2}>
         {error && <Text style={styles.errorText}>{error}</Text>}
-        
+
         <CustomizedTextInput
           label="Email Address"
           placeholder="Enter your email"
@@ -91,26 +108,25 @@ export function Signin({ navigation, onSignIn }) {
           rightIcon={notvisible ? imagePath.hideEye : imagePath.showEye}
           onPressRight={() => setNotVisible(!notvisible)}
         />
+
         <TouchableOpacity
           style={styles.forgotPasswordStyle}
-          onPress={() => {
-            navigation.navigate(navigationStrings.FORGOTPASSWORD);
-          }}
+          onPress={() => navigation.navigate(navigationStrings.FORGOTPASSWORD)}
         >
           <Text>Forgot Password?</Text>
         </TouchableOpacity>
+
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <CustomizedButton btnText="Login" onPress={handleSignin} />
         )}
       </View>
+
       <View style={styles.bottomView}>
         <Text>Not a member?</Text>
         <TouchableOpacity
-          onPress={() => {
-            navigation.navigate(navigationStrings.SIGNUP);
-          }}
+          onPress={() => navigation.navigate(navigationStrings.SIGNUP)}
         >
           <Text>Join Now</Text>
         </TouchableOpacity>

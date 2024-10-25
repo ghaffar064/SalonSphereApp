@@ -36,7 +36,7 @@ const haversineDistance = (coords1, coords2) => {
   return R * c; // Distance in km
 };
 
-export default function Map({ nailsalon, hairsalon, permissionStatus, setPermissionStatus, setAddress, setLocation, address, location }) {
+export default function Map({ allSalons, permissionStatus, setPermissionStatus, setAddress, setLocation, address, location }) {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [mapRegion, setMapRegion] = useState({
@@ -82,14 +82,14 @@ export default function Map({ nailsalon, hairsalon, permissionStatus, setPermiss
     getLocation();
   }, [permissionStatus]);
 
-  useEffect(() => {
-    const mergedData = [...nailsalon, ...hairsalon];
-    setData(mergedData);
-  }, []);
+  // useEffect(() => {
+  //   const mergedData = [...nailsalon, ...hairsalon];
+  //   setData(mergedData);
+  // }, []);
 
   useEffect(() => {
-    const mergedData = [...nailsalon, ...hairsalon];
-    const formattedData = mergedData.map(item => ({
+    // const mergedData = [...nailsalon, ...hairsalon];
+    const formattedData = allSalons.map(item => ({
       ...item,
       latitude: parseFloat(item.location.latitude),
       longitude: parseFloat(item.location.longitude)
@@ -98,12 +98,12 @@ export default function Map({ nailsalon, hairsalon, permissionStatus, setPermiss
     if (location) {
       const nearbySalons = formattedData.filter(item => {
         const distance = haversineDistance(location.coords, { latitude: item.latitude, longitude: item.longitude });
-        return distance <= 15; // Distance within 5 km
+        return distance <= 15000; // Distance within 5 km
       });
       setData(nearbySalons);
       console.log("Nearby Salons:", nearbySalons);
     }
-  }, [location, nailsalon, hairsalon]);
+  }, [location, allSalons]);
 
   const handleMarkerPress = (item) => {
     const { latitude, longitude } = item;
