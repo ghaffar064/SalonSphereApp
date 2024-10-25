@@ -1,48 +1,52 @@
 import mongoose from "mongoose";
 
+
 const StylistSchema = new mongoose.Schema({
-  name: String,
-  experience: String,
-  expertise: String,
-  about: String,
-  id: Number,
+  name: { type: String, required: true },
+  experience: { type: String, required: true },
+  expertise: { type: String, required: true },
+  about: { type: String, required: true },
+  id: { type: Number, required: true },
   dateTimeSlots: [
     {
-      date: String,
-      times: [String],
+      date: { type: String, required: true },
+      times: [{ type: String, required: true }],
     },
   ],
 });
 
+
 const ServiceOptionSchema = new mongoose.Schema({
-  name: String,
-  price: String,
+  name: { type: String, required: true },
+  price: { type: String, required: true },
 });
+
 
 const ServiceSchema = new mongoose.Schema({
-  type: String,
-  options: [ServiceOptionSchema],
+  type: { type: String, required: true },
+  options: { type: [ServiceOptionSchema], required: true },
 });
 
+
 const SalonSchema = new mongoose.Schema({
-  salonId: String,
-  name: String,
-  reviews: Object,
-  description: String,
-  image: String,
-  address: String,
+  salonId: { type: String, required: true },
+  name: { type: String, required: true },
+  reviews: { type: Object, required: true },
+  description: { type: String, required: true },
+  images: { type: [String],  },
+  coverImage: { type: String, },
+  address: { type: String, required: true },
   location: {
-    latitude: String,
-    longitude: String,
+    latitude: { type: String, required: true },
+    longitude: { type: String, required: true },
   },
-  salonType: { // Updated field to support an array of types
-    type: [String], // Now an array of strings
-    enum: ['Hair Salon', 'Nail Salon', 'Home Service', 'Make Up', 'Skin Care', 'Spa'], // Allowed values
-    required: true,
+  salonType: { 
+    type: [String], 
+    required: true, 
   },
-  about: String,
-  stylists: [StylistSchema],
-  services: [ServiceSchema],
+  about: { type: String, required: true },
+  stylists: { type: [StylistSchema], required: true },
+  services: { type: [ServiceSchema], required: true },
 });
 
 export const Salon = mongoose.model("Salon", SalonSchema);

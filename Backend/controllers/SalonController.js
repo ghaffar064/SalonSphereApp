@@ -1,6 +1,8 @@
 import { Salon } from '../models/SalonSchema.js';
 
 // Function to add a salon with type specified in the request body
+
+
 export const addSalon = async (req, res) => {
   try {
     const {
@@ -8,10 +10,9 @@ export const addSalon = async (req, res) => {
       name,
       reviews,
       description,
-      image,
       address,
       location,
-      salonType, // salonType is now coming from the request body
+      salonType,
       fillheart,
       about,
       stylists,
@@ -20,8 +21,19 @@ export const addSalon = async (req, res) => {
 
     // Validate required fields
     if (!salonId || !name || !salonType || !services) {
-      return res.status(400).json({ message: 'salonId, name, salonType, and services are required.' });
+      return res.status(400).json({
+        message: 'salonId, name, salonType, and services are required.',
+      });
     }
+
+    // Safely extract uploaded file paths
+    const coverImage = req.files?.coverImage
+      ? `/uploads/${req.files.coverImage[0].filename}`
+      : null;
+
+    const images = req.files?.images
+      ? req.files.images.map((file) => `/uploads/${file.filename}`)
+      : [];
 
     // Create a new salon document
     const newSalon = new Salon({
@@ -29,10 +41,11 @@ export const addSalon = async (req, res) => {
       name,
       reviews,
       description,
-      image,
+      coverImage,
+      images,
       address,
       location,
-      salonType, // Use the salonType provided in the request body
+      salonType,
       fillheart,
       about,
       stylists,
@@ -45,10 +58,10 @@ export const addSalon = async (req, res) => {
     // Return a success response
     res.status(201).json({ message: 'Salon added successfully', salon: newSalon });
   } catch (error) {
+    console.error('Error adding salon:', error);
     res.status(500).json({ message: 'Server error while adding salon', error });
   }
 };
-
 // Function to get all salons by type
 export const getSalonsByType = async (req, res) => {
   try {
