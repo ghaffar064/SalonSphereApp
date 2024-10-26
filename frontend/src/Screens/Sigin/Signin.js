@@ -66,8 +66,8 @@ export function Signin({ navigation, onSignIn }) {
           }, 2000);
         } else {
           setTimeout(() => {
-            navigation.navigate(navigationStrings.TABROUTES);
-          }, 2000);
+            navigation.replace(navigationStrings.TABROUTES);
+          }, 0);
         }
       }
     } catch (err) {

@@ -9,7 +9,7 @@ import color from "../constants/color";
 const Tab = createBottomTabNavigator();
 export default function TabRoutes({allSalons,permissionStatus,setPermissionStatus,
 
-  location,setLocation,address,setAddress,categories
+  location,setLocation,address,setAddress,categories,onSignIn, setLogin,login
 }) {
   
   return (
@@ -83,8 +83,13 @@ export default function TabRoutes({allSalons,permissionStatus,setPermissionStatu
           },
         }}
       
-        component={Profile}
-      />
+        
+      >
+          {(props) => <Profile {...props}  onSignIn={onSignIn} setLogin={setLogin} login={login}
+          />}
+        
+
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

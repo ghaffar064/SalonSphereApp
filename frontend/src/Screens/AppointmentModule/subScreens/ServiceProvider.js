@@ -33,7 +33,7 @@ export default function ServiceProvider({ stylists, onNextStep, setSelectedStyli
           data={stylists}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={[styles.card, selectedStylist?.id === item.id ? styles.selectedCard : null]}
+              style={[styles.card, selectedStylist?._id === item.id ? styles.selectedCard : null]}
               onPress={() => handleStylistSelect(item)}
             >
               <Image style={styles.image} source={imagePath.hairsalon} />

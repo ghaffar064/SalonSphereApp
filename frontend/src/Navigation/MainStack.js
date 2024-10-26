@@ -16,22 +16,19 @@ const Stack = createNativeStackNavigator();
 
 export default function MainStack({allSalons,permissionStatus,setPermissionStatus,
 
-  location,setLocation,address,setAddress,categories
+  location,setLocation,address,setAddress,categories,onSignIn, setLogin,login
 }) {
  
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name={navigationStrings.HOME}
-        component={Home}
-        options={{ headerShown: false }}
-      />
+       <Stack.Screen name={navigationStrings.HOME} component={Home} options={{ headerShown: false }} />
        
       <Stack.Screen  name={navigationStrings.TABROUTES} options={{ headerShown: false }}>
 
-      {(props) => <TabRoutes {...props} allSalons={allSalons}  permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}
+      {(props) => <TabRoutes {...props} allSalons={allSalons}  permissionStatus={permissionStatus}
+       setPermissionStatus={setPermissionStatus}
           location={location} setLocation = {setLocation} address ={address} setAddress={setAddress} categories={categories}
-          
+          onSignIn={onSignIn} setLogin={setLogin} login={login}
           />}
         </Stack.Screen>
 

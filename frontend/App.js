@@ -16,9 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
 
-// useEffect(() => {
-//   AsyncStorage.clear();
-// }, []);
+
 
   const [allSalons, setAllSalons] = useState([]);
   const categories = [
@@ -42,6 +40,7 @@ export default function App() {
             },
           }
         );
+        console.log(response.data);
         setAllSalons(response.data);
       } catch (error) {
         console.error('Error fetching salons:', error);
@@ -51,9 +50,8 @@ export default function App() {
   }, [selectedType]);
 
   const [login, setLogin] = useState(false)
-  const handleSignIn = () => {
-    setLogin(true);
-  };
+  const handleSignIn = () => setLogin(true);
+  
   const [permissionStatus, setPermissionStatus] = useState(null);
   const [location, setLocation] = useState(null);
     
@@ -71,7 +69,7 @@ export default function App() {
    
    
    <NavigationContainer>
-     <Routes login={login}  onSignIn={handleSignIn}  allSalons ={allSalons} categories={categories}
+     <Routes login={login}  onSignIn={handleSignIn} setLogin={setLogin} allSalons ={allSalons} categories={categories}
       location={location} setLocation = {setLocation} address ={address} setAddress={setAddress}
       permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}/>
 

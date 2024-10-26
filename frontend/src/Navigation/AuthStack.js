@@ -7,7 +7,7 @@ import ChangePassword from "../Screens/ChangePassword/ChangePassword";
 import TabRoutes from "./TabRoutes";
 const Stack = createNativeStackNavigator();
 
-export default function AuthStack({ onSignIn }) {
+export default function AuthStack({ onSignIn}) {
   return (
     <>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

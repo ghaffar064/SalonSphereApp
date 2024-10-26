@@ -6,8 +6,11 @@ import authRoute from "./routes/authRoute.js";
 import salonRouter from './routes/SalonRoute.js'
 import bookingRouter from './routes/Booking.js'
 import cors from "cors";
+import path from 'path';
+import { fileURLToPath } from 'url';
 const app = express();
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 //config env
 dotenv.config();
 //config DB
@@ -15,7 +18,7 @@ connectDB();
 //use middelwares
 app.use(express.json());
 app.use(cors());
-
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 //rest api
 app.get("/", (req, resp) => {
   resp.send({

@@ -17,7 +17,13 @@ export default function PaymentMethod({
   selectedTime,
   salonName,
   nextStep,
-}) {
+  salon
+
+
+})
+
+{
+  console.log("payment ",salon)
   console.log(selectedServices);
   const { addBooking } = useContext(BookingContext);
   const [email, setEmail] = useState('');
@@ -50,54 +56,55 @@ export default function PaymentMethod({
     return { clientSecret, error };
   };
 
-  const handlePayPress = async () => {
-    if (!cardDetails?.complete || !email) {
-      Alert.alert('Please enter all details');
+ const handlePayPress = async () => {
+  if (!cardDetails?.complete || !email) {
+    Alert.alert('Please enter all details');
+    return;
+  }
+
+  const billingDetails = { email };
+
+  try {
+    setIsProcessing(true);
+    const { clientSecret, error } = await fetchPaymentIntentClientSecret();
+
+    if (error) {
+      Alert.alert('Unable to process payment', error);
+      setIsProcessing(false);
       return;
     }
-  
-    const billingDetails = { email };
-  
-    try {
-      setIsProcessing(true);
-      const { clientSecret, error } = await fetchPaymentIntentClientSecret();
-  
-      if (error) {
-        Alert.alert('Unable to process payment', error);
-        setIsProcessing(false);
-        return;
-      }
-  
-      const { paymentIntent, paymentError } = await confirmPayment(clientSecret, {
-        paymentMethodType: 'Card',
-        billingDetails,
-      });
-  
-      if (paymentError) {
-        Alert.alert(`Payment Confirmation Error: ${paymentError.message}`);
-      } else {
-        const newBooking = {
-          salonName,
-          selectedServices,
-          selectedStylist,
-          selectedDate,
-          selectedTime,
-          customerEmail: email,
-          paymentIntentId: paymentIntent.id,
-        };
-  
-        console.log('Adding new booking:', newBooking); // Debugging
-        await addBooking(newBooking); // Ensure the booking is saved
-        nextStep(); // Proceed to the next step
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      Alert.alert('An unexpected error occurred');
-    } finally {
-      setIsProcessing(false);
+
+    const { paymentIntent, paymentError } = await confirmPayment(clientSecret, {
+      paymentMethodType: 'Card',
+      billingDetails,
+    });
+
+    if (paymentError) {
+      Alert.alert(`Payment Confirmation Error: ${paymentError.message}`);
+    } else {
+      const newBooking = {
+        salonName,
+        salon, // Include the entire salon object
+        selectedServices,
+        selectedStylist,
+        selectedDate,
+        selectedTime,
+        customerEmail: email,
+        paymentIntentId: paymentIntent.id,
+      };
+
+      console.log('Adding new booking:', newBooking);
+      await addBooking(newBooking); // Save the booking
+      nextStep(); // Proceed to the next step
     }
-  };
-  
+  } catch (error) {
+    console.error('Error:', error);
+    Alert.alert('An unexpected error occurred');
+  } finally {
+    setIsProcessing(false);
+  }
+};
+
   
   
 

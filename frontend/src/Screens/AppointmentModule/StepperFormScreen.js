@@ -12,7 +12,7 @@ import PaymentMethod from './subScreens/PaymentMethod';
 
 const StepperFormScreen = ({ route, navigation }) => {
   const [currentPosition, setCurrentPosition] = useState(1);
-  const { selectedServices, stylists, salonName,salonId } = route.params;
+  const { selectedServices, stylists, salonName,salonId,salon } = route.params;
   const [selectedStylist, setSelectedStylist] = useState({});
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedAgent, setSelectedAgent] = useState(null);
@@ -158,7 +158,9 @@ const StepperFormScreen = ({ route, navigation }) => {
           <View>
             <Text style={styles.stepText}>Payment Method</Text>
            <PaymentMethod  selectedServices = {selectedServices} selectedStylist = {selectedStylist} 
-              selectedDate = {selectedDate} selectedTime = {selectedTime} salonId={salonId} salonName={salonName} nextStep={nextStep}/>
+              selectedDate = {selectedDate} 
+              selectedTime = {selectedTime} 
+              salonId={salonId} salonName={salonName} nextStep={nextStep} salon={salon}/>
            
           </View>
         )}

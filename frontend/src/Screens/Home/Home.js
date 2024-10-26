@@ -40,19 +40,13 @@ export default function Home({
   
 
   
-  const { favorites } = useFavorites(); // Access favorites from context
+  const { favorites } = useFavorites(); 
+ 
   
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(true);
 
  
-// useEffect(() => {
- 
-//     // Clear AsyncStorage (for debugging)
-// AsyncStorage.clear();
-
-
-// }, []);  
 
   
 
@@ -129,16 +123,18 @@ export default function Home({
   
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    return <View style={{flex:1,backgroundColor:'white'}}></View>;
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.header}>
+        
           <View style={styles.headerContent}>
             <Text style={styles.userText}>Hello, {userName}</Text>
-            <GetLocation
+            {loading?<ActivityIndicator size="large" color="#0000ff"/>:
+              <GetLocation
               permissionStatus={permissionStatus}
               setPermissionStatus={setPermissionStatus}
               location={location}
@@ -146,7 +142,10 @@ export default function Home({
               address={address}
               setAddress={setAddress}
             />
+            
+            }
           </View>
+          
           <TouchableOpacity
             onPress={() => navigation.navigate(navigationStrings.NOTIFICATION)}
           >
@@ -155,7 +154,7 @@ export default function Home({
         </View>
 
         <SearchBar placeholder="Search for services" />
-
+       
         <Image source={imagePath.promo} style={styles.banner} />
 
         <Text style={styles.sectionTitle}>What do you want to do?</Text>
