@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   cameraIcon: {
-    position: "absolute",
     top: moderateScale(-30),
+  
     left: moderateScale(25),
     backgroundColor: color.background,
     borderRadius: 100,

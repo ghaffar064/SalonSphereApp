@@ -7,6 +7,8 @@ import {
   ScrollView,
   Alert,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,6 +20,7 @@ import imagePath from "../../constants/imagePath";
 import navigationStrings from "../../constants/navigationStrings";
 import styles from "./styles";
 import { moderateVerticalScale } from "react-native-size-matters";
+import { Snackbar } from "react-native-paper";
 
 export function Signin({ navigation, onSignIn }) {
   const [email, setEmail] = useState("");
@@ -25,7 +28,7 @@ export function Signin({ navigation, onSignIn }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [notvisible, setNotVisible] = useState(true);
-
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
   const { updateFavorites } = useFavorites(); // Access Favorites context
 
   const handleSignin = async () => {
@@ -39,8 +42,6 @@ export function Signin({ navigation, onSignIn }) {
       );
 
       if (response.status === 200) {
-        console.log("Login successful:", response.data);
-
         // Store user data in AsyncStorage
         await AsyncStorage.setItem("auth", JSON.stringify(response.data));
 
@@ -56,13 +57,11 @@ export function Signin({ navigation, onSignIn }) {
         const userRole = response.data.user.role;
         if (userRole === 1) {
           setTimeout(() => {
-            Alert.alert("Please sign in with web as you are admin");
+            setSnackbarVisible(true);
           }, 2000);
         } else if (userRole === 2) {
           setTimeout(() => {
-            Alert.alert(
-              "Please sign in with web as you have registered as a Salon"
-            );
+            setSnackbarVisible(true);
           }, 2000);
         } else {
           setTimeout(() => {
@@ -71,68 +70,89 @@ export function Signin({ navigation, onSignIn }) {
         }
       }
     } catch (err) {
-      console.error(err);
       const errorMessage = err.response?.data?.message || "Login failed";
       setError(errorMessage);
-      Alert.alert("Login Failed", errorMessage);
+      setSnackbarVisible(true);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.view1}>
-        <Image source={imagePath.logo} style={styles.imgStyle} />
-        <Text style={styles.loginTextStyle}>Login</Text>
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1 }}
+    >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.container}>
+        <View style={styles.view1}>
+          <Snackbar
+            visible={snackbarVisible}
+            onDismiss={() => setSnackbarVisible(false)}
+            duration={3000}
+            style={customStyles.snackbar}
+          >
+            {error}
+          </Snackbar>
+          <Image source={imagePath.logo} style={styles.imgStyle} />
+          <Text style={styles.loginTextStyle}>Login</Text>
+        </View>
 
-      <View style={styles.view2}>
-        {error && <Text style={styles.errorText}>{error}</Text>}
+        <View style={styles.view2}>
+          <CustomizedTextInput
+            label="Email Address"
+            placeholder="Enter your email"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            inputStyle={{ marginBottom: moderateVerticalScale(28) }}
+          />
 
-        <CustomizedTextInput
-          label="Email Address"
-          placeholder="Enter your email"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          inputStyle={{ marginBottom: moderateVerticalScale(28) }}
-        />
+          <CustomizedTextInput
+            label="Password"
+            placeholder="Enter your password"
+            secureTextEntry={notvisible}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            rightIcon={notvisible ? imagePath.hideEye : imagePath.showEye}
+            onPressRight={() => setNotVisible(!notvisible)}
+          />
 
-        <CustomizedTextInput
-          label="Password"
-          placeholder="Enter your password"
-          secureTextEntry={notvisible}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          rightIcon={notvisible ? imagePath.hideEye : imagePath.showEye}
-          onPressRight={() => setNotVisible(!notvisible)}
-        />
+          <TouchableOpacity
+            style={styles.forgotPasswordStyle}
+            onPress={() => navigation.navigate(navigationStrings.FORGOTPASSWORD)}
+          >
+            <Text>Forgot Password?</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.forgotPasswordStyle}
-          onPress={() => navigation.navigate(navigationStrings.FORGOTPASSWORD)}
-        >
-          <Text>Forgot Password?</Text>
-        </TouchableOpacity>
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <CustomizedButton btnText="Login" onPress={handleSignin} />
+          )}
+        </View>
 
-        {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : (
-          <CustomizedButton btnText="Login" onPress={handleSignin} />
-        )}
-      </View>
-
-      <View style={styles.bottomView}>
-        <Text>Not a member?</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(navigationStrings.SIGNUP)}
-        >
-          <Text>Join Now</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        <View style={styles.bottomView}>
+          <Text>Not a member?</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(navigationStrings.SIGNUP)}
+          >
+            <Text>Join Now</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
+
+const customStyles = {
+  snackbar: {
+    backgroundColor: "red",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
+  },
+};
 
 export default Signin;

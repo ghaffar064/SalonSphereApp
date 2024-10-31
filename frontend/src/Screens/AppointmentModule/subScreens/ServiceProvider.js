@@ -33,7 +33,7 @@ export default function ServiceProvider({ stylists, onNextStep, setSelectedStyli
           data={stylists}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={[styles.card, selectedStylist?._id === item.id ? styles.selectedCard : null]}
+              style={[styles.card, selectedStylist?._id === item._id ? styles.selectedCard : null]}
               onPress={() => handleStylistSelect(item)}
             >
               <Image style={styles.image} source={imagePath.hairsalon} />
@@ -42,7 +42,7 @@ export default function ServiceProvider({ stylists, onNextStep, setSelectedStyli
               <Text style={styles.stylistDetail}>Expertise: {item.expertise}</Text>
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item._id.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.flatListContent}

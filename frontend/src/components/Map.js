@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity, Image, Linking } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, Linking,StyleSheet } from 'react-native';
 import React, { useState, useEffect } from "react";
 import {
   scale,
@@ -18,10 +18,10 @@ import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import { userLocation } from './UserLocation';
 
-// Haversine formula for distance between two coordinates
+
 const haversineDistance = (coords1, coords2) => {
   const toRad = x => (x * Math.PI) / 180;
-  const R = 6371; // Radius of the Earth in km
+  const R = 6371; 
 
   const dLat = toRad(coords2.latitude - coords1.latitude);
   const dLon = toRad(coords2.longitude - coords1.longitude);
@@ -33,7 +33,7 @@ const haversineDistance = (coords1, coords2) => {
     Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  return R * c; // Distance in km
+  return R * c; 
 };
 
 export default function Map({ allSalons, permissionStatus, setPermissionStatus, setAddress, setLocation, address, location }) {
@@ -82,13 +82,10 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
     getLocation();
   }, [permissionStatus]);
 
-  // useEffect(() => {
-  //   const mergedData = [...nailsalon, ...hairsalon];
-  //   setData(mergedData);
-  // }, []);
+  
 
   useEffect(() => {
-    // const mergedData = [...nailsalon, ...hairsalon];
+   
     const formattedData = allSalons.map(item => ({
       ...item,
       latitude: parseFloat(item.location.latitude),
@@ -98,10 +95,10 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
     if (location) {
       const nearbySalons = formattedData.filter(item => {
         const distance = haversineDistance(location.coords, { latitude: item.latitude, longitude: item.longitude });
-        return distance <= 15000; // Distance within 5 km
+        return distance <= 11; 
       });
       setData(nearbySalons);
-      console.log("Nearby Salons:", nearbySalons);
+     
     }
   }, [location, allSalons]);
 
@@ -139,7 +136,7 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
             <View style={{ alignItems: 'center' }}>
               <Text
                 style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.7)', // Semi-transparent background
+                  backgroundColor: 'rgba(255, 255, 255, 0.7)', 
                   paddingHorizontal: 5,
                   borderRadius: 5,
                 }}
@@ -161,6 +158,7 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
             horizontal
             showsHorizontalScrollIndicator={false}
             data={data}
+            
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <TouchableOpacity
@@ -172,6 +170,7 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
                     margin: verticalScale(7),
                     borderWidth: moderateScale(1),
                     borderRadius: moderateScale(10),
+                 
                     backgroundColor: "white",
                     borderColor: "white",
                   }}

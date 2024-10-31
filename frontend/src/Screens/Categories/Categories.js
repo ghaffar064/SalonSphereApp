@@ -19,7 +19,7 @@ export default function Categories() {
                     category
         }
     } = useRoute();
-    console.log(category)
+   
    
   return (
     <View style={{flex:1}}>

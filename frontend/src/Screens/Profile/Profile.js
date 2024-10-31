@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext ,useState,useEffect} from "react";
 import {
   Text,
   View,
@@ -49,7 +49,26 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
     );
   };
   
-  console.log("Login state in Profile:", login);
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('auth');
+        if (userData) {
+          const parsedData = JSON.parse(userData);
+          setUserName(parsedData.user.first_name);
+          setUserEmail(parsedData.user.email);
+          console.log(parsedData.user);
+          
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchUserData();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -67,8 +86,8 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
               />
             </View>
             <View style={styles.profileTextView}>
-              <Text style={styles.profileTextName}>Shahbaz</Text>
-              <Text style={styles.profileTextEmail}>Shahbaz@gmail.com</Text>
+              <Text style={styles.profileTextName}>{userName}</Text>
+              <Text style={styles.profileTextEmail}>{userEmail}</Text>
             </View>
           </View>
         </View>
@@ -76,7 +95,7 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
         <View style={styles.additionalTextContainer}>
           <TouchableOpacity
             style={styles.additionalTextView}
-            onPress={() => navigation.navigate(navigationStrings.MYACCOUNT)}
+            onPress={() => navigation.navigate(navigationStrings.MYACCONT)}
           >
             <Icon name="user" size={25} style={styles.ProfileIcon} />
             <Text style={styles.additionalText}>My Account</Text>

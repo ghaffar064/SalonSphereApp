@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { FavoritesProvider } from "./src/contextApi/FavouriteContext";
-import { BookingProvider } from "./src/contextApi/BookingContext";
+
 import axios from "axios";
 import imagePath from "./src/constants/imagePath";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -40,7 +40,7 @@ export default function App() {
             },
           }
         );
-        console.log(response.data);
+      
         setAllSalons(response.data);
       } catch (error) {
         console.error('Error fetching salons:', error);
@@ -57,13 +57,13 @@ export default function App() {
     
 
   const [address, setAddress] = useState(null);
-  console.log(address,"from app.js")
+
   
 
  
   return (
     <FavoritesProvider>
-    <BookingProvider>
+
    
      <StripeProvider publishableKey="pk_test_51PIFiAFdq3SMwAKaqLqamiYft5sraI8d13P9vy0x3mMC2NS1qPdI9Ygm7v8QceNqIgfunx6BwACCIKYQtSwbz7Jm00Cx9Ovein">
    
@@ -77,7 +77,7 @@ export default function App() {
   
    </StripeProvider>
    
-   </BookingProvider>
+   
    </FavoritesProvider>
    
    

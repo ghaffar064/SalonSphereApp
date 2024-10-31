@@ -20,7 +20,7 @@ const StepperFormScreen = ({ route, navigation }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [incompleteMsg, setIncompleteMsg] = useState(false);
 
-  console.log(salonId)
+
   
 
   const steps = ['Service', 'Service Provider', 'Date & Time', 'Cart', 'Payment'];
@@ -62,12 +62,7 @@ const StepperFormScreen = ({ route, navigation }) => {
   };
 
   const handleConfirmation = () => {
-    console.log(
-      'Booking confirmed with selected service:',
-      selectedServices,
-      'and selected stylists:',
-      selectedStylist
-    );
+   
     navigation.navigate('BookingSuccess');
   };
 

@@ -5,6 +5,7 @@ import connectDB from "./configDB/dbConnection.js";
 import authRoute from "./routes/authRoute.js";
 import salonRouter from './routes/SalonRoute.js'
 import bookingRouter from './routes/Booking.js'
+import userBookingRouter from './routes/UserBooking.js'
 import cors from "cors";
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -30,6 +31,7 @@ app.get("/", (req, resp) => {
 app.use("/api/auth", authRoute);
 app.use('/api/salon/',salonRouter)
 app.use('/api/booking',bookingRouter)
+app.use('/api/userBooking',userBookingRouter)
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

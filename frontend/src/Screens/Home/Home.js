@@ -57,6 +57,7 @@ export default function Home({
         if (userData) {
           const parsedData = JSON.parse(userData);
           setUserName(parsedData.user.first_name);
+          
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -222,10 +223,12 @@ const styles = StyleSheet.create({
    
     borderRadius: 10,
     marginRight: 5,
-    width: 200,
-    overflow: 'hidden',
+    width:'100%',
+    width: 200, 
+    height: 220, 
     elevation: 2,
     backgroundColor: 'white',
+    
   },
   image: { width: '100%', height: 120 },
   favoriteIcon: { position: 'absolute', top: 10, right: 10 },

@@ -18,7 +18,7 @@ export default function Routes({
   categories, 
   setLogin,
 }) {
-  console.log("From Routes:", login);
+ 
 
   return login ? (
     <MainStack 

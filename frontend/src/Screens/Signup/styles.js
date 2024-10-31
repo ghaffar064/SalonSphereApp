@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   view2: {
     paddingHorizontal: moderateScale(24),
-    paddingVertical: 44,
+    paddingVertical: 10,
   },
 
   bottomView: {
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    paddingTop:10
   },
 });
 export default styles;

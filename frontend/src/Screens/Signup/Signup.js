@@ -7,6 +7,8 @@ import {
   ScrollView,
   Alert,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,17 +20,14 @@ import { moderateVerticalScale } from "react-native-size-matters";
 import navigationStrings from "../../constants/navigationStrings";
 
 export default function Signup({ navigation }) {
-  // State for input fields
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false); 
+  const [notVisible, setNotVisible] = useState(true);
 
-  const [notVisible, setNotVisible] = useState(true); // Password visibility toggle
-
-  // Handle Signup Request
   const handleSignup = async () => {
     if (!firstName || !lastName || !email || !phoneNumber || !password) {
       Alert.alert("Error", "All fields are required.");
@@ -52,10 +51,7 @@ export default function Signup({ navigation }) {
       if (response.status === 201) {
         Alert.alert("Success", "User registered successfully!");
 
-        // Store user data in AsyncStorage
         await AsyncStorage.setItem("auth", JSON.stringify(response.data.user));
-
-        // Navigate to the home screen
         navigation.replace(navigationStrings.SIGNIN);
       } else {
         Alert.alert("Error", response.data.message || "Registration failed.");
@@ -69,62 +65,67 @@ export default function Signup({ navigation }) {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.view1}>
-        <Image source={imagePath.logo} style={styles.imgStyle} />
-        <Text style={styles.signupTextStyle}>Register</Text>
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1 }}
+    >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={styles.view1}>
+          <Image source={imagePath.logo} style={styles.imgStyle} />
+          <Text style={styles.signupTextStyle}>Register</Text>
+        </View>
 
-      <View style={styles.view2}>
-        <CustomizedTextInput
-          placeholder="Enter First Name"
-          value={firstName}
-          onChangeText={setFirstName}
-          inputStyle={{ marginBottom: moderateVerticalScale(10) }}
-        />
-        <CustomizedTextInput
-          placeholder="Enter Last Name"
-          value={lastName}
-          onChangeText={setLastName}
-          inputStyle={{ marginBottom: moderateVerticalScale(10) }}
-        />
-        <CustomizedTextInput
-          placeholder="Enter Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          inputStyle={{ marginBottom: moderateVerticalScale(10) }}
-        />
-        <CustomizedTextInput
-          placeholder="Enter Phone Number"
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
-          keyboardType="numeric"
-          inputStyle={{ marginBottom: moderateVerticalScale(10) }}
-        />
-        <CustomizedTextInput
-          placeholder="Enter Password"
-          value={password}
-          secureTextEntry={notVisible}
-          onChangeText={setPassword}
-          rightIcon={notVisible ? imagePath.hideEye : imagePath.showEye}
-          onPressRight={() => setNotVisible(!notVisible)}
-          inputStyle={{ marginBottom: moderateVerticalScale(30) }}
-        />
+        <View style={styles.view2}>
+          <CustomizedTextInput
+            placeholder="Enter First Name"
+            value={firstName}
+            onChangeText={setFirstName}
+            inputStyle={{ marginBottom: moderateVerticalScale(10) }}
+          />
+          <CustomizedTextInput
+            placeholder="Enter Last Name"
+            value={lastName}
+            onChangeText={setLastName}
+            inputStyle={{ marginBottom: moderateVerticalScale(10) }}
+          />
+          <CustomizedTextInput
+            placeholder="Enter Email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            inputStyle={{ marginBottom: moderateVerticalScale(10) }}
+          />
+          <CustomizedTextInput
+            placeholder="Enter Phone Number"
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+            keyboardType="numeric"
+            inputStyle={{ marginBottom: moderateVerticalScale(10) }}
+          />
+          <CustomizedTextInput
+            placeholder="Enter Password"
+            value={password}
+            secureTextEntry={notVisible}
+            onChangeText={setPassword}
+            rightIcon={notVisible ? imagePath.hideEye : imagePath.showEye}
+            onPressRight={() => setNotVisible(!notVisible)}
+            inputStyle={{ marginBottom: moderateVerticalScale(30) }}
+          />
 
-        {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : (
-          <CustomizedButton btnText="Signup" onPress={handleSignup} />
-        )}
-      </View>
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <CustomizedButton btnText="Signup" onPress={handleSignup} />
+          )}
+        </View>
 
-      <View style={styles.bottomView}>
-        <Text>Already a member?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate(navigationStrings.SIGNIN)}>
-          <Text>Signin</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        <View style={styles.bottomView}>
+          <Text>Already a member?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate(navigationStrings.SIGNIN)}>
+            <Text>Signin</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

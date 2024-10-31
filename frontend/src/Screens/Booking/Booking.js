@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,27 +6,94 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
-  Linking
+  Linking,
+  Alert,
 } from 'react-native';
-import { BookingContext } from '../../contextApi/BookingContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native'; // Import navigation hook
+import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import navigationStrings from '../../constants/navigationStrings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import dayjs from 'dayjs'; // Import dayjs for date and time comparisons
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'; // Import the plugin
 
+// Extend dayjs with necessary plugins
+dayjs.extend(isSameOrBefore);
 
-export default function Booking({navigation}) {
-  const { bookings } = useContext(BookingContext); // Access bookings from context
+export default function Booking() {
   const [activeTab, setActiveTab] = useState('ongoing'); // Manage active tab
-   
+  const [email, setEmail] = useState('');
+  const [ongoingBookings, setOngoingBookings] = useState([]);
+  const [historyBookings, setHistoryBookings] = useState([]);
+  const navigation = useNavigation(); // Navigation hook
 
+  // Fetch user email from AsyncStorage
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('auth');
+        if (userData) {
+          const parsedData = JSON.parse(userData);
+          setEmail(parsedData.user.email); // Set email state
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchUserData();
+  }, []);
 
-  const handleTabPress = (tab) => setActiveTab(tab); // Tab switching logic
+  // Fetch bookings from the backend when the email is available
+  useEffect(() => {
+    if (email) {
+      const fetchBookings = async () => {
+        try {
+          const response = await axios.get(
+            `${process.env.EXPO_PUBLIC_API_URL}/userBooking/user-bookings?email=${email}`
+          );
+          if (response.data.success) {
+            categorizeBookings(response.data.bookings); // Categorize bookings
+          } else {
+            console.log('No bookings found for this user.');
+          }
+        } catch (error) {
+          console.error('Error fetching bookings:', error);
+          Alert.alert('Error', 'Unable to fetch bookings');
+        }
+      };
+      fetchBookings();
+    }
+  }, [activeTab, email]);
+
+  // Categorize bookings into ongoing and history
+  const categorizeBookings = (bookings) => {
+    const now = dayjs(); // Get the current date and time
+
+    const ongoing = bookings.filter((booking) =>
+      dayjs(`${booking.selectedDate} ${booking.selectedTime}`, 'YYYY-MM-DD hh:mm A').isAfter(now)
+    );
+
+    const history = bookings.filter((booking) =>
+      dayjs(`${booking.selectedDate} ${booking.selectedTime}`, 'YYYY-MM-DD hh:mm A').isSameOrBefore(now)
+    );
+
+    setOngoingBookings(ongoing); // Set ongoing bookings
+    setHistoryBookings(history); // Set history bookings
+  };
+
+  const handleTabPress = (tab) => setActiveTab(tab); // Handle tab switch
 
   const navigateToSalon = (item) => {
-    console.log("from navigate to salon",item)
-    navigation.navigate(navigationStrings.SHOP, { item }); // Navigate to salon details
+    navigation.navigate(navigationStrings.SHOP, { item });
+  };
+
+  const GetDirectionPress = (item) => {
+    const { location } = item.salon;
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}`;
+    Linking.openURL(url).catch((err) =>
+      console.error('Error opening Google Maps:', err)
+    );
   };
 
   const renderBookingItem = ({ item }) => (
@@ -52,12 +119,17 @@ export default function Booking({navigation}) {
 
           {activeTab === 'ongoing' && (
             <View style={styles.buttonView}>
-              <TouchableOpacity style={styles.button}   onPress={() => GetDirectionPress(item)}>
+              <TouchableOpacity style={styles.button} onPress={() => GetDirectionPress(item)}>
                 <Text style={styles.buttonTextD}>Get Direction</Text>
               </TouchableOpacity>
               <View style={styles.butttonSpace}>
-                <TouchableOpacity style={styles.button} >
-                  <Text style={styles.buttonTextC}  onPress={() => navigateToSalon(item.salon)}>Cancel</Text>
+                <TouchableOpacity style={styles.button}>
+                  <Text
+                    style={styles.buttonTextC}
+                    onPress={() => navigateToSalon(item.salon)}
+                  >
+                    Cancel
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -66,20 +138,6 @@ export default function Booking({navigation}) {
       </View>
     </TouchableOpacity>
   );
-  const GetDirectionPress = (item) => {
-    const { location } = item.salon; // Access the salon's location
-  
-    const latitude = location.latitude;
-    const longitude = location.longitude;
-  
-    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-  
-    // If you want to open Google Maps with directions:
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
-    Linking.openURL(url).catch(err =>
-      console.error('An error occurred while opening Google Maps:', err)
-    );
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -119,7 +177,7 @@ export default function Booking({navigation}) {
 
       <FlatList
         style={[styles.contentContainer, { height: 600 }]}
-        data={activeTab === 'ongoing' ? bookings.ongoing : bookings.history}
+        data={activeTab === 'ongoing' ? ongoingBookings : historyBookings}
         keyExtractor={(item) => item.paymentIntentId}
         renderItem={renderBookingItem}
         ListEmptyComponent={
