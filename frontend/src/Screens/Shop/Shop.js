@@ -112,6 +112,7 @@ export default function Shop() {
         </View>
 
         <TopTab
+            shopData = {item}
           services={item.services}
           selected={selected}
           onSelect={(serviceType, option) => {

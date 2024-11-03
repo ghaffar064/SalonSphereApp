@@ -10,7 +10,8 @@ import imagePath from "../constants/imagePath";
 
 const topTab = createMaterialTopTabNavigator();
 
-export default function TopTab({services, onSelect,selected}) {
+export default function TopTab({services, onSelect,selected,shopData}) {
+
  
    
   return (
@@ -41,8 +42,11 @@ export default function TopTab({services, onSelect,selected}) {
         )}
       />
 
-      <topTab.Screen name={navigationStrings.INFORMATION} component={Information} 
-       
+<topTab.Screen
+        name={navigationStrings.INFORMATION}
+        children={() => (
+          <Information shopData={shopData} />
+        )}
       />
       <topTab.Screen name={navigationStrings.REVIEWS} component={Reviews} />
     </topTab.Navigator>
