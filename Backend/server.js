@@ -19,7 +19,7 @@ connectDB();
 //use middelwares
 app.use(express.json());
 app.use(cors());
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 //rest api
 app.get("/", (req, resp) => {
   resp.send({

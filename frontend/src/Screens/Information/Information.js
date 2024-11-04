@@ -3,6 +3,7 @@ import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react
 
 export default function Information({ shopData }) {
   const { about, stylists, images } = shopData;
+  console.log(shopData.images);
 
   return (
     <FlatList
@@ -41,13 +42,13 @@ export default function Information({ shopData }) {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Photos</Text>
             <FlatList
-              data={stylists}
+              data={images}
               // numColumns={2} 
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => (
                <View style={styles.photos}>
-                   <Image source={{ uri: item.profileImage || 'https://via.placeholder.com/100' }} style={styles.photo} />
+                   <Image  source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}${item}`}} style={styles.photo} />
 
                </View>
               )}

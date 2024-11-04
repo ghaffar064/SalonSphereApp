@@ -25,9 +25,12 @@ import TopTab from "../../Navigation/TopTab";
 import navigationStrings from "../../constants/navigationStrings";
 
 export default function Shop() {
+
+
   const navigation = useNavigation();
   const { params: { item } } = useRoute(); 
-    console.log(item);
+  
+  
   const [selected, setSelected] = useState({});
 
   // Check if any service is selected
@@ -51,12 +54,9 @@ export default function Shop() {
         >
          
           <Image
-            // source={
-            //   item.image
-              
-            // }
+           
 
-            source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}/1729861638097-counter4.png`}}
+            source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}${item.coverImage}`}}
             style={{
               width: "105%",
               height: moderateScale(200),

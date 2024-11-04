@@ -112,7 +112,7 @@ export default function Home({
  
    >
      <View style={styles.card}>
-      <Image  source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}/1729861638097-counter4.png`}} style={styles.image} />
+      <Image  source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}${item.coverImage}`}} style={styles.image} />
       
       <View style={styles.cardContent}>
        

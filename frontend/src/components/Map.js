@@ -176,7 +176,7 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
                   }}
                 >
                   <Image
-                    source={item.image}
+                    source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}${item.coverImage}`}}
                     style={{ width: moderateScale(120), height: moderateVerticalScale(120) }}
                   />
                   <View style={{ flexDirection: "row", flex: 0.6 }}>
