@@ -28,7 +28,7 @@ export default function Booking() {
   const [historyBookings, setHistoryBookings] = useState([]);
   const navigation = useNavigation(); // Navigation hook
 
-  // Fetch user email from AsyncStorage
+  // Fetch user email
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -44,7 +44,7 @@ export default function Booking() {
     fetchUserData();
   }, []);
 
-  // Fetch bookings from the backend when the email is available
+  // Fetch bookings
   useEffect(() => {
     if (email) {
       const fetchBookings = async () => {
@@ -54,6 +54,7 @@ export default function Booking() {
           );
           if (response.data.success) {
             categorizeBookings(response.data.bookings); // Categorize bookings
+            
           } else {
             console.log('No bookings found for this user.');
           }
@@ -64,7 +65,7 @@ export default function Booking() {
       };
       fetchBookings();
     }
-  }, [activeTab, email]);
+  }, [email]);
 
   // Categorize bookings into ongoing and history
   const categorizeBookings = (bookings) => {

@@ -72,6 +72,7 @@ export function Signin({ navigation, onSignIn }) {
     } catch (err) {
       const errorMessage = err.response?.data?.message || "Login failed";
       setError(errorMessage);
+      console.log(errorMessage);
       setSnackbarVisible(true);
     } finally {
       setLoading(false);

@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
 
   itemContainer: {
     flexDirection: "row",
-    borderWidth:.3,
+    borderWidth:.75,
     borderRadius: moderateScale(3),
-    margin: moderateScale(10),
+    margin: moderateScale(15),
     backgroundColor: "white",
 
   },
