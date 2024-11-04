@@ -37,7 +37,12 @@ export default function Home({
   categories
 }) {
 
-
+  const bannerData = [
+    { id: '1', image: imagePath.promo},
+    { id: '2', image: imagePath.promo },
+    { id: '3', image: imagePath.promo },
+    
+  ];
   
 
   
@@ -48,6 +53,8 @@ export default function Home({
   const [loading, setLoading] = useState(true);
 
  
+
+  const [searchQuery, setSearchQuery] = useState('');
 
   
 
@@ -105,7 +112,7 @@ export default function Home({
  
    >
      <View style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.image} />
+      <Image  source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}/1729861638097-counter4.png`}} style={styles.image} />
       
       <View style={styles.cardContent}>
        
@@ -122,12 +129,12 @@ export default function Home({
     </View>
    </TouchableOpacity>
   );
-  
+
 
   if (loading) {
     return <View style={{flex:1,backgroundColor:'white'}}></View>;
   }
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -155,16 +162,32 @@ export default function Home({
           </TouchableOpacity>
         </View>
 
-        <View style={{marginTop:10,paddingHorizontal:10}}>
-        <SearchBar placeholder="Search for services" containerStyle={{borderColor:'grey',
-        borderRadius:10,
-        padding:4,
-        borderWidth:2,
-        
-}} />
-        </View>
-       
-        <Image source={imagePath.promo} style={styles.banner} />
+        <View style={{ marginTop: 10, paddingHorizontal: 10 }}>
+        <SearchBar
+          placeholder="Search for services"
+          containerStyle={{
+            borderColor: 'grey',
+            borderRadius: 10,
+            padding: 4,
+            borderWidth: .5,
+          }}
+          onChangeText={(text) => setSearchQuery(text)} // Update the search query
+        />
+      </View>  
+         
+      <View style={styles.bannerContainer}>
+      <FlatList
+        data={bannerData}
+        renderItem={({ item }) => (
+          <Image source={item.image} style={styles.banner} />
+        )}
+        keyExtractor={(item) => item.id}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled // To scroll one banner at a time
+      />
+    </View>
+
 
         <Text style={styles.sectionTitle}>What do you want to do?</Text>
         <FlatList
@@ -173,6 +196,7 @@ export default function Home({
           renderItem={renderCategory}
           keyExtractor={(item) => item.name}
           contentContainerStyle={styles.categoriesContainer}
+          showsHorizontalScrollIndicator={false}
         />
 
         <Text style={styles.sectionTitle}>Your Favourites</Text>

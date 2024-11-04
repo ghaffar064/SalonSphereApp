@@ -34,6 +34,11 @@ export default function App() {
         const response = await axios.get(
           `${process.env.EXPO_PUBLIC_API_URL}/salon/getSalons`,
           {
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              Pragma: 'no-cache',
+              Expires: '0',
+            },
             params: {
               salonType: categories.map((category) => category.name),
               selectedType: selectedType,
@@ -57,6 +62,7 @@ export default function App() {
     
 
   const [address, setAddress] = useState(null);
+
 
   
 

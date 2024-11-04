@@ -65,7 +65,8 @@ export default function Cards({ data }) {
           >
             <View style={{ flex: 0.3 }}>
               <Image
-                source={{ uri: item.imageUrl }}
+                // source={{ uri: item.imageUrl }}
+                source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}/1729861638097-counter4.png`}}
                 style={{
                   width: moderateScale(120),
                   height: moderateVerticalScale(120),

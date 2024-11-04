@@ -49,12 +49,14 @@ export default function Shop() {
             marginTop: verticalScale(20),
           }}
         >
-          {/* Check if the image exists, otherwise use a placeholder */}
+         
           <Image
-            source={
-              item.image
+            // source={
+            //   item.image
               
-            }
+            // }
+
+            source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}/1729861638097-counter4.png`}}
             style={{
               width: "105%",
               height: moderateScale(200),

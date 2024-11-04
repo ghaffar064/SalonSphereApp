@@ -14,7 +14,7 @@ import {
 } from "react-native-responsive-dimensions";
 const deviceheight = Dimensions.get('window').height
 const deviceWidth = Dimensions.get('window').width
-const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   header: {
     flexDirection: 'row',
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   headerContent: { flexDirection: 'column' },
   userText: { fontSize: 16, fontWeight: 'bold', color: 'white' },
-  banner: { width: '100%', height: 150, resizeMode: 'cover', marginVertical: 15 },
+  banner: {  height: 150, resizeMode: 'cover', marginVertical: 15, width: Dimensions.get('window').width, },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   ratingContainer: { flexDirection: 'row', alignItems: 'center' },
   rating: { marginLeft: 4, fontSize: 14, color: '#333' },
   reviews: { marginLeft: 4, fontSize: 14, color: '#888' },
+  bannerContainer:{marginVertical: 10,}
 });
 
   export default styles;

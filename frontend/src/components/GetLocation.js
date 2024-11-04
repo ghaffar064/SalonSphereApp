@@ -38,7 +38,7 @@ export default function GetLocation({permissionStatus,setPermissionStatus,locati
   }
 
   return (
-    <View style={{ flexDirection: 'row', paddingVertical: moderateScale(6),width:'80%' }}>
+    <View style={{ flexDirection: 'row', paddingVertical: moderateScale(6),width:'90%' }}>
       <MapPinIcon size={20} color="white" />
       <Text style={styles.paragraph}>{text}</Text>
     </View>
