@@ -1,4 +1,6 @@
 import { Salon } from '../models/SalonSchema.js';
+import userModel from '../models/authModel.js';
+
 
 // Function to add a salon with type specified in the request body
 
@@ -83,5 +85,58 @@ export const getSalonsByType = async (req, res) => {
   } catch (error) {
     // Return an error response in case of a server error
     res.status(500).json({ message: 'Server error while fetching salons', error });
+  }
+};
+export const reviewController = async (req, res) => {
+  try {
+    const { comment, rating } = req.body;
+    // find product
+    const salon = await Salon.findById(req.params.id);
+    const user = await userModel.findById(req.user._id)
+   console.log(user);
+    // check previous review
+    const alreadyReviewed = salon.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+    if (alreadyReviewed) {
+      return res.status(400).send({
+        success: false,
+        message: "Alredy Reviewed",
+      });
+    }
+    
+    const review = {
+      name: user.first_name,
+      rating: Number(rating),
+      comment,
+      user: user._id,
+    };
+    // passing review object to reviews array
+    salon.reviews.push(review);
+    // number or reviews
+    salon.numReviews = salon.reviews.length;
+    salon.rating =
+      salon.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      salon.reviews.length;
+    // save
+    await salon.save();
+    res.status(200).send({
+      success: true,
+      message: "Review Added!",
+    });
+  } catch (error) {
+    console.log(error);
+    // cast error ||  OBJECT ID
+    if (error.name === "CastError") {
+      return res.status(500).send({
+        success: false,
+        message: "Invalid Id",
+      });
+    }
+    res.status(500).send({
+      success: false,
+      message: "Error In Review Comment API",
+      error,
+    });
   }
 };

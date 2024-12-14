@@ -19,5 +19,6 @@ export default {
   TOPTAB: "TopTab",
   MYACCONT: "MyAccount",
   STEPPERFORMSCREEN:"StepperFormScreen",
-  AUTHSTACK:"AuthStack"
+  AUTHSTACK:"AuthStack",
+  REVIEWS:"Reviews"
 };

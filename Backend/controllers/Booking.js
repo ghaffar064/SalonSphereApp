@@ -9,7 +9,7 @@ const calculateTotalPrice = (selectedServices) => {
   return selectedServices.reduce((total, serviceObj) => {
     const priceString = serviceObj.price; 
     return total + (priceString ? parseFloat(priceString) : 0);
-  }, 0) * 100; // Convert to cents
+  }, 0) ; // Convert to cents
 };
 
 // Function to create a new booking
@@ -37,6 +37,7 @@ export const createPaymentIntent = async (req, res) => {
       customerPhoneNumber,
       selectedServices,
     });
+
 
     // Create the payment intent
     const paymentIntent = await stripe.paymentIntents.create({

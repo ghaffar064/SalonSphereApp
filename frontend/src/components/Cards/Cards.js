@@ -22,7 +22,7 @@ import {
 } from 'react-native-size-matters';
 import color from '../../constants/color';
 import navigationStrings from '../../constants/navigationStrings';
-
+import { IMAGELOCATION } from '../../../ipconfig';
 export default function Cards({ data }) {
   const navigation = useNavigation();
   const [data1, setData1] = useState(data);
@@ -66,7 +66,7 @@ export default function Cards({ data }) {
             <View style={{ flex: 0.3 }}>
               <Image
                
-                source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}${item.coverImage}`}}
+                source={{ uri: `${IMAGELOCATION}${item.coverImage}`}}
                 style={{
                   width: moderateScale(120),
                   height: moderateVerticalScale(120),

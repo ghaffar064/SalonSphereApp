@@ -11,7 +11,7 @@ import { CardField, useConfirmPayment } from '@stripe/stripe-react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-
+import { API_URL } from '../../../../ipconfig';
 export default function PaymentMethod({
   selectedServices,
   selectedStylist,
@@ -20,15 +20,14 @@ export default function PaymentMethod({
   salonName,
   nextStep,
   salon,
-}) {
-  
+}) {  
   // const { addBooking } = useContext(BookingContext); // Access BookingContext
   const [email, setEmail] = useState('');
   const [userId, setUserId] = useState(null); // Store user ID
   const [cardDetails, setCardDetails] = useState();
   const { confirmPayment, loading } = useConfirmPayment();
   const [isProcessing, setIsProcessing] = useState(false);
-
+console.log(selectedServices);
   // Fetch user data from AsyncStorage on component mount
   useEffect(() => {
     const fetchUserData = async () => {
@@ -54,7 +53,7 @@ export default function PaymentMethod({
     ) * 100; // Amount in cents
 
     const response = await fetch(
-      `${process.env.EXPO_PUBLIC_API_URL}/booking/create-payment-intent`,
+      `${API_URL}/booking/create-payment-intent`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -128,7 +127,7 @@ export default function PaymentMethod({
   const saveBookingToDB = async (booking) => {
     try {
       const response = await axios.post(
-        `${process.env.EXPO_PUBLIC_API_URL}/userBooking/add-booking`,
+        `${API_URL}/userBooking/add-booking`,
         booking
       );
 

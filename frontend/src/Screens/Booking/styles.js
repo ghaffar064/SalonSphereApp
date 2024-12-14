@@ -124,10 +124,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  feedBackButton: {
+    borderRadius: moderateScale(5),
+    borderWidth: moderateScale(0.3),
+    backgroundColor: "white",
+    height: moderateScale(40), // Adjust button height as needed
+    width: moderateScale(180),
+    justifyContent: "center",
+    alignItems: "center",
+  },
   butttonSpace: {
     paddingLeft: moderateScale(10),
   },
+  
 });
+
 
 // Export the styles object as default
 export default styles;

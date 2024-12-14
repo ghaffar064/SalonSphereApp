@@ -12,6 +12,7 @@ export { default as Notification } from "./Notification/Notification";
 
 export { default as Shop } from "./Shop/Shop";
 export { default as Categories } from "./Categories/Categories";
+export { default as Reviews } from "./Reviews/Reviews";
 
 //Profile Screens
 export { default as MyAccount } from "./Profile/SubScreens/MyAccount/MyAccount";

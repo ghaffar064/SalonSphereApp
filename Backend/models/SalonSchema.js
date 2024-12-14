@@ -1,12 +1,35 @@
 import mongoose from "mongoose";
 
+const reviewSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "name is require"],
+    },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    comment: {
+      type: String,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "user require"],
+    },
+  },
+  { timestamps: true }
+);
+
+
 
 const StylistSchema = new mongoose.Schema({
   name: { type: String, required: true },
   experience: { type: String, required: true },
   expertise: { type: String, required: true },
   about: { type: String, required: true },
-  id: { type: Number, required: true },
+ 
   dateTimeSlots: [
     {
       date: { type: String, required: true },
@@ -31,7 +54,16 @@ const ServiceSchema = new mongoose.Schema({
 const SalonSchema = new mongoose.Schema({
   salonId: { type: String, required: true },
   name: { type: String, required: true },
-  reviews: { type: Object, required: true },
+ 
+  reviews: [reviewSchema],
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  numReviews: {
+    type: Number,
+    default: 0,
+  },
   description: { type: String, required: true },
   images: { type: [String],  },
   coverImage: { type: String, },

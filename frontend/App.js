@@ -12,11 +12,11 @@ import { FavoritesProvider } from "./src/contextApi/FavouriteContext";
 import axios from "axios";
 import imagePath from "./src/constants/imagePath";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { API_URL } from "./ipconfig";
 
 export default function App() {
 
-
+console.log(API_URL);
 
   const [allSalons, setAllSalons] = useState([]);
   const categories = [
@@ -32,7 +32,7 @@ export default function App() {
     const fetchSalons = async () => {
       try {
         const response = await axios.get(
-          `${process.env.EXPO_PUBLIC_API_URL}/salon/getSalons`,
+          `${API_URL}/salon/getSalons`,
           {
             headers: {
               'Cache-Control': 'no-cache, no-store, must-revalidate',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { IMAGELOCATION } from '../../../ipconfig';
 export default function Information({ shopData }) {
   const { about, stylists, images } = shopData;
   console.log(shopData.images);
@@ -48,7 +48,7 @@ export default function Information({ shopData }) {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => (
                <View style={styles.photos}>
-                   <Image  source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}${item}`}} style={styles.photo} />
+                   <Image  source={{ uri: `${IMAGELOCATION}${item}`}} style={styles.photo} />
 
                </View>
               )}

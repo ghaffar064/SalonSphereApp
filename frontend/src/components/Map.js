@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import { userLocation } from './UserLocation';
-
+import { IMAGELOCATION } from '../../ipconfig';
 
 const haversineDistance = (coords1, coords2) => {
   const toRad = x => (x * Math.PI) / 180;
@@ -176,7 +176,7 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
                   }}
                 >
                   <Image
-                    source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}${item.coverImage}`}}
+                    source={{ uri: `${IMAGELOCATION}${item.coverImage}`}}
                     style={{ width: moderateScale(120), height: moderateVerticalScale(120) }}
                   />
                   <View style={{ flexDirection: "row", flex: 0.6 }}>

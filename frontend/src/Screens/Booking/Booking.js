@@ -20,7 +20,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'; // Import the plugin
 
 // Extend dayjs with necessary plugins
 dayjs.extend(isSameOrBefore);
-
+import { API_URL } from '../../../ipconfig';
 export default function Booking() {
   const [activeTab, setActiveTab] = useState('ongoing'); // Manage active tab
   const [email, setEmail] = useState('');
@@ -50,7 +50,7 @@ export default function Booking() {
       const fetchBookings = async () => {
         try {
           const response = await axios.get(
-            `${process.env.EXPO_PUBLIC_API_URL}/userBooking/user-bookings?email=${email}`
+            `${API_URL}/userBooking/user-bookings?email=${email}`
           );
           if (response.data.success) {
             categorizeBookings(response.data.bookings); // Categorize bookings
@@ -87,6 +87,9 @@ export default function Booking() {
 
   const navigateToSalon = (item) => {
     navigation.navigate(navigationStrings.SHOP, { item });
+  };
+  const navigateToReview = (item) => {
+    navigation.navigate(navigationStrings.REVIEWS, { salon1:item });
   };
 
   const GetDirectionPress = (item) => {
@@ -133,6 +136,14 @@ export default function Booking() {
                   </Text>
                 </TouchableOpacity>
               </View>
+            </View>
+          )}
+          {activeTab === 'history' && (
+            <View style={styles.buttonView}>
+              <TouchableOpacity style={styles.feedBackButton}  onPress={() => navigateToReview(item.salon)} >
+                <Text style={styles.buttonTextD}>Give Feedback</Text>
+              </TouchableOpacity>
+             
             </View>
           )}
         </View>

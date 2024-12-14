@@ -18,7 +18,7 @@ import imagePath from "../../constants/imagePath";
 import styles from "./styles";
 import { moderateVerticalScale } from "react-native-size-matters";
 import navigationStrings from "../../constants/navigationStrings";
-
+import { API_URL } from "../../../ipconfig";
 export default function Signup({ navigation }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -38,7 +38,7 @@ export default function Signup({ navigation }) {
 
     try {
       const response = await axios.post(
-        `${process.env.EXPO_PUBLIC_API_URL}/auth/register`,
+        `${API_URL}/auth/register`,
         {
           first_name: firstName,
           last_name: lastName,

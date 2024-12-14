@@ -48,7 +48,7 @@ export default function TopTab({services, onSelect,selected,shopData}) {
           <Information shopData={shopData} />
         )}
       />
-      <topTab.Screen name={navigationStrings.REVIEWS} component={Reviews} />
+      {/* <topTab.Screen name={navigationStrings.REVIEWS} component={Reviews} /> */}
     </topTab.Navigator>
 
   

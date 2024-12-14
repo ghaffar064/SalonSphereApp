@@ -23,13 +23,18 @@ import {
 import color from "../../constants/color";
 import TopTab from "../../Navigation/TopTab";
 import navigationStrings from "../../constants/navigationStrings";
+import { IMAGELOCATION } from "../../../ipconfig";
 
 export default function Shop() {
 
 
   const navigation = useNavigation();
-  const { params: { item } } = useRoute(); 
-  
+  const route = useRoute();
+  const { item} = route.params || {}; 
+
+   
+
+ 
   
   const [selected, setSelected] = useState({});
 
@@ -56,7 +61,7 @@ export default function Shop() {
           <Image
            
 
-            source={{ uri: `${process.env.EXPO_PUBLIC_IMAGELOCATION}${item.coverImage}`}}
+            source={{ uri: `${IMAGELOCATION}${item.coverImage}`}}
             style={{
               width: "105%",
               height: moderateScale(200),
