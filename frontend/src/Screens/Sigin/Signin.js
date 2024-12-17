@@ -21,7 +21,7 @@ import navigationStrings from "../../constants/navigationStrings";
 import styles from "./styles";
 import { moderateVerticalScale } from "react-native-size-matters";
 import { Snackbar } from "react-native-paper";
-
+import { API_URL } from "../../../ipconfig";
 export function Signin({ navigation, onSignIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +37,7 @@ export function Signin({ navigation, onSignIn }) {
 
     try {
       const response = await axios.post(
-        `${process.env.EXPO_PUBLIC_API_URL}/auth/login`,
+        `${API_URL}/auth/login`,
         { email, password }
       );
 

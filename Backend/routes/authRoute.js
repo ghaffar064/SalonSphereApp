@@ -23,8 +23,7 @@ router.post("/business/admin/register", salonRegisterController);
 
 //proteted route on user token base
 router.get("/user-auth", requireSignIn, (req, resp) => {
-  const {decode} = requireSignIn()
-  console.log("hello",decode);
+ 
   resp.status(200).send({
     ok: true,
   });

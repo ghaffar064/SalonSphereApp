@@ -20,5 +20,6 @@ export default {
   MYACCONT: "MyAccount",
   STEPPERFORMSCREEN:"StepperFormScreen",
   AUTHSTACK:"AuthStack",
-  REVIEWS:"Reviews"
+  REVIEWS:"Reviews",
+  SALONREVIEWS:"Reviews"
 };

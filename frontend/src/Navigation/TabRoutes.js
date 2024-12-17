@@ -1,4 +1,4 @@
-import TopTab from "./TopTab";
+import  TopTab from "./TopTab";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import navigationStrings from "../constants/navigationStrings";
 import { Booking, Home, NearBy, Profile } from  '../Screens'; 

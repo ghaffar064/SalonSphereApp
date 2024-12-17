@@ -7,6 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import color from "../constants/color";
 import { Image} from "react-native";
 import imagePath from "../constants/imagePath";
+import SalonReviews from '../Screens/SalonReviews/SalonReviews';
+
 
 const topTab = createMaterialTopTabNavigator();
 
@@ -48,7 +50,13 @@ export default function TopTab({services, onSelect,selected,shopData}) {
           <Information shopData={shopData} />
         )}
       />
-      {/* <topTab.Screen name={navigationStrings.REVIEWS} component={Reviews} /> */}
+      <topTab.Screen
+        name={navigationStrings.SALONREVIEWS}
+        children={() => (
+          <SalonReviews shopData={shopData} />
+        )}
+      />
+     
     </topTab.Navigator>
 
   

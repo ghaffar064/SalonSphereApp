@@ -27,7 +27,7 @@ export default function PaymentMethod({
   const [cardDetails, setCardDetails] = useState();
   const { confirmPayment, loading } = useConfirmPayment();
   const [isProcessing, setIsProcessing] = useState(false);
-console.log(selectedServices);
+
   // Fetch user data from AsyncStorage on component mount
   useEffect(() => {
     const fetchUserData = async () => {
