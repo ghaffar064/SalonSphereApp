@@ -21,5 +21,6 @@ export default {
   STEPPERFORMSCREEN:"StepperFormScreen",
   AUTHSTACK:"AuthStack",
   REVIEWS:"Reviews",
-  SALONREVIEWS:"Reviews"
+  SALONREVIEWS:"Reviews",
+  CONFIRMATION:"Confirmation"
 };

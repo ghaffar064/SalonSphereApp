@@ -50,7 +50,7 @@ const StepperFormScreen = ({ route, navigation }) => {
       setCurrentPosition(currentPosition + 1);
     }
     else if(currentPosition==4){
-      navigation.navigate(navigationStrings.TABROUTES)
+      navigation.navigate(navigationStrings.CONFIRMATION)
 
     }
   };
