@@ -214,3 +214,48 @@ export const loginController = async (req, resp) => {
     });
   }
 };
+
+export const changePassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    // Find user by email
+    const user = await userModel.findOne({ email });
+    
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "Email does not exist.",
+      });
+    }
+
+    // Check if the new password is the same as the old one
+    const matchPassword = await comparePassword(newPassword, user.password);
+    if (matchPassword) {
+      return res.status(400).send({
+        success: false,
+        message: "New password cannot be the same as the old password.",
+      });
+    }
+
+    // Hash the new password
+    const hashedPassword = await hashpassword(newPassword);
+
+    // Update the user's password in the database
+    user.password = hashedPassword;
+    await user.save();
+
+    // Send success response
+    return res.status(200).send({
+      success: true,
+      message: "Password updated successfully.",
+    });
+    
+  } catch (error) {
+    console.error("Error changing password:", error);
+    return res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};

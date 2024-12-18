@@ -3,6 +3,7 @@ import {
   registerController,
   loginController,
   salonRegisterController,
+  changePassword
 } from "../controllers/authController.js";
 import {
   isAdmin,
@@ -43,4 +44,5 @@ router.get("/salon-auth", requireSignIn, isSalonOwner, (req, resp) => {
     ok: true,
   });
 });
+router.post("/changePassword", changePassword);
 export default router;

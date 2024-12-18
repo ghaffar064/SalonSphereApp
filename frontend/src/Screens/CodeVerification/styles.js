@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 
   bottomView: {
     flex: 0.5,
-    flexDirection: "row",
+    flexDirection: "vertical",
     justifyContent: "center",
     alignItems: "center",
   },
