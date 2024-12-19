@@ -7,6 +7,7 @@ import salonRouter from './routes/SalonRoute.js'
 import bookingRouter from './routes/Booking.js'
 import userBookingRouter from './routes/UserBooking.js'
 import forgotPasswordRouter from './routes/forgotPassword.js'
+import searchRouter from './routes/searchRoute.js'
 import cors from "cors";
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -34,6 +35,7 @@ app.use('/api/salon/',salonRouter)
 app.use('/api/booking',bookingRouter)
 app.use('/api/userBooking',userBookingRouter)
 app.use('/api/forgot',forgotPasswordRouter)
+app.use('/api/searchquery',searchRouter)
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

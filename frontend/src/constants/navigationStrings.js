@@ -22,5 +22,6 @@ export default {
   AUTHSTACK:"AuthStack",
   REVIEWS:"Reviews",
   SALONREVIEWS:"Reviews",
-  CONFIRMATION:"Confirmation"
+  CONFIRMATION:"Confirmation",
+  SEARCHSCREEN:'SearchScreen'
 };

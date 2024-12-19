@@ -1,5 +1,5 @@
 import { View, Text , TouchableOpacity,StyleSheet, SafeAreaView,Image,TextInput} from 'react-native'
-import React from 'react'
+import React,{ forwardRef } from 'react'
 import {
   scale,
   verticalScale,
@@ -11,7 +11,7 @@ import CustomizedTextInput from './CustomizedTextInput';
 import {MagnifyingGlassIcon,StarIcon,MicrophoneIcon} from  "react-native-heroicons/outline";
 import color from '../constants/color';
 
-export default function SearchBar({placeholder,containerStyle = {},}) {
+export default function SearchBar({placeholder,containerStyle = {},onFocus,value,onChangeText,ref}) {
   return (
     <View style={[styles.container,containerStyle]}>
 
@@ -20,6 +20,10 @@ export default function SearchBar({placeholder,containerStyle = {},}) {
              <View style={styles.search}>
                        <TextInput style={styles.inlineStyle} 
            placeholder={placeholder}
+           onFocus={onFocus}
+           value={value}
+           onChangeText={onChangeText}
+           ref={ref}
            /> 
                        <MagnifyingGlassIcon size={22} color={color.textColor}/>
     

@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import navigationStrings from "../constants/navigationStrings";
 import TabRoutes from "./TabRoutes";
-import { Home, Notification, Shop, Categories, MyAccount, Reviews, Confirmation } from "../Screens";
+import { Home, Notification, Shop, Categories, MyAccount, Reviews, Confirmation, SearchScreen } from "../Screens";
 
 import { View, Text, Button, TouchableOpacity } from "react-native";
 import color from "../constants/color";
@@ -89,6 +89,7 @@ export default function MainStack({allSalons,permissionStatus,setPermissionStatu
        <Stack.Screen name={navigationStrings.STEPPERFORMSCREEN} component={StepperFormScreen}  options={{ headerShown: false }} />
        <Stack.Screen name={navigationStrings.REVIEWS} component={Reviews}  options={{ headerShown: false }} />
        <Stack.Screen name={navigationStrings.CONFIRMATION} component={Confirmation}  options={{ headerShown: false }} />
+       <Stack.Screen name={navigationStrings.SEARCHSCREEN} component={SearchScreen}  options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

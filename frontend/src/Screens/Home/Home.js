@@ -131,6 +131,10 @@ export default function Home({
    </TouchableOpacity>
   );
 
+  const handleInput = () => {
+    navigation.navigate(navigationStrings.SEARCHSCREEN)
+  };
+
 
   if (loading) {
     return <View style={{flex:1,backgroundColor:'white'}}></View>;
@@ -165,15 +169,15 @@ export default function Home({
 
         <View style={{ marginTop: 10, paddingHorizontal: 10 }}>
         <SearchBar
-          placeholder="Search for services"
-          containerStyle={{
-            borderColor: 'grey',
-            borderRadius: 10,
-            padding: 4,
-            borderWidth: .5,
-          }}
-          onChangeText={(text) => setSearchQuery(text)} // Update the search query
-        />
+      placeholder="Search for services"
+      containerStyle={{
+        borderColor: 'grey',
+        borderRadius: 10,
+        padding: 4,
+        borderWidth: 0.5,
+      }}
+      onFocus={handleInput}  // Navigate when the search bar is focused (tapped)
+    />
       </View>  
          
       <View style={styles.bannerContainer}>
