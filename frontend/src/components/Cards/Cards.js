@@ -24,8 +24,15 @@ import color from '../../constants/color';
 import navigationStrings from '../../constants/navigationStrings';
 import { IMAGELOCATION } from '../../../ipconfig';
 export default function Cards({ data }) {
+  React.useEffect(() => {
+   data.map((salon)=>{
+
+    console.log("salon in card component",salon.name);
+   })
+  }, [data]);
+  
   const navigation = useNavigation();
-  const [data1, setData1] = useState(data);
+
   const { favorites, updateFavorites } = useFavorites();
 
   const toggleHeart = (item) => {
@@ -45,7 +52,7 @@ export default function Cards({ data }) {
 
   return (
     <FlatList
-      data={data1}
+      data={data}
       
       renderItem={({ item }) => (
         <TouchableOpacity

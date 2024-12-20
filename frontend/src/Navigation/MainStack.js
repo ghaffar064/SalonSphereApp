@@ -57,20 +57,21 @@ export default function MainStack({allSalons,permissionStatus,setPermissionStatu
       <Stack.Screen
         name={navigationStrings.CATEGORIES}
         component={Categories}
-        options={{
-          title: "Search",
-          headerShadowVisible: false,
+        // options={{
+        //   title: "Search",
+        //   headerShadowVisible: false,
 
-          headerStyle: {
-            backgroundColor: color.background,
-          },
-          headerTintColor: color.foreground,
-          headerRight: () => (
-            <TouchableOpacity>
-              <AdjustmentsHorizontalIcon size={25} color={color.foreground} />
-            </TouchableOpacity>
-          ),
-        }}
+        //   headerStyle: {
+        //     backgroundColor: color.background,
+        //   },
+        //   headerTintColor: color.foreground,
+        //   headerRight: () => (
+        //     <TouchableOpacity>
+        //       <AdjustmentsHorizontalIcon size={25} color={color.foreground} />
+        //     </TouchableOpacity>
+        //   ),
+        // }}
+        options={{ headerShown: false }}
       />
       {/* //profile Subscreens  */}
       <Stack.Screen
