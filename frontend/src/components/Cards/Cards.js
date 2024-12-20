@@ -24,12 +24,7 @@ import color from '../../constants/color';
 import navigationStrings from '../../constants/navigationStrings';
 import { IMAGELOCATION } from '../../../ipconfig';
 export default function Cards({ data }) {
-  React.useEffect(() => {
-   data.map((salon)=>{
-
-    console.log("salon in card component",salon.name);
-   })
-  }, [data]);
+  
   
   const navigation = useNavigation();
 
@@ -94,16 +89,19 @@ export default function Cards({ data }) {
                 </Text>
 
                 <View style={{ flexDirection: 'row' }}>
-                  <StarIcon color="grey" size={15} />
-                  <StarIcon color="grey" size={15} />
-                  <StarIcon color="grey" size={15} />
-                  <StarIcon color="grey" size={15} />
-                  <StarIcon color="grey" size={15} />
-                </View>
+  {[1, 2, 3, 4, 5].map((star) => (
+    <StarIcon
+      key={star}
+      color="grey"
+      size={15}
+      fill={star <= item.rating ? color.background : 'none'} // Fill the star if its value is <= the rating
+    />
+  ))}
+</View>
                 <View style={{ flexDirection: 'row' }}>
                   <MapPinIcon size={18} color="grey" />
                   <Text style={{ fontSize: scale(12), color: color.textColor }}>
-                    {/* {item.location} */}
+                    {item.address}
                   </Text>
                 </View>
               </View>

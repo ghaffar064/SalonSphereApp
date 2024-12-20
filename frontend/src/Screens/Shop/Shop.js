@@ -92,13 +92,16 @@ export default function Shop() {
             {item.name}
           </Text>
           <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <View style={{ flexDirection: "row", marginRight: moderateScale(15) }}>
-              <StarIcon size={22} color="grey" fill={color.background} />
-              <StarIcon size={22} color="grey" fill={color.background} />
-              <StarIcon size={22} color="grey" fill={color.background} />
-              <StarIcon size={22} color="grey" />
-              <StarIcon size={22} color="grey" />
-            </View>
+          <View style={{ flexDirection: 'row' }}>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <StarIcon
+                            key={star}
+                            color="grey"
+                            size={15}
+                            fill={star <= item.rating ? color.background : 'none'} // Fill the star if its value is <= the rating
+                          />
+                        ))}
+                      </View>
             <View style={{ flexDirection: "row", right: 10 }}>
               <TouchableOpacity
                 style={{ right: moderateScale(20), borderRadius: 100 }}

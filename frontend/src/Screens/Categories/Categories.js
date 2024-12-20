@@ -18,23 +18,26 @@ export default function Categories({ navigation }) {
   } = useRoute();
 
   const [isFilterVisible, setFilterVisible] = useState(false);
-  const [filteredData, setFilteredData] = useState(category.data); // Initialize with full data
-
+  const [filteredData, setFilteredData] = useState(category.data);
+   // Initialize with full data
+    console.log(category.data);
   // Function to handle filter logic
   const applyFilters = (filters) => {
     console.log('Applied Filters:', filters);
 
     const filteredSalons = category.data.filter((salon) => {
       // Check if any service matches the price filter
-      return salon.services.some((service) =>
+      const matchesPrice = salon.services.some((service) =>
         service.options.some((option) => parseInt(option.price, 10) <= filters.price)
       );
+
+      const matchesRating = salon.rating >= filters.rating;
+
+      return matchesPrice && matchesRating;
     });
 
-    filteredSalons.map((salon)=>{
-      console.log("salon in categories",salon.name);
-    })
-        
+    // console.log('Filtered Salons:', filteredSalons.map((salon) => salon.name)); // Debugging output
+     
     setFilteredData(filteredSalons);
     setFilterVisible(false); // Close the modal
   };

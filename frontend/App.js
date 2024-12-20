@@ -16,7 +16,7 @@ import { API_URL } from "./ipconfig";
 
 export default function App() {
 
-console.log(API_URL);
+
 
   const [allSalons, setAllSalons] = useState([]);
   const categories = [

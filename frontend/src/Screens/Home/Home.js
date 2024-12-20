@@ -36,7 +36,7 @@ export default function Home({
   allSalons,
   categories
 }) {
-  console.log(categories);
+
 
   const bannerData = [
     { id: '1', image: imagePath.promo},
@@ -89,6 +89,7 @@ export default function Home({
         name: category,
         data: filtered,
         placeholder: `Search for ${category}`,
+
       },
     });
   };
@@ -124,8 +125,8 @@ export default function Home({
         <Text style={styles.salonName}>{item.name}</Text>
         <View style={styles.ratingContainer}>
           <StarIcon size={16} color="orange" />
-          <Text style={styles.rating}>{item.reviews?.averageRating || 'N/A'}</Text>
-          <Text style={styles.reviews}>({item.reviews?.totalReviews || 0})</Text>
+          <Text style={styles.rating}>{item.rating || 'N/A'}</Text>
+          <Text style={styles.reviews}>({item.numReviews || 0})</Text>
         </View>
       </View>
     </View>
@@ -222,14 +223,18 @@ export default function Home({
         )}
 
         <Text style={styles.sectionTitle}>Featured Salons</Text>
-        <FlatList
-          data={allSalons}
-          renderItem={renderFavoriteSalon}
-          keyExtractor={(item) => item._id || item.salonId.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.listContainer}
-        />
+        {Array.isArray(allSalons) ? (
+  <FlatList
+    data={allSalons.filter((salon) => salon.rating >= 4)} // Safely filter salons with rating >= 4
+    renderItem={renderFavoriteSalon}
+    keyExtractor={(item) => item._id || item.salonId.toString()}
+    horizontal
+    showsHorizontalScrollIndicator={false}
+    contentContainerStyle={styles.listContainer}
+  />
+) : (
+  <Text>Loading salons...</Text> // Show a fallback while salons are loading
+)}
       </ScrollView>
     </SafeAreaView>
   );

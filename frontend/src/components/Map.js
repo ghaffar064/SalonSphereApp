@@ -184,12 +184,15 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
                       <Text style={{ fontSize: scale(17), fontWeight: "400", color }}>
                         {item.name}
                       </Text>
-                      <View style={{ flexDirection: "row" }}>
-                        <StarIcon color="grey" fill={color.foreground} size={15} />
-                        <StarIcon color="grey" fill={color.foreground} size={15} />
-                        <StarIcon color="grey" fill={color.foreground} size={15} />
-                        <StarIcon color="grey" size={15} />
-                        <StarIcon color="grey" size={15} />
+                      <View style={{ flexDirection: 'row' }}>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <StarIcon
+                            key={star}
+                            color="grey"
+                            size={15}
+                            fill={star <= item.rating ? color.background : 'none'} // Fill the star if its value is <= the rating
+                          />
+                        ))}
                       </View>
                       <View style={{ flexDirection: "row" }}>
                         <MapPinIcon size={18} color="grey" />

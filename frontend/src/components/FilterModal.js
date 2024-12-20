@@ -63,13 +63,13 @@ export default function FilterModal({ visible, onClose, onApply, onReset }) {
                 <TouchableOpacity
                   key={rate}
                   style={[
-                    styles.ratingButton,
-                    rating === rate && styles.selectedRating,
+                    styles.categoryButton,
+                    rating === rate && styles.selectedCategory,
                   ]}
                   onPress={() => setRating(rate)}
                 >
                   <Text
-                    style={{ color: rating === rate ? 'white' : 'black' }}
+                    style={{ color: rating === rate ? 'black' : 'black' }}
                   >
                     {rate}⭐
                   </Text>
