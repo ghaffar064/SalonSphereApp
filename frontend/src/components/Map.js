@@ -141,10 +141,10 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
                   borderRadius: 5,
                 }}
               >
-                {item.name}
+               {item.name}
               </Text>
               <Image
-                source={item.image}
+               source={{ uri: `${IMAGELOCATION}${item.coverImage}`}}
                 style={{ width: 40, height: 40, borderRadius: 20 }}
               />
             </View>

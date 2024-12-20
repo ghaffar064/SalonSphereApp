@@ -98,7 +98,7 @@ const SearchScreen = ({navigation}) => {
           >
             <ArrowLeftIcon size={30} color={color.background} />
           </TouchableOpacity>
-      {/* <Text style={styles.headerText}>{salonName}</Text> */}
+     
     </View>
       {/* Search Bar */}
       

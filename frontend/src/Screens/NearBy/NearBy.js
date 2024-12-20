@@ -23,15 +23,14 @@ export default function NearBy({allSalons,permissionStatus,setPermissionStatus,l
     <View style={{
        justifyContent:'center',
        backgroundColor:color.background,
-       paddingVertical:moderateVerticalScale(30),
+       paddingVertical:moderateVerticalScale(40),
        borderBottomEndRadius:moderateScale(80),
-        paddingLeft:moderateScale(10)
+        paddingLeft:moderateScale(20)
        }}>
          <Text style={{color:'white',fontSize:scale(17)}}>Near by you</Text>
          <Text style={{color:'white',fontSize:scale(13),marginTop:moderateVerticalScale(5),
-        marginBottom:moderateVerticalScale(10)}}>Search your nearest salon</Text>
-   <SearchBar placeholder="Search"/>
-
+        marginBottom:moderateVerticalScale(10)}}>Salons near you </Text>
+   
 
    
    </View>

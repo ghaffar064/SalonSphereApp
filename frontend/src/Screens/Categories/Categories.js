@@ -11,16 +11,19 @@ import {
 } from "react-native-size-matters";
 import color from '../../constants/color';
 import { useRoute } from '@react-navigation/native';
+import navigationStrings from '../../constants/navigationStrings';
 
 
-export default function Categories() {
+export default function Categories({navigation}) {
     const {
         params:{
                     category
         }
     } = useRoute();
-   
-   
+  
+    const handleInput = () => {
+      navigation.navigate(navigationStrings.SEARCHSCREEN)
+    };
   return (
     <View style={{flex:1}}>
      <View style={{
@@ -29,7 +32,9 @@ export default function Categories() {
         padding:moderateVerticalScale(12),
         borderBottomEndRadius:moderateScale(80)
         }}>
-    <SearchBar placeholder={category.placeholder}/>
+    <SearchBar placeholder={category.placeholder}
+           onFocus={handleInput}
+    />
     
     </View>
     <Cards data ={category.data}/>

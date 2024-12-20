@@ -36,6 +36,7 @@ export default function Home({
   allSalons,
   categories
 }) {
+  console.log(categories);
 
   const bannerData = [
     { id: '1', image: imagePath.promo},
