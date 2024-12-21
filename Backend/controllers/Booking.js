@@ -74,7 +74,7 @@ export const confirmPaymentAndCreateBooking = async (req, res) => {
 
     // Confirm the payment intent
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-
+      console.log(paymentIntent);
     // Check if the payment was successful
     if (paymentIntent.status === 'succeeded') {
       // Prepare booking data
