@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import navigationStrings from "../constants/navigationStrings";
 import TabRoutes from "./TabRoutes";
-import { Home, Notification, Shop, Categories, MyAccount, Reviews, Confirmation, SearchScreen } from "../Screens";
+import { Home, Notification, Shop, Categories, MyAccount, Reviews, Confirmation, SearchScreen, TermsOfService } from "../Screens";
 
 import { View, Text, Button, TouchableOpacity } from "react-native";
 import color from "../constants/color";
@@ -79,6 +79,20 @@ export default function MainStack({allSalons,permissionStatus,setPermissionStatu
         component={MyAccount}
         options={{
           title: "My Account",
+          headerShadowVisible: false,
+
+          headerStyle: {
+            backgroundColor: color.background,
+          },
+          headerTintColor: color.foreground,
+        }}
+      />
+
+<Stack.Screen
+        name={navigationStrings.TERMSOFSERVICES}
+        component={TermsOfService}
+        options={{
+          title: "Terms And Services",
           headerShadowVisible: false,
 
           headerStyle: {

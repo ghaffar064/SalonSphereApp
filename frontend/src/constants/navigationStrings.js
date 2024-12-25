@@ -23,5 +23,6 @@ export default {
   REVIEWS:"Reviews",
   SALONREVIEWS:"Reviews",
   CONFIRMATION:"Confirmation",
-  SEARCHSCREEN:'SearchScreen'
+  SEARCHSCREEN:'SearchScreen',
+  TERMSOFSERVICES:"TermsOfServices"
 };

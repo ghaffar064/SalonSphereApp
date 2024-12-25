@@ -16,6 +16,7 @@ export { default as Reviews } from "./Reviews/Reviews";
 
 //Profile Screens
 export { default as MyAccount } from "./Profile/SubScreens/MyAccount/MyAccount";
+export{default as TermsOfService} from './Profile/SubScreens/TermsOfServices'
 export {default as Confirmation} from './AppointmentModule/subScreens/Confirmation'
 export {default as SearchScreen} from './SearchScreen/SearchScreen'
 

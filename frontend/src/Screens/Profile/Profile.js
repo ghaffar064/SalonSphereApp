@@ -160,7 +160,7 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
 
           <TouchableOpacity
             style={styles.additionalButton}
-            onPress={() => console.log("Terms Of Services clicked")}
+            onPress={() => navigation.navigate(navigationStrings.TERMSOFSERVICES)}
           >
             <Icon name="file-text-o" size={25} style={styles.ProfileIcon} />
             <Text style={styles.additionalText}>Terms Of Services</Text>
