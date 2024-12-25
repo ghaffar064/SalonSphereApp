@@ -13,10 +13,15 @@ import axios from "axios";
 import imagePath from "./src/constants/imagePath";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from "./ipconfig";
+import SplashScreenView from "./SplashScreenView";
 
 export default function App() {
-
-
+const [isShownSplash,setIsShownSplash] = useState(true)
+  useEffect(() => {
+    setTimeout(async () => {
+     setIsShownSplash(false)
+    }, 4000); 
+  }, []);
 
   const [allSalons, setAllSalons] = useState([]);
   const categories = [
@@ -67,25 +72,28 @@ export default function App() {
   
 
  
-  return (
-    <FavoritesProvider>
+  return <>
+  {isShownSplash?<SplashScreenView/>:
+   <FavoritesProvider>
 
    
-     <StripeProvider publishableKey="pk_test_51PIFiAFdq3SMwAKaqLqamiYft5sraI8d13P9vy0x3mMC2NS1qPdI9Ygm7v8QceNqIgfunx6BwACCIKYQtSwbz7Jm00Cx9Ovein">
-   
-   
-   <NavigationContainer>
-     <Routes login={login}  onSignIn={handleSignIn} setLogin={setLogin} allSalons ={allSalons} categories={categories}
-      location={location} setLocation = {setLocation} address ={address} setAddress={setAddress}
-      permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}/>
+   <StripeProvider publishableKey="pk_test_51PIFiAFdq3SMwAKaqLqamiYft5sraI8d13P9vy0x3mMC2NS1qPdI9Ygm7v8QceNqIgfunx6BwACCIKYQtSwbz7Jm00Cx9Ovein">
+ 
+ 
+ <NavigationContainer>
+   <Routes login={login}  onSignIn={handleSignIn} setLogin={setLogin} allSalons ={allSalons} categories={categories}
+    location={location} setLocation = {setLocation} address ={address} setAddress={setAddress}
+    permissionStatus={permissionStatus} setPermissionStatus={setPermissionStatus}/>
 
-   </NavigationContainer>
+ </NavigationContainer>
+
+ </StripeProvider>
+ 
+ 
+ </FavoritesProvider>
+
+
+  }
   
-   </StripeProvider>
-   
-   
-   </FavoritesProvider>
-   
-   
-  );
+  </>
 }
