@@ -142,7 +142,7 @@ export default function Shop() {
                   selectedServices: selected,
                   stylists: item.stylists,
                   salonName: item.name,
-                  salonId: item.salonId,
+                  salonId: item._id,
                   salon:item,
                 })
               }

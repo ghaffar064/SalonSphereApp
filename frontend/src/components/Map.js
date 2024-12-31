@@ -15,7 +15,7 @@ import color from "../constants/color";
 import navigationStrings from "../constants/navigationStrings";
 import { useNavigation } from "@react-navigation/native";
 import * as Location from 'expo-location';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker,PROVIDER_GOOGLE } from 'react-native-maps';
 import { userLocation } from './UserLocation';
 import { IMAGELOCATION } from '../../ipconfig';
 
@@ -57,8 +57,8 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
             setLocation(location);
             setAddress(`${address[0].name}, ${address[0].city}`);
             setMapRegion({
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
+              latitude: location.coords.latitude||null,
+              longitude: location.coords.longitude||null,
               latitudeDelta: 0.005,
               longitudeDelta: 0.005,
             });
@@ -69,10 +69,10 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
       } else {
         try {
           setMapRegion({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
+            latitude: location.coords.latitude||null,
+            longitude: location.coords.longitude||null,
+            latitudeDelta: .3,
+            longitudeDelta: .3,
           });
         } catch (error) {
           console.log(error);
@@ -113,12 +113,13 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
       <MapView
         style={{ height: moderateVerticalScale(750) }}
         region={mapRegion}
+        provider={PROVIDER_GOOGLE}
       >
         {location ? (
           <Marker
             coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
+              latitude: location.coords.latitude||null,
+              longitude: location.coords.longitude||null,
             }}
             title={address}
           />
@@ -153,7 +154,7 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
       </MapView>
 
       {location ? (
-        <View style={{ position: 'absolute', zIndex: 1, bottom: moderateVerticalScale(210) }}>
+        <View style={{  position: 'absolute', zIndex: 1, bottom: moderateVerticalScale(210)}}>
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}

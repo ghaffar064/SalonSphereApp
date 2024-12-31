@@ -50,14 +50,15 @@ const [isShownSplash,setIsShownSplash] = useState(true)
             },
           }
         );
-      
         setAllSalons(response.data);
       } catch (error) {
-        console.error('Error fetching salons:', error);
+        console.error('Error fetching salons:', error.message || error);
+        alert('Failed to fetch salon data. Please check your network or backend.');
       }
     };
     fetchSalons();
   }, [selectedType]);
+  
 
   const [login, setLogin] = useState(false)
   const handleSignIn = () => setLogin(true);
