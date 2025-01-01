@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   view2: {
     paddingHorizontal: moderateScale(24),
-    paddingVertical: 44,
+    paddingVertical: moderateVerticalScale(14)
   },
 
   forgotPasswordStyle: {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     marginVertical: moderateVerticalScale(24),
   },
   bottomView: {
-    flex: 0.5,
+    flex: 0.2,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

@@ -66,7 +66,7 @@ export default function Home({
         if (userData) {
           const parsedData = JSON.parse(userData);
           setUserName(parsedData.user.first_name);
-          console.log(userData);
+          
           
         }
       } catch (error) {

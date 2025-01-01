@@ -1,11 +1,14 @@
-import { View, Text, ScrollView, Alert, ActivityIndicator, } from "react-native";
+import { View, Text, ScrollView, Alert, ActivityIndicator,TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import CustomizedTextInput from "../../components/CustomizedTextInput";
-import { moderateVerticalScale } from "react-native-size-matters";
+
 import CustomizedButton from "../../components/CustomizedButton";
 import navigationStrings from "../../constants/navigationStrings";
 import { API_URL } from "../../../ipconfig";
 import styles from "./styles";
+import { moderateScale, moderateVerticalScale } from 'react-native-size-matters';
+import { ArrowLeftIcon } from 'react-native-heroicons/outline';
+import color from "../../constants/color";
 
 export default function ForgotPassword({ navigation }) {
   const [email, setEmail] = useState("");
@@ -48,8 +51,20 @@ export default function ForgotPassword({ navigation }) {
     }
   };
 
+
   return (
     <ScrollView>
+         <TouchableOpacity
+           onPress={navigation.goBack}
+          style={{
+            left: moderateScale(18),
+                          top: moderateVerticalScale(50),
+            
+            borderRadius: 100,
+          }}
+        >
+          <ArrowLeftIcon size={30} color={color.background} />
+        </TouchableOpacity>
       <View style={styles.view1}>
         <Text style={styles.forgotTextStyle}>Forgot Password</Text>
       </View>

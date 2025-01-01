@@ -8,6 +8,7 @@ import {
   Modal,
   TextInput,
   Alert,
+  ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./Styles";
@@ -61,7 +62,7 @@ export default function MyAccount() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.view1}>
         <View style={styles.profileImageContainer}>
           <View style={styles.profileImageWrapper}>
@@ -141,6 +142,6 @@ export default function MyAccount() {
           <Text style={styles.modalText}>Profile Image Upload Coming Soon!</Text>
         </View>
       </Modal>
-    </SafeAreaView>
+    </ScrollView>
   );
 }

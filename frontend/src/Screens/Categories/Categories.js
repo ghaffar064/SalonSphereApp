@@ -11,6 +11,7 @@ import color from '../../constants/color';
 import { useRoute } from '@react-navigation/native';
 import FilterModal from '../../components/FilterModal';
 import { moderateScale, moderateVerticalScale } from 'react-native-size-matters';
+import navigationStrings from '../../constants/navigationStrings';
 
 export default function Categories({ navigation }) {
   const {
@@ -49,7 +50,7 @@ export default function Categories({ navigation }) {
   };
 
   const handleBackPress = () => {
-    navigation.navigate('TABROUTES');
+    navigation.navigate(navigationStrings.TABROUTES);
   };
 
   return (

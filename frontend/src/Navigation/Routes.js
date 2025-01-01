@@ -17,10 +17,11 @@ export default function Routes({
   allSalons, 
   categories, 
   setLogin,
+  
 }) {
  
 
-  return login ? (
+  return  login ? (
     <MainStack 
       allSalons={allSalons} 
       categories={categories}
@@ -37,5 +38,6 @@ export default function Routes({
   ) : (
     <AuthStack onSignIn={onSignIn} />
   );
+   
 }
 

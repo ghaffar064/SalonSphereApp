@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import CustomizedButton from "../../components/CustomizedButton";
 import { OtpInput } from "react-native-otp-entry";
 import styles from "./styles";
-import { moderateVerticalScale } from "react-native-size-matters";
+import { moderateVerticalScale, moderateScale } from "react-native-size-matters";
 import { API_URL } from "../../../ipconfig";
 import navigationStrings from "../../constants/navigationStrings";
 import CustomizedOtpInput from "../../components/customizedOtpInput";
+import { ArrowLeftIcon } from 'react-native-heroicons/outline';
+import color from "../../constants/color";
+
 export default function CodeVerification({ navigation, route }) {
   const [otp, setOtp] = useState("");
   const [isResending, setIsResending] = useState(false);
@@ -77,6 +80,17 @@ export default function CodeVerification({ navigation, route }) {
 
   return (
     <ScrollView>
+       <TouchableOpacity
+           onPress={navigation.goBack}
+          style={{
+            left: moderateScale(18),
+                          top: moderateVerticalScale(50),
+            
+            borderRadius: 100,
+          }}
+        >
+          <ArrowLeftIcon size={30} color={color.background} />
+        </TouchableOpacity>
       <View style={styles.view1}>
         <Text style={styles.verifyTextStyle}>Verify OTP</Text>
       </View>

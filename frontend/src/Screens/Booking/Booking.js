@@ -20,7 +20,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'; // Import the plugin
 
 // Extend dayjs with necessary plugins
 dayjs.extend(isSameOrBefore);
-import { API_URL } from '../../../ipconfig';
+import { API_URL, IMAGELOCATION } from '../../../ipconfig';
 export default function Booking() {
   const [activeTab, setActiveTab] = useState('ongoing'); // Manage active tab
   const [email, setEmail] = useState('');
@@ -105,7 +105,7 @@ export default function Booking() {
       <View style={styles.itemContainer}>
         <View style={styles.imageContainer}>
           <Image
-            source={item.image || require('../../assets/images/nailsalon.png')}
+             source={{ uri: `${IMAGELOCATION}${item.coverImage}`}}
             style={styles.image}
           />
         </View>

@@ -14,25 +14,23 @@ import imagePath from "./src/constants/imagePath";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from "./ipconfig";
 import SplashScreenView from "./SplashScreenView";
+import navigationStrings from "./src/constants/navigationStrings";
 
 export default function App() {
+
 const [isShownSplash,setIsShownSplash] = useState(true)
-  useEffect(() => {
-    setTimeout(async () => {
-     setIsShownSplash(false)
-    }, 4000); 
-  }, []);
-
-  const [allSalons, setAllSalons] = useState([]);
-  const categories = [
-    { name: 'Hair Salon', imagePath: imagePath.hairsalon },
-    { name: 'Nail Salon', imagePath: imagePath.nailsalon },
-    { name: 'Home Service', imagePath: imagePath.homeservice },
-    { name: 'Make Up', imagePath: imagePath.makeup },
-    { name: 'Spa', imagePath: imagePath.spa },
-  ];
-
-  const selectedType = 'yourSelectedType';
+const [login, setLogin] = useState(true)
+const handleSignIn = () => setLogin(true);
+const selectedType = 'yourSelectedType';
+const [allSalons, setAllSalons] = useState([]);
+const categories = [
+  { name: 'Hair Salon', imagePath: imagePath.hairsalon },
+  { name: 'Nail Salon', imagePath: imagePath.nailsalon },
+  { name: 'Home Service', imagePath: imagePath.homeservice },
+  { name: 'Make Up', imagePath: imagePath.makeup },
+  { name: 'Spa', imagePath: imagePath.spa },
+];
+ const [userData,setUserData] = useState()
   useEffect(() => {
     const fetchSalons = async () => {
       try {
@@ -50,7 +48,9 @@ const [isShownSplash,setIsShownSplash] = useState(true)
             },
           }
         );
+        
         setAllSalons(response.data);
+        console.log(allSalons);
       } catch (error) {
         console.error('Error fetching salons:', error.message || error);
         alert('Failed to fetch salon data. Please check your network or backend.');
@@ -58,10 +58,56 @@ const [isShownSplash,setIsShownSplash] = useState(true)
     };
     fetchSalons();
   }, [selectedType]);
+
+useEffect(() => {
+  const checkAuthToken = async () => {
+    try {
+      const userData1 = await AsyncStorage.getItem('auth');
+      
+     
+     
+      
+     
+      if (userData1) {
+        const parsedData = JSON.parse(userData1);
+        setUserData(parsedData)
+
+        const token = parsedData.token;
+        if (token) {
+          
+         
+          setLogin(true); 
+        }
+       
+       
+      }
+     
+     
+    } catch (error) {
+      console.log("Error reading auth token:", error.message);
+    } finally {
+      setIsShownSplash(false); // End splash screen
+    }
+  };
+
+  setTimeout(() => {
+    checkAuthToken();
+  },4000); 
+}, []);
+
+  useEffect(() => {
+    setTimeout(async () => {
+     setIsShownSplash(false)
+    }, 4000); 
+  }, []);
+
+ 
+
+
+  
   
 
-  const [login, setLogin] = useState(false)
-  const handleSignIn = () => setLogin(true);
+ 
   
   const [permissionStatus, setPermissionStatus] = useState(null);
   const [location, setLocation] = useState(null);

@@ -60,7 +60,7 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
           const parsedData = JSON.parse(userData);
           setUserName(parsedData.user.first_name);
           setUserEmail(parsedData.user.email);
-          console.log(parsedData.user);
+         
           
         }
       } catch (error) {

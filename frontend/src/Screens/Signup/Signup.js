@@ -80,27 +80,27 @@ export default function Signup({ navigation }) {
             placeholder="Enter First Name"
             value={firstName}
             onChangeText={setFirstName}
-            inputStyle={{ marginBottom: moderateVerticalScale(10) }}
+            inputStyle={{ marginBottom: moderateVerticalScale(1) }}
           />
           <CustomizedTextInput
             placeholder="Enter Last Name"
             value={lastName}
             onChangeText={setLastName}
-            inputStyle={{ marginBottom: moderateVerticalScale(10) }}
+            inputStyle={{ marginBottom: moderateVerticalScale(1) }}
           />
           <CustomizedTextInput
             placeholder="Enter Email"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
-            inputStyle={{ marginBottom: moderateVerticalScale(10) }}
+            inputStyle={{ marginBottom: moderateVerticalScale(1) }}
           />
           <CustomizedTextInput
             placeholder="Enter Phone Number"
             value={phoneNumber}
             onChangeText={setPhoneNumber}
             keyboardType="numeric"
-            inputStyle={{ marginBottom: moderateVerticalScale(10) }}
+            inputStyle={{ marginBottom: moderateVerticalScale(1) }}
           />
           <CustomizedTextInput
             placeholder="Enter Password"
@@ -109,7 +109,7 @@ export default function Signup({ navigation }) {
             onChangeText={setPassword}
             rightIcon={notVisible ? imagePath.hideEye : imagePath.showEye}
             onPressRight={() => setNotVisible(!notVisible)}
-            inputStyle={{ marginBottom: moderateVerticalScale(30) }}
+            inputStyle={{ marginBottom: moderateVerticalScale(12) }}
           />
 
           {loading ? (

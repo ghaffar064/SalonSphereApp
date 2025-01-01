@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     paddingVertical: scale(10),
     alignItems: "center",
     marginHorizontal: scale(15),
-    marginTop: moderateScale(100),
+    marginTop: moderateScale(10),
   },
   bigButtonText: {
     color: "white",

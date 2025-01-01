@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   imgStyle: {
-    height: moderateScale(220),
+    height: moderateScale(200),
     width: "100%",
   },
 
@@ -24,15 +24,17 @@ const styles = StyleSheet.create({
   },
   view2: {
     paddingHorizontal: moderateScale(24),
-    paddingVertical: 10,
+    paddingVertical:moderateVerticalScale(15)
+   
   },
 
   bottomView: {
-    flex: 0.5,
+   
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop:10
+    marginBottom:moderateVerticalScale(10)
+   
   },
 });
 export default styles;

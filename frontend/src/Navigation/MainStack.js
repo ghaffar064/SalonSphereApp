@@ -21,7 +21,7 @@ export default function MainStack({allSalons,permissionStatus,setPermissionStatu
  
   return (
     <Stack.Navigator>
-       <Stack.Screen name={navigationStrings.HOME} component={Home} options={{ headerShown: false }} />
+      
        
       <Stack.Screen  name={navigationStrings.TABROUTES} options={{ headerShown: false }}>
 
