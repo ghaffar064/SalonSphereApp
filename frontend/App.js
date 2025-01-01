@@ -19,7 +19,7 @@ import navigationStrings from "./src/constants/navigationStrings";
 export default function App() {
 
 const [isShownSplash,setIsShownSplash] = useState(true)
-const [login, setLogin] = useState(true)
+const [login, setLogin] = useState(false)
 const handleSignIn = () => setLogin(true);
 const selectedType = 'yourSelectedType';
 const [allSalons, setAllSalons] = useState([]);

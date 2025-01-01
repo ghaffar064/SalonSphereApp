@@ -53,7 +53,8 @@ export default function Booking() {
             `${API_URL}/userBooking/user-bookings?email=${email}`
           );
           if (response.data.success) {
-            categorizeBookings(response.data.bookings); // Categorize bookings
+            categorizeBookings(response.data.bookings);
+            console.log(response.data.bookings[0].salon.address); // Categorize bookings
             
           } else {
             console.log('No bookings found for this user.');
@@ -105,7 +106,7 @@ export default function Booking() {
       <View style={styles.itemContainer}>
         <View style={styles.imageContainer}>
           <Image
-             source={{ uri: `${IMAGELOCATION}${item.coverImage}`}}
+             source={{ uri: `${IMAGELOCATION}${item.salon.coverImage}`}}
             style={styles.image}
           />
         </View>
@@ -114,7 +115,7 @@ export default function Booking() {
           <View style={styles.locationContainer}>
             <Icon name="map-marker" size={20} color="grey" style={styles.locationIcon} />
             <Text style={styles.LocationitemText}>
-              {item.selectedStylist?.name || 'No stylist'}
+              {item.salon.address}
             </Text>
           </View>
           <Text style={styles.itemTextAppointment}>

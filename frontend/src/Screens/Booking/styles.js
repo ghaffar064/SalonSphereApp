@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   view1: {
     backgroundColor: color.background,
     borderBottomEndRadius: moderateScale(80),
-    padding: moderateScale(28),
+    padding: moderateScale(38),
   },
   textHeading: {
 
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    height: moderateVerticalScale(120),
-    width: moderateScale(120),
+    height: moderateVerticalScale(110),
+    width: moderateScale(110),
     
   },
 
