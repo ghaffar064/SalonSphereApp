@@ -9,6 +9,8 @@ import { ArrowLeftIcon } from 'react-native-heroicons/outline';
 import { scale, verticalScale, moderateScale, moderateVerticalScale } from "react-native-size-matters";
 import navigationStrings from '../../constants/navigationStrings';
 import PaymentMethod from './subScreens/PaymentMethod';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const StepperFormScreen = ({ route, navigation }) => {
   const [currentPosition, setCurrentPosition] = useState(1);
@@ -79,8 +81,8 @@ const StepperFormScreen = ({ route, navigation }) => {
              onPress={handleBackPress}
               style={{
                 position: "absolute",
-                left: moderateScale(18),
-                top: moderateVerticalScale(35),
+                left: wp(7),
+                top:hp(5),
                 backgroundColor: "white",
                 borderRadius: 100,
                 

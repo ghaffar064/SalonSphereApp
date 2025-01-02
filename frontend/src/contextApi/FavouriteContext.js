@@ -17,7 +17,7 @@ export const FavoritesProvider = ({ children }) => {
           setFavorites(JSON.parse(storedFavorites));
         }
       } catch (error) {
-        console.error('Failed to load favorites:', error);
+        console.log('Failed to load favorites:', error);
       }
     };
     loadFavorites();
@@ -28,7 +28,7 @@ export const FavoritesProvider = ({ children }) => {
       await AsyncStorage.setItem('favorites', JSON.stringify(newFavorites));
       setFavorites(newFavorites);
     } catch (error) {
-      console.error('Failed to update favorites:', error);
+      console.log('Failed to update favorites:', error);
     }
   };
 

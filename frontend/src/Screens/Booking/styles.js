@@ -7,6 +7,11 @@ import {
   moderateScale,
   moderateVerticalScale,
 } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 // Define the styles using StyleSheet.create
 const styles = StyleSheet.create({
@@ -16,35 +21,35 @@ const styles = StyleSheet.create({
   },
   view1: {
     backgroundColor: color.background,
-    borderBottomEndRadius: moderateScale(80),
-    padding: moderateScale(38),
+    borderBottomEndRadius: wp('20%'),
+    padding:  wp('10%'),
   },
   textHeading: {
 
-    paddingLeft: moderateScale(20),
+    paddingLeft: wp('5%'),
     color: "white",
     fontWeight: "bold",
-    fontSize: scale(15),
+    fontSize: RFPercentage(2.5),
   },
   textSubheading: {
-    paddingTop: moderateScale(5),
-    paddingLeft: moderateScale(20),
+    paddingTop: wp('2%'),
+    paddingLeft: wp('5%'),
     color: "white",
-    fontSize: scale(12),
+    fontSize: RFPercentage(2),
   },
   tabContainer: {
     flexDirection: "row",
-    paddingTop: scale(20),
+    paddingTop: hp('3%'),
     justifyContent: "space-around",
   },
   tabButton: {
-    paddingVertical: verticalScale(10),
-    paddingHorizontal: moderateScale(20),
-    borderRadius: moderateScale(10),
+    paddingVertical: hp('1.5%'),
+    paddingHorizontal: wp('8%'),
+    borderRadius: wp('2.5%'),
   },
   tabButtonText: {
     color: "white",
-    fontSize: scale(15),
+    fontSize: RFPercentage(2),
   },
   activeTabButton: {
     backgroundColor: "white",
@@ -55,9 +60,9 @@ const styles = StyleSheet.create({
 
   itemContainer: {
     flexDirection: "row",
-    borderWidth:.75,
-    borderRadius: moderateScale(3),
-    margin: moderateScale(15),
+    borderWidth: 0.75,
+    borderRadius: wp('1%'),
+    margin: wp('4%'),
     backgroundColor: "white",
 
   },
@@ -70,27 +75,27 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    height: moderateVerticalScale(110),
-    width: moderateScale(110),
+    height: hp('15%'),
+    width: wp('30%'),
     
   },
 
   itemTextName: {
-    fontSize: scale(13),
+    fontSize: RFPercentage(2),
     fontWeight: "bold",
     color: color.background,
   },
   locationContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: moderateVerticalScale(5),
-    paddingTop: moderateScale(5),
+    marginBottom: hp('1%'),
+    paddingTop: wp('2%'),
   },
   locationIcon: {
-    marginRight: moderateScale(5),
+    marginRight: wp('2%'),
   },
   LocationitemText: {
-    fontSize: scale(12),
+    fontSize: RFPercentage(1.8),
     color: "grey",
   },
 
@@ -102,8 +107,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
    
-    paddingTop: moderateScale(10),
-    paddingBottom: moderateScale(10),
+    paddingTop: wp('2%'),
+    paddingBottom: wp('2%'),
   },
   buttonTextD: {
     fontSize: scale(10),
@@ -116,20 +121,20 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    borderRadius: moderateScale(5),
-    borderWidth: moderateScale(0.3),
+    borderRadius: wp('2%'),
+    borderWidth: wp('0.1%'),
     backgroundColor: "white",
-    height: moderateScale(40), // Adjust button height as needed
-    width: moderateScale(100),
+    height: hp('5%'),
+    width: wp('25%'),
     justifyContent: "center",
     alignItems: "center",
   },
   feedBackButton: {
-    borderRadius: moderateScale(5),
-    borderWidth: moderateScale(0.3),
+    borderRadius:wp('2%'),
+    borderWidth: wp('0.1%'),
     backgroundColor: "white",
-    height: moderateScale(40), // Adjust button height as needed
-    width: moderateScale(180),
+    height: hp('5%'),
+    width: wp('50%'),
     justifyContent: "center",
     alignItems: "center",
   },

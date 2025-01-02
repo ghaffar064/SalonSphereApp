@@ -40,7 +40,7 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
                 });
               }, 100); // Small delay to ensure proper state propagation
             } catch (error) {
-              console.error("Error logging out:", error);
+              console.log("Error logging out:", error);
             }
           },
         },
@@ -64,7 +64,7 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
           
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.log('Error fetching user data:', error);
       }
     };
     fetchUserData();

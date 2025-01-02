@@ -47,7 +47,7 @@ export default function ChangePassword({ navigation, route }) {
           Alert.alert("Error", data.message || "Failed to change password.");
         }
       } catch (error) {
-        console.error("Error changing password:", error);
+        console.log("Error changing password:", error);
         Alert.alert("Error", "Unable to change password. Please try again later.");
       }
     }

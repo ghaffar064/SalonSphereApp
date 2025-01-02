@@ -1,12 +1,8 @@
 // Import necessary components and styles
 import { StyleSheet } from "react-native";
 import color from "../../constants/color";
-import {
-  scale,
-  verticalScale,
-  moderateScale,
-  moderateVerticalScale,
-} from "react-native-size-matters";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
 
 // Define the styles using StyleSheet.create
 const styles = StyleSheet.create({
@@ -16,65 +12,66 @@ const styles = StyleSheet.create({
   },
   view1: {
     backgroundColor: color.background,
-    paddingBottom: moderateVerticalScale(100),
+    paddingBottom: wp(10),
+    padding: wp(3),
   },
   textHeading: {
-    paddingTop: moderateScale(30),
-    paddingLeft: moderateScale(15),
+    paddingTop: wp(7),
+    paddingLeft: wp(3),
     color: "white",
     fontWeight: "bold",
-    fontSize: scale(15),
+    fontSize: RFValue(16),
   },
   profileImageContainer: {
     position: "absolute",
-    top: moderateScale(25),
-    left: moderateScale(100),
+    top: hp(5), // Replacing moderateScale(25)
+    left: wp(25), // Replacing moderateScale(100)
     alignItems: "center",
     zIndex: 1,
   },
   profileImageWrapper: {
-    width: moderateScale(150),
-    height: moderateScale(150),
-    borderWidth: 4,
+    width: wp(40), // Replacing moderateScale(150)
+    height: wp(40), // Keeping it square
+    borderWidth: wp(1), // Adjusted to scale with screen size
     borderColor: "white",
-    borderRadius: 100, // Half of width and height to make it circular
+    borderRadius: wp(20), // Half of width and height to make it circular
     overflow: "hidden", // Clip the image to the border radius
     backgroundColor: "white", // Background color to cover the safe area
   },
   profileImage: {
-    width: moderateScale(150),
-    height: moderateScale(150),
+    width: wp(40), // Replacing moderateScale(150)
+    height: wp(40), // Keeping it square
     resizeMode: "cover",
   },
   profileTextView: {
     alignItems: "center",
   },
   profileTextName: {
-    fontSize: scale(13),
+    fontSize: RFValue(13), // Replacing scale(13)
     fontWeight: "bold",
     textAlign: "center", // Align text centrally
   },
   profileTextEmail: {
-    fontSize: scale(10),
+    fontSize: RFValue(10), // Replacing scale(10)
     textAlign: "center", // Align text centrally
   },
   additionalTextContainer: {
     flexDirection: "column",
-    marginTop: moderateScale(150),
-    padding: scale(10),
-    margin: scale(10),
+    marginTop: hp(18), // Replacing moderateScale(150)
+    padding: wp(3), // Replacing scale(10)
+    margin: wp(3), // Replacing scale(10)
     borderWidth: 0.3,
     borderColor: "grey",
-    borderRadius: 5,
+    borderRadius: wp(1.5), // Adjusted to be responsive
   },
   additionalText2ndContainer: {
     flexDirection: "column",
-    marginTop: moderateScale(10),
-    padding: scale(10),
-    margin: scale(10),
+    marginTop: hp(1.5), // Replacing moderateScale(10)
+    padding: wp(3), // Replacing scale(10)
+    margin: wp(3), // Replacing scale(10)
     borderWidth: 0.3,
     borderColor: "grey",
-    borderRadius: 5,
+    borderRadius: wp(1.5), // Adjusted to be responsive
   },
   additionalTextView: {
     flexDirection: "row",
@@ -84,21 +81,21 @@ const styles = StyleSheet.create({
   additionalButton: {
     flexDirection: "row",
     alignItems: "center",
-    paddingTop: moderateScale(25),
+    paddingTop: hp(3), // Replacing moderateScale(25)
   },
   additionalText: {
-    fontSize: scale(12),
+    fontSize: RFValue(12), // Replacing scale(12)
     marginRight: "auto", // Push the text to the end of the row
     fontWeight: "bold",
   },
   ProfileIcon: {
-    marginRight: moderateScale(5),
-    paddingRight: moderateScale(10),
+    marginRight: wp(2), // Replacing moderateScale(5)
+    paddingRight: wp(3), // Replacing moderateScale(10)
     color: color.background,
   },
   ChatIcon: {
-    marginRight: moderateScale(5),
-    paddingRight: moderateScale(10),
+    marginRight: wp(2), // Replacing moderateScale(5)
+    paddingRight: wp(3), // Replacing moderateScale(10)
     color: color.background,
   },
 });

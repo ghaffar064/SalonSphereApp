@@ -24,6 +24,8 @@ import color from "../../constants/color";
 import TopTab from "../../Navigation/TopTab";
 import navigationStrings from "../../constants/navigationStrings";
 import { IMAGELOCATION } from "../../../ipconfig";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export default function Shop() {
 
@@ -54,7 +56,7 @@ export default function Shop() {
           style={{
             alignItems: "center",
             justifyContent: "center",
-            marginTop: verticalScale(20),
+           
           }}
         >
          
@@ -64,27 +66,27 @@ export default function Shop() {
             source={{ uri: `${IMAGELOCATION}${item.coverImage}`}}
             style={{
               width: "105%",
-              height: moderateScale(200),
+              height: hp(30),
             }}
           />
           <TouchableOpacity
             onPress={navigation.goBack}
             style={{
               position: "absolute",
-              left: moderateScale(8),
+              left: wp(4),
               top: moderateVerticalScale(16),
               backgroundColor: "white",
-              borderRadius: 100,
+              borderRadius: wp(3),
             }}
           >
             <ArrowLeftIcon size={30} color={color.background} />
           </TouchableOpacity>
         </View>
         
-        <View style={{ backgroundColor: "white", margin: moderateScale(5) }}>
+        <View style={{ backgroundColor: "white",padding:wp(4) }}>
           <Text
             style={{
-              fontSize: scale(20),
+              fontSize: RFValue(20),
               fontWeight: "500",
               color: color.textColor,
             }}
@@ -102,7 +104,7 @@ export default function Shop() {
                           />
                         ))}
                       </View>
-            <View style={{ flexDirection: "row", right: 10 }}>
+            {/* <View style={{ flexDirection: "row", right: 10 }}>
               <TouchableOpacity
                 style={{ right: moderateScale(20), borderRadius: 100 }}
               >
@@ -113,9 +115,9 @@ export default function Shop() {
               >
                 <ChatBubbleLeftEllipsisIcon size={22} color={color.background} />
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
-          <View style={{ flexDirection: "row", margin: moderateScale(5) }}>
+          <View style={{ flexDirection: "row", margin: wp(2) }}>
             <MapPinIcon size={20} color="grey" />
             <Text>{item.address}</Text>
           </View>
@@ -135,7 +137,7 @@ export default function Shop() {
 
         {/* Conditionally render the "Choose Next" button */}
         {hasSelectedService && (
-          <View style={{ marginVertical: moderateVerticalScale(20), alignItems: "center" }}>
+          <View style={{ marginVertical: hp(6), alignItems: "center" }}>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate(navigationStrings.STEPPERFORMSCREEN, {
@@ -148,12 +150,12 @@ export default function Shop() {
               }
               style={{
                 backgroundColor: color.background,
-                paddingVertical: moderateVerticalScale(10),
+                paddingVertical: hp(1.5),
                 paddingHorizontal: moderateScale(20),
                 borderRadius: 10,
               }}
             >
-              <Text style={{ color: "white", fontSize: scale(16) }}>Choose Next</Text>
+              <Text style={{ color: "white", fontSize: RFValue(16) }}>Choose Next</Text>
             </TouchableOpacity>
           </View>
         )}

@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: scale(15),
     marginTop: moderateScale(10),
+  
   },
   bigButtonText: {
     color: "white",

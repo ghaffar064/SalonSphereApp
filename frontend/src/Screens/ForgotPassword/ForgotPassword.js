@@ -9,11 +9,13 @@ import styles from "./styles";
 import { moderateScale, moderateVerticalScale } from 'react-native-size-matters';
 import { ArrowLeftIcon } from 'react-native-heroicons/outline';
 import color from "../../constants/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export default function ForgotPassword({ navigation }) {
   const [email, setEmail] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
-  const [message,setMessage] = useState('');
+ 
   const [loading, setLoading] = useState(false);
   // Function to handle email submission
   const handleSubmission = async () => {
@@ -34,16 +36,17 @@ export default function ForgotPassword({ navigation }) {
       });
 
       const data = await response.json();
-      setMessage(data.message)
+      console.log(data.message);
 
-      if (response.ok && data.success) {
+      if (response.ok && data.success&&data.message!==null) {
         setIsSubmit(true);
-        navigation.navigate(navigationStrings.CODEVERIFICATION,{message,email});
+        
+        navigation.navigate(navigationStrings.CODEVERIFICATION,{message:data.message,email});
       } else {
         Alert.alert("Error", data.message || "Something went wrong");
       }
     } catch (error) {
-      console.error("Error during API call:", error);
+      console.log("Error during API call:", error);
       Alert.alert("Error", "Failed to connect to the server");
     }
     finally{
@@ -57,10 +60,10 @@ export default function ForgotPassword({ navigation }) {
          <TouchableOpacity
            onPress={navigation.goBack}
           style={{
-            left: moderateScale(18),
-                          top: moderateVerticalScale(50),
+            left: wp(6),
+                          top: hp(6),
             
-            borderRadius: 100,
+            borderRadius: wp(10),
           }}
         >
           <ArrowLeftIcon size={30} color={color.background} />

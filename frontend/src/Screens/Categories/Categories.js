@@ -12,6 +12,8 @@ import { useRoute } from '@react-navigation/native';
 import FilterModal from '../../components/FilterModal';
 import { moderateScale, moderateVerticalScale } from 'react-native-size-matters';
 import navigationStrings from '../../constants/navigationStrings';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export default function Categories({ navigation }) {
   const {
@@ -52,7 +54,9 @@ export default function Categories({ navigation }) {
   const handleBackPress = () => {
     navigation.navigate(navigationStrings.TABROUTES);
   };
-
+ const handleInput = () => {
+    navigation.navigate(navigationStrings.SEARCHSCREEN)
+  };
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
@@ -73,11 +77,11 @@ export default function Categories({ navigation }) {
         style={{
           justifyContent: 'center',
           backgroundColor: color.background,
-          padding: moderateVerticalScale(12),
-          borderBottomEndRadius: moderateScale(80),
+          padding:wp(4),
+          borderBottomEndRadius: wp(20),
         }}
       >
-        <SearchBar placeholder={category.placeholder} />
+        <SearchBar placeholder={category.placeholder} onFocus={handleInput} />
       </View>
       {/* Pass the filtered or default data to Cards */}
       <Cards data={filteredData} />
@@ -95,9 +99,9 @@ export default function Categories({ navigation }) {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: color.background,
-    padding: 15,
+    padding: wp(4),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: 40,
+    paddingTop: hp(6),
   },
 });

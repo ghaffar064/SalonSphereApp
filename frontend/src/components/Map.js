@@ -18,7 +18,8 @@ import * as Location from 'expo-location';
 import MapView, { Marker,PROVIDER_GOOGLE } from 'react-native-maps';
 import { userLocation } from './UserLocation';
 import { IMAGELOCATION } from '../../ipconfig';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
 const haversineDistance = (coords1, coords2) => {
   const toRad = x => (x * Math.PI) / 180;
   const R = 6371; 
@@ -111,7 +112,7 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
   return (
     <View>
       <MapView
-        style={{ height: moderateVerticalScale(750) }}
+        style={{   height: hp(100), }}
         region={mapRegion}
         provider={PROVIDER_GOOGLE}
       >
@@ -138,15 +139,15 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
               <Text
                 style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.7)', 
-                  paddingHorizontal: 5,
-                  borderRadius: 5,
+                  paddingHorizontal:  wp(5),
+                  borderRadius: wp(10),
                 }}
               >
                {item.name}
               </Text>
               <Image
                source={{ uri: `${IMAGELOCATION}${item.coverImage}`}}
-                style={{ width: 40, height: 40, borderRadius: 20 }}
+                style={{ width: wp(10), height: wp(10), borderRadius: wp(10) }}
               />
             </View>
           </Marker>
@@ -154,7 +155,7 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
       </MapView>
 
       {location ? (
-        <View style={{  position: 'absolute', zIndex: 1, bottom: moderateVerticalScale(210)}}>
+        <View style={{  position: 'absolute', zIndex: 1, bottom:  hp(23)}}>
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -168,9 +169,9 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
                 <View
                   style={{
                     flexDirection: "row",
-                    margin: verticalScale(7),
-                    borderWidth: moderateScale(1),
-                    borderRadius: moderateScale(10),
+                    margin: wp(3),
+                    borderWidth: scale(3),
+                    borderRadius: wp(6),
                  
                     backgroundColor: "white",
                     borderColor: "white",
@@ -178,11 +179,11 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
                 >
                   <Image
                     source={{ uri: `${IMAGELOCATION}${item.coverImage}`}}
-                    style={{ width: moderateScale(120), height: moderateVerticalScale(120) }}
+                    style={{ width: wp(40), height: hp(20) }}
                   />
                   <View style={{ flexDirection: "row", flex: 0.6 }}>
-                    <View style={{ padding: moderateScale(20) }}>
-                      <Text style={{ fontSize: scale(17), fontWeight: "400", color }}>
+                    <View style={{ padding: wp(8) }}>
+                      <Text style={{ fontSize: RFValue(18), fontWeight: "400", color }}>
                         {item.name}
                       </Text>
                       <View style={{ flexDirection: 'row' }}>

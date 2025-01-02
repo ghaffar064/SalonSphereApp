@@ -57,7 +57,7 @@ export default function Signup({ navigation }) {
         Alert.alert("Error", response.data.message || "Registration failed.");
       }
     } catch (error) {
-      console.error("Registration Error:", error);
+      console.log("Registration Error:", error);
       Alert.alert("Error", error.response?.data?.message || "An error occurred.");
     } finally {
       setLoading(false);

@@ -39,7 +39,7 @@ export default function PaymentMethod({
         
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.log('Error fetching user data:', error);
       }
     };
     fetchUserData();
@@ -116,7 +116,7 @@ export default function PaymentMethod({
         nextStep(); // Proceed to the next step
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.log('Error:', error);
       Alert.alert('An unexpected error occurred');
     } finally {
       setIsProcessing(false);
@@ -134,11 +134,11 @@ export default function PaymentMethod({
       if (response.data.success) {
         
       } else {
-        console.error('Failed to save booking to DB:', response.data.message);
+        console.log('Failed to save booking to DB:', response.data.message);
         Alert.alert('Error', 'Failed to save booking in the database.');
       }
     } catch (error) {
-      console.error('Error saving booking to DB:', error);
+      console.log('Error saving booking to DB:', error);
       Alert.alert('Error', 'An error occurred while saving the booking.');
     }
   };

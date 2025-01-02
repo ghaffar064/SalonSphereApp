@@ -63,7 +63,7 @@ const Reviews = () => {
         console.log(data);
       }
     } catch (error) {
-      console.error('Error submitting review:', error);
+      console.log('Error submitting review:', error);
       Alert.alert('Error', 'Something went wrong. Please try again.');
     }
   };

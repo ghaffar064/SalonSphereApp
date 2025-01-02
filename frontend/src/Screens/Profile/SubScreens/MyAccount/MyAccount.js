@@ -33,7 +33,7 @@ export default function MyAccount() {
           setUserPhoneNumber(parsedData.user.phone_number);
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.log('Error fetching user data:', error);
       }
     };
     fetchUserData();
@@ -56,7 +56,7 @@ export default function MyAccount() {
       Alert.alert('Success', 'Profile updated successfully!');
       setIsEditable(false); // Exit edit mode
     } catch (error) {
-      console.error('Error updating user data:', error);
+      console.log('Error updating user data:', error);
       Alert.alert('Error', 'Failed to update profile.');
     }
   };

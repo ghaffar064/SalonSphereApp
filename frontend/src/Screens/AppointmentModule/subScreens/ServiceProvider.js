@@ -10,10 +10,13 @@ export default function ServiceProvider({ stylists, onNextStep, setSelectedStyli
 
   const handleStylistSelect = (stylist) => {
     setSelectedStylist(stylist);
+   
   };
-
   const handleNextStep = () => {
-    if (!selectedStylist) {
+   
+    
+    // Check if selectedStylist is empty
+    if (!selectedStylist || Object.keys(selectedStylist).length === 0) {
       Alert.alert(
         'Select Stylist',
         'Please select a stylist to proceed.',

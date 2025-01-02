@@ -9,12 +9,15 @@ import navigationStrings from "../../constants/navigationStrings";
 import CustomizedOtpInput from "../../components/customizedOtpInput";
 import { ArrowLeftIcon } from 'react-native-heroicons/outline';
 import color from "../../constants/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export default function CodeVerification({ navigation, route }) {
   const [otp, setOtp] = useState("");
   const [isResending, setIsResending] = useState(false);
-  const { email, message: initialMessage } = route.params;
-  const [message, setMessage] = useState(initialMessage);
+  const { email, message } = route.params;
+  // const [message, setMessage] = useState();
+  
  
  
   // Function to handle OTP submission
@@ -45,7 +48,7 @@ export default function CodeVerification({ navigation, route }) {
         Alert.alert("Error", data.message || "Invalid OTP");
       }
     } catch (error) {
-      console.error("Error during OTP verification:", error);
+      console.log("Error during OTP verification:", error);
       Alert.alert("Error", "Unable to connect to the server");
     }
   };
@@ -71,7 +74,7 @@ export default function CodeVerification({ navigation, route }) {
         Alert.alert("Error", data.message || "Failed to resend the OTP");
       }
     } catch (error) {
-      console.error("Error during OTP resend:", error);
+      console.log("Error during OTP resend:", error);
       Alert.alert("Error", "Unable to connect to the server");
     } finally {
       setIsResending(false);
@@ -82,12 +85,12 @@ export default function CodeVerification({ navigation, route }) {
     <ScrollView>
        <TouchableOpacity
            onPress={navigation.goBack}
-          style={{
-            left: moderateScale(18),
-                          top: moderateVerticalScale(50),
-            
-            borderRadius: 100,
-          }}
+         style={{
+                    left: wp(6),
+                                  top: hp(6),
+                    
+                    borderRadius: wp(10),
+                  }}
         >
           <ArrowLeftIcon size={30} color={color.background} />
         </TouchableOpacity>

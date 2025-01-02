@@ -38,7 +38,7 @@ export default function Booking() {
           setEmail(parsedData.user.email); // Set email state
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.log('Error fetching user data:', error);
       }
     };
     fetchUserData();
@@ -60,7 +60,7 @@ export default function Booking() {
             console.log('No bookings found for this user.');
           }
         } catch (error) {
-          console.error('Error fetching bookings:', error);
+          console.log('Error fetching bookings:', error);
           Alert.alert('Error', 'Unable to fetch bookings');
         }
       };
@@ -97,7 +97,7 @@ export default function Booking() {
     const { location } = item.salon;
     const url = `https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}`;
     Linking.openURL(url).catch((err) =>
-      console.error('Error opening Google Maps:', err)
+      console.log('Error opening Google Maps:', err)
     );
   };
 

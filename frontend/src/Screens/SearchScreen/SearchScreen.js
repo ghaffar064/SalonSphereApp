@@ -18,6 +18,8 @@ import { scale, verticalScale, moderateScale, moderateVerticalScale } from "reac
 import { useFocusEffect } from "@react-navigation/native";
 import navigationStrings from '../../constants/navigationStrings';
 import SearchBar from '../../components/SearchBar';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { RFValue } from "react-native-responsive-fontsize";
 
 
 
@@ -53,7 +55,7 @@ const SearchScreen = ({navigation}) => {
       const data = await response.json();
       setResults(data); // Assuming the response is an array of search results
     } catch (error) {
-      console.error('Error fetching search results:', error);
+      console.log('Error fetching search results:', error);
     } finally {
       setLoading(false);
     }
@@ -89,8 +91,8 @@ const SearchScreen = ({navigation}) => {
            onPress={handleBackPress}
             style={{
               position: "absolute",
-              left: moderateScale(18),
-              top: moderateVerticalScale(35),
+              left: wp(8),
+              top: hp(5),
               backgroundColor: "white",
               borderRadius: 100,
               
@@ -105,12 +107,12 @@ const SearchScreen = ({navigation}) => {
        <SearchBar
       placeholder="Search for salons or services"
       containerStyle={{
-        height: 50,
-    borderRadius: 25,
+        height: hp(6),
+    borderRadius: wp(10),
     backgroundColor: '#f9f9f9',
-    paddingHorizontal: 20,
-    fontSize: 16,
-    marginBottom: 20,
+    paddingHorizontal: wp(6),
+    fontSize: RFValue(14),
+    marginBottom: hp(1),
     borderWidth: 1,
     borderColor: '#ccc',
        
@@ -141,22 +143,23 @@ const SearchScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+   
    
     
   },
   header: {
     backgroundColor: color.background,
-    padding: 40,
+    padding: wp(18),
    
-    marginBottom: 10,
+    marginBottom: hp(2),
+    borderBottomEndRadius:wp(10)
   },
  
   loading: {
     marginVertical: 20,
   },
   resultItem: {
-    paddingVertical: 15,
+   
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },

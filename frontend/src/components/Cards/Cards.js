@@ -23,6 +23,7 @@ import {
 import color from '../../constants/color';
 import navigationStrings from '../../constants/navigationStrings';
 import { IMAGELOCATION } from '../../../ipconfig';
+
 export default function Cards({ data }) {
   
   
