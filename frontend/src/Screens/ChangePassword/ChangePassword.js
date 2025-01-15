@@ -53,7 +53,7 @@ export default function ChangePassword({ navigation, route }) {
     }
   };
 
-  // Handle Android Back Button
+ 
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {

@@ -45,14 +45,16 @@ const styles = StyleSheet.create({
   },
   profileTextView: {
     alignItems: "center",
+    marginTop:hp(13),
+    margin:wp(5)
   },
   profileTextName: {
-    fontSize: RFValue(13), // Replacing scale(13)
+    fontSize: RFValue(16), // Replacing scale(13)
     fontWeight: "bold",
     textAlign: "center", // Align text centrally
   },
   profileTextEmail: {
-    fontSize: RFValue(10), // Replacing scale(10)
+    fontSize: RFValue(12), // Replacing scale(10)
     textAlign: "center", // Align text centrally
   },
   additionalTextContainer: {

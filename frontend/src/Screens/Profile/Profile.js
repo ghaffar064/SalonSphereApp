@@ -79,12 +79,12 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
           </View>
 
           <View style={styles.profileImageContainer}>
-            <View style={styles.profileImageWrapper}>
+            {/* <View style={styles.profileImageWrapper}>
               <Image
                 source={require("../../assets/images/sk.png")}
                 style={styles.profileImage}
               />
-            </View>
+            </View> */}
             <View style={styles.profileTextView}>
               <Text style={styles.profileTextName}>{userName}</Text>
               <Text style={styles.profileTextEmail}>{userEmail}</Text>
@@ -102,43 +102,43 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
             <Icon name="chevron-right" size={20} color="#000" />
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.additionalButton}
             onPress={() => console.log("Chat clicked")}
           >
             <Icon name="comment" size={25} style={styles.ChatIcon} />
             <Text style={styles.additionalText}>Chat</Text>
             <Icon name="chevron-right" size={20} color="#000" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <View style={styles.additionalText2ndContainer}>
           <TouchableOpacity
             style={styles.additionalTextView}
-            onPress={() => console.log("My Favorite clicked")}
+            onPress={() => navigation.navigate(navigationStrings.FAVOURITES)}
           >
             <Icon name="heart-o" size={25} style={styles.ProfileIcon} />
             <Text style={styles.additionalText}>Favorite</Text>
             <Icon name="chevron-right" size={20} color="#000" />
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.additionalButton}
             onPress={() => console.log("Language clicked")}
           >
             <Icon name="language" size={25} style={styles.ProfileIcon} />
             <Text style={styles.additionalText}>Language</Text>
             <Icon name="chevron-right" size={20} color="#000" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.additionalButton}
             onPress={() => console.log("Notification Setting")}
           >
             <Icon name="bell-o" size={25} style={styles.ProfileIcon} />
             <Text style={styles.additionalText}>Notification Setting</Text>
             <Icon name="chevron-right" size={20} color="#000" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={styles.additionalButton}
@@ -149,14 +149,14 @@ export default function Profile({ navigation,setLogin,onSignIn,login }) {
             <Icon name="chevron-right" size={20} color="#000" />
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.additionalButton}
             onPress={() => console.log("Your Coupon clicked")}
           >
             <Icon name="ticket" size={25} style={styles.ProfileIcon} />
             <Text style={styles.additionalText}>Your Coupon</Text>
             <Icon name="chevron-right" size={20} color="#000" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={styles.additionalButton}

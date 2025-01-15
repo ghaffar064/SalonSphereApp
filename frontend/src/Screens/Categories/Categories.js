@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   View,
   StyleSheet,
   TouchableOpacity,
+  BackHandler
 } from 'react-native';
 import SearchBar from '../../components/SearchBar';
 import Cards from '../../components/Cards/Cards';
@@ -50,6 +51,7 @@ export default function Categories({ navigation }) {
     setFilteredData(category.data); // Reset to original data
     setFilterVisible(false); // Close the modal
   };
+   
 
   const handleBackPress = () => {
     navigation.navigate(navigationStrings.TABROUTES);
@@ -57,6 +59,7 @@ export default function Categories({ navigation }) {
  const handleInput = () => {
     navigation.navigate(navigationStrings.SEARCHSCREEN)
   };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
@@ -90,7 +93,9 @@ export default function Categories({ navigation }) {
         visible={isFilterVisible}
         onClose={() => setFilterVisible(false)}
         onApply={applyFilters}
-        onReset={resetFilters} // Add reset functionality
+        onReset={resetFilters}
+        setFilterVisible={setFilterVisible}
+       
       />
     </View>
   );

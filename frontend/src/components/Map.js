@@ -210,6 +210,6 @@ export default function Map({ allSalons, permissionStatus, setPermissionStatus, 
           />
         </View>
       ) : null}
-    </View>
-  );
-}
+      </View>
+    );
+  }

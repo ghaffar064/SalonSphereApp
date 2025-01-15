@@ -37,7 +37,7 @@ export default function Home({
   categories
 }) {
 
-
+console.log(allSalons);
   const bannerData = [
     { id: '1', image: imagePath.promo},
     { id: '2', image: imagePath.promo },
@@ -232,9 +232,42 @@ export default function Home({
     showsHorizontalScrollIndicator={false}
     contentContainerStyle={styles.listContainer}
   />
+
+  
 ) : (
   <Text>Loading salons...</Text> // Show a fallback while salons are loading
 )}
+<Text style={styles.sectionTitle}>Hair Salons</Text>
+    {Array.isArray(allSalons) ? (
+  <FlatList
+    data={allSalons.filter((salon) =>salon.salonType.includes("Hair Salon"))} // Safely filter salons with rating >= 4
+    renderItem={renderFavoriteSalon}
+    keyExtractor={(item) => item._id || item.salonId.toString()}
+    horizontal
+    showsHorizontalScrollIndicator={false}
+    contentContainerStyle={styles.listContainer}
+  />
+
+  
+) : (
+  <Text>Loading salons...</Text> // Show a fallback while salons are loading
+)}
+<Text style={styles.sectionTitle}>Home Service</Text>
+    {Array.isArray(allSalons) ? (
+  <FlatList
+    data={allSalons.filter((salon) =>salon.salonType.includes("Home Service"))} // Safely filter salons with rating >= 4
+    renderItem={renderFavoriteSalon}
+    keyExtractor={(item) => item._id || item.salonId.toString()}
+    horizontal
+    showsHorizontalScrollIndicator={false}
+    contentContainerStyle={styles.listContainer}
+  />
+
+  
+) : (
+  <Text>Loading salons...</Text> // Show a fallback while salons are loading
+)}
+
       </ScrollView>
     </SafeAreaView>
   );

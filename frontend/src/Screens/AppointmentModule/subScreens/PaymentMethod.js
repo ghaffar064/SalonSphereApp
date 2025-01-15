@@ -98,6 +98,11 @@ export default function PaymentMethod({
       if (paymentError) {
         Alert.alert(`Payment Confirmation Error: ${paymentError.message}`);
       } else {
+        const servicesArray = Object.values(selectedServices || {});
+        const amount = servicesArray.reduce(
+          (total, service) => total + parseFloat(service.price || 0),
+          0
+        ) * 1; // Amount in cents
         const newBooking = {
           user_id: userId, // Use the fetched user ID
           salonName,
@@ -108,6 +113,7 @@ export default function PaymentMethod({
           selectedTime,
           customerEmail: email,
           paymentIntentId: paymentIntent.id,
+          paymentAmount:amount
         };
 
        
