@@ -32,7 +32,6 @@ const authSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-
     // OTP and expiry fields for password reset functionality
     resetOtp: {
       type: String, // Store the OTP here

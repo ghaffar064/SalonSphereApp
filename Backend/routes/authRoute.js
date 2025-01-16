@@ -24,7 +24,6 @@ router.post("/business/admin/register", salonRegisterController);
 
 //proteted route on user token base
 router.get("/user-auth", requireSignIn, (req, resp) => {
- 
   resp.status(200).send({
     ok: true,
   });
@@ -32,7 +31,6 @@ router.get("/user-auth", requireSignIn, (req, resp) => {
 
 //proteted route on admin
 router.get("/admin-auth", requireSignIn, isAdmin, (req, resp) => {
- 
   resp.status(200).send({
     ok: true,
   });
@@ -44,5 +42,6 @@ router.get("/salon-auth", requireSignIn, isSalonOwner, (req, resp) => {
     ok: true,
   });
 });
+
 router.post("/changePassword", changePassword);
 export default router;

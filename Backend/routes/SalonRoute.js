@@ -1,18 +1,50 @@
-import express from 'express';
-import { addSalon, getSalonsByType,reviewController } from '../controllers/SalonController.js';
-import salonUpload from '../middlewares/multer.js'; // Import multer middleware
+import express from "express";
 import {
-    
-    requireSignIn,
-  } from "../middlewares/authMiddlewares.js";
+  isAdmin,
+  isSalonOwner,
+  requireSignIn,
+  authenticateUser,
+  requireSignInForReviews
+} from "../middlewares/authMiddlewares.js";
+import salonPicsUpload from "../middlewares/imagesMiddleWare.js";
+import {
+  createSalonProfile,
+  viewSalonProfile,
+  editSalonProfile,
+  updateSalonProfile,
+  reviewController,
+  deleteSalonProfile,
+  getSalonsByType
+  
+} from "../controllers/salonController.js";
 const router = express.Router();
-
 // Route to add a salon with images
-router.post('/addSalon', salonUpload, addSalon);
+router.post(
+  "/create-salon-profile",
+  salonPicsUpload,
+  authenticateUser,
+  createSalonProfile,
+  
+);
 
-// Route to get salons filtered by type
+//route for getting Salon  data
+router.get("/view-salon/:id", viewSalonProfile);
+
+//route for edit Salon  data
+router.get("/edit-salon/:id", editSalonProfile);
+router.put(
+  "/update-salon-profile/:id",
+  authenticateUser, // Ensure the user is authenticated
+  isSalonOwner, // Ensure the user owns the salon
+  salonPicsUpload, // Handles file uploads
+  updateSalonProfile
+);
+
+
+//route for delete Salon  
+router.delete("/delete-salon/:id", deleteSalonProfile);
+
+//for reviews
+router.put("/:id/review",requireSignInForReviews, reviewController);
 router.get('/getSalons', getSalonsByType);
-
-router.put("/:id/review",requireSignIn, reviewController);
-
 export default router;

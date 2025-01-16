@@ -1,4 +1,4 @@
-import { Salon } from '../models/SalonSchema.js';
+import Salon from "../models/createSalonModel.js";
 
 export const search = async (req, res) => {
   const { query } = req.query;

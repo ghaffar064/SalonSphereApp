@@ -215,6 +215,7 @@ export const loginController = async (req, resp) => {
   }
 };
 
+//cahnge password
 export const changePassword = async (req, res) => {
   const { email, newPassword } = req.body;
 
