@@ -18,7 +18,7 @@ import {
   
 } from "../controllers/salonController.js";
 const router = express.Router();
-// Route to add a salon with images
+
 router.post(
   "/create-salon-profile",
   salonPicsUpload,
@@ -27,24 +27,23 @@ router.post(
   
 );
 
-//route for getting Salon  data
+
 router.get("/view-salon/:id", viewSalonProfile);
 
-//route for edit Salon  data
+
 router.get("/edit-salon/:id", editSalonProfile);
 router.put(
   "/update-salon-profile/:id",
-  authenticateUser, // Ensure the user is authenticated
-  isSalonOwner, // Ensure the user owns the salon
-  salonPicsUpload, // Handles file uploads
+  authenticateUser, 
+  isSalonOwner,
+  salonPicsUpload,
   updateSalonProfile
 );
 
 
-//route for delete Salon  
+
 router.delete("/delete-salon/:id", deleteSalonProfile);
 
-//for reviews
 router.put("/:id/review",requireSignInForReviews, reviewController);
 router.get('/getSalons', getSalonsByType);
 export default router;
