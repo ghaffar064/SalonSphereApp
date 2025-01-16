@@ -35,11 +35,11 @@ app.get("/", (req, resp) => {
 //define your routes here
 app.use("/api/auth", authRoute);
 
-//Routes For creating Salon's
+
 app.use("/api/salon", salonRouter);
 
 
-//..
+
 app.use('/api/booking',bookingRouter)
 app.use('/api/userBooking',userBookingRouter)
 app.use('/api/forgot',forgotPasswordRouter)
