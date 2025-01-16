@@ -3,7 +3,7 @@ import colors from "colors";
 import dotenv from "dotenv";
 import connectDB from "./configDB/dbConnection.js";
 import authRoute from "./routes/authRoute.js";
-import salonRoute from "./routes/salonRoute.js";
+import salonRouter from "./routes/salonRoute.js";
 import bookingRouter from './routes/Booking.js'
 import userBookingRouter from './routes/UserBooking.js'
 import forgotPasswordRouter from './routes/forgotPassword.js'
@@ -36,7 +36,7 @@ app.get("/", (req, resp) => {
 app.use("/api/auth", authRoute);
 
 //Routes For creating Salon's
-app.use("/api/salon", salonRoute);
+app.use("/api/salon", salonRouter);
 
 
 //..
